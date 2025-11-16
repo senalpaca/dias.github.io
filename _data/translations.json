@@ -1,0 +1,29 @@
+{
+  "en": {
+    "nav_home": "Home",
+    "nav_dias": "DIAS Case",
+    "nav_methodology": "Methodology",
+    "nav_about": "About",
+    "lang_en": "EN",
+    "lang_de": "DE",
+    "lang_ar": "العربية"
+  },
+  "de": {
+    "nav_home": "Startseite",
+    "nav_dias": "DIAS-Fall",
+    "nav_methodology": "Methodik",
+    "nav_about": "Über",
+    "lang_en": "EN",
+    "lang_de": "DE",
+    "lang_ar": "العربية"
+  },
+  "ar": {
+    "nav_home": "الرئيسية",
+    "nav_dias": "ملف DIAS",
+    "nav_methodology": "المنهجية",
+    "nav_about": "حول المشروع",
+    "lang_en": "EN",
+    "lang_de": "DE",
+    "lang_ar": "العربية"
+  }
+}

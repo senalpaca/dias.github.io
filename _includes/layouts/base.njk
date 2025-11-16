@@ -1,5 +1,16 @@
+{% set currentLang = lang or "en" %}
+
+{# Determine text direction: explicit dir > arabic default > ltr #}
+{% if dir %}
+  {% set currentDir = dir %}
+{% elseif currentLang == "ar" %}
+  {% set currentDir = "rtl" %}
+{% else %}
+  {% set currentDir = "ltr" %}
+{% endif %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ currentLang }}" dir="{{ currentDir }}">
 <head>
   <meta charset="UTF-8" />
   <title>
@@ -9,18 +20,27 @@
   <!-- IMPORTANT: filename is style.css, not styles.css -->
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
-<body>
+<body class="lang-{{ currentLang }}">
+
+  {# Translation labels for nav #}
+  {% set t = translations[currentLang] %}
 
   <header class="main-nav">
     <div class="nav-inner">
-      <a href="/" class="nav-logo">SENA ARCHIVE</a>
+      <a href="/{{ currentLang }}/" class="nav-logo">SENA ARCHIVE</a>
 
       <nav class="nav-links">
-        <a href="/">Home</a>
-        <a href="/cases/dias/">DIAS Case</a>
-        <a href="/methodology/">Methodology</a>
-        <a href="/about/">About</a>
+        <a href="/{{ currentLang }}/">{{ t.nav_home }}</a>
+        <a href="/{{ currentLang }}/cases/dias/">{{ t.nav_dias }}</a>
+        <a href="/{{ currentLang }}/methodology/">{{ t.nav_methodology }}</a>
+        <a href="/{{ currentLang }}/about/">{{ t.nav_about }}</a>
       </nav>
+
+      <div class="nav-lang">
+        <a href="/en/" class="nav-lang__link">{{ translations.en.lang_en }}</a>
+        <a href="/de/" class="nav-lang__link">{{ translations.de.lang_de }}</a>
+        <a href="/ar/" class="nav-lang__link">{{ translations.ar.lang_ar }}</a>
+      </div>
 
       <button class="nav-toggle" aria-label="Open menu">
         ☰
@@ -36,7 +56,6 @@
     <p>Archival platform for my Master's thesis. Built with Eleventy & vanilla JS.</p>
   </footer>
 
-  <!-- Make sure this path matches your folder structure exactly -->
   <script src="/assets/main.js"></script>
 </body>
 </html>

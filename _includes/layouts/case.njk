@@ -18,24 +18,44 @@ layout: layouts/base.njk
         <span><strong>Location:</strong> {{ location }}</span>
       {% endif %}
     </div>
+
+    {# Case-level language switcher #}
+    {% if translations %}
+      <div class="lang-switcher">
+        {% for code, url in translations %}
+          <a href="{{ url }}"
+             class="lang-switcher__link{% if code == lang %} lang-switcher__link--active{% endif %}">
+            {% if code == "ar" %}
+              العربية
+            {% else %}
+              {{ code | upper }}
+            {% endif %}
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
   </header>
 
   <div class="case-layout">
     <aside class="case-sidebar">
       {% if tags %}
-      <h2>Keywords</h2>
-      <ul>
-        {% for tag in tags %}
-          <li>{{ tag }}</li>
-        {% endfor %}
-      </ul>
+        <h2>Keywords</h2>
+        <ul>
+          {% for tag in tags %}
+            <li>{{ tag }}</li>
+          {% endfor %}
+        </ul>
       {% endif %}
 
+      {# hook for JS-based evidence filter #}
       <div id="evidence-filter"></div>
     </aside>
 
     <section class="case-content">
       {{ content | safe }}
+
+      {# hook for JS-based evidence list #}
+      <div id="evidence-list"></div>
     </section>
   </div>
 </article>
