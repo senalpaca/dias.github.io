@@ -1,0 +1,26 @@
+{
+  "name": "dias.github.io",
+  "version": "1.0.0",
+  "description": "Thesis Platform",
+  "main": ".eleventy.js",
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve",
+    "watch": "eleventy --watch"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/senalpaca/dias.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/senalpaca/dias.github.io/issues"
+  },
+  "homepage": "https://github.com/senalpaca/dias.github.io#readme"
+}

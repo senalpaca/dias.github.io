@@ -1,0 +1,245 @@
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #0b0c10;
+  color: #f5f5f5;
+}
+
+a {
+  color: #ffdd88;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.site-header {
+  background: #12141f;
+  border-bottom: 1px solid #242637;
+}
+
+.site-header__inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-title {
+  font-weight: 600;
+}
+
+.site-main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.site-footer {
+  max-width: 1000px;
+  margin: 2rem auto 1rem;
+  padding: 1rem 1.5rem;
+  font-size: 0.8rem;
+  color: #aaa;
+  border-top: 1px solid #242637;
+}
+
+.case-header {
+  margin-bottom: 1.5rem;
+}
+
+.case-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+  color: #bbbbbb;
+}
+
+.case-title {
+  margin: 0.25rem 0 0.5rem;
+}
+
+.case-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: #cccccc;
+}
+
+.case-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2rem;
+}
+
+.case-sidebar {
+  border-right: 1px solid #242637;
+  padding-right: 1rem;
+  font-size: 0.9rem;
+}
+
+.case-sidebar h2 {
+  font-size: 0.95rem;
+  margin-top: 0;
+}
+
+.case-content {
+  line-height: 1.6;
+}
+
+#timeline {
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid #242637;
+  border-radius: 6px;
+  background: #111320;
+}
+
+.timeline-item {
+  padding: 0.2rem 0;
+  cursor: pointer;
+}
+
+.timeline-item span.year {
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.timeline-item--active {
+  background: #1f2238;
+}
+
+.evidence-filter,
+.evidence-list {
+  font-size: 0.9rem;
+}
+
+.evidence-filter label {
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.evidence-card {
+  border: 1px solid #242637;
+  border-radius: 6px;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  background: #12141f;
+}
+
+.evidence-card__meta {
+  font-size: 0.8rem;
+  color: #aaaaaa;
+  margin-bottom: 0.3rem;
+}
+
+/* ------------------ */
+/* NAVBAR BASE LAYOUT */
+/* ------------------ */
+
+.main-nav {
+  background: #0d0f13;      /* Dark, slightly bluish similar to borderViolence.eu */
+  border-bottom: 1px solid #1b1e25;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ------------------ */
+/* LOGO */
+/* ------------------ */
+
+.nav-logo {
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+/* ------------------ */
+/* LINKS */
+/* ------------------ */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+}
+
+.nav-links a {
+  color: #e6e6e6;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-bottom: 2px;
+  position: relative;
+}
+
+/* Hover underline similar to borderViolence.eu */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0%;
+  height: 1px;
+  background: #ffffff;
+  transition: width 0.25s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* ------------------ */
+/* MOBILE MENU */
+/* ------------------ */
+
+.nav-toggle {
+  display: none; /* Hidden on desktop */
+  font-size: 1.4rem;
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 58px;
+    right: 0;
+    background: #0d0f13;
+    padding: 1.5rem;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1rem;
+    border-left: 1px solid #1b1e25;
+    border-bottom: 1px solid #1b1e25;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+}

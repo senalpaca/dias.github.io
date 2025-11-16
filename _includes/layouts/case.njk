@@ -1,0 +1,41 @@
+---
+layout: layouts/base.njk
+---
+
+<article class="case">
+  <header class="case-header">
+    <p class="case-kicker">Case File</p>
+    <h1 class="case-title">{{ title }}</h1>
+
+    <div class="case-meta">
+      {% if case_id %}
+        <span><strong>ID:</strong> {{ case_id }}</span>
+      {% endif %}
+      {% if date_range %}
+        <span><strong>Period:</strong> {{ date_range }}</span>
+      {% endif %}
+      {% if location %}
+        <span><strong>Location:</strong> {{ location }}</span>
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="case-layout">
+    <aside class="case-sidebar">
+      {% if tags %}
+      <h2>Keywords</h2>
+      <ul>
+        {% for tag in tags %}
+          <li>{{ tag }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+      <div id="evidence-filter"></div>
+    </aside>
+
+    <section class="case-content">
+      {{ content | safe }}
+    </section>
+  </div>
+</article>
