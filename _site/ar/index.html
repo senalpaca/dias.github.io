@@ -21,32 +21,144 @@
   
   
 
-  <header class="main-nav">
-    <div class="nav-inner">
-      <a href="/ar/" class="nav-logo">SENA ARCHIVE</a>
+  <header id="header" class="main-nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="/ar/">
+      DIAS Archive
+    </a>
 
-      <nav class="nav-links">
-        <a href="/ar/">الرئيسية</a>
-        <a href="/ar/cases/dias/">ملف DIAS</a>
-        <a href="/ar/methodology/">المنهجية</a>
-        <a href="/ar/about/">حول المشروع</a>
-      </nav>
+    <nav id="nav" class="nav-main">
+      <ul class="menu">
+        <li class="menu-item has-submenu">
+          <button type="button">About</button>
+          <ul class="submenu">
+            <li><a href="/ar/about/">What we document</a></li>
+            <li><a href="/ar/who-we-are/">Who we are</a></li>
+            <li><a href="/ar/methodology/">Our methodology</a></li>
+            <li><a href="/ar/publications/">Publications</a></li>
+          </ul>
+        </li>
 
-      <div class="nav-lang">
-        <a href="/en/" class="nav-lang__link">EN</a>
-        <a href="/de/" class="nav-lang__link">DE</a>
-        <a href="/ar/" class="nav-lang__link">العربية</a>
+        <li class="menu-item has-submenu">
+          <button type="button">Cases & Evidence</button>
+          <ul class="submenu">
+            <li><a href="/ar/cases/dias/">DIAS case file</a></li>
+            <li><a href="/ar/timeline/">Timeline & actors</a></li>
+            <li><a href="/ar/documents/">Documents & data</a></li>
+            <li><a href="/ar/testimonies/">Testimonies & accounts</a></li>
+          </ul>
+        </li>
+
+        <li class="menu-item has-submenu">
+          <button type="button">Key concepts</button>
+          <ul class="submenu">
+            <li><a href="/ar/concepts/algorithmic-borders/">Algorithmic borders</a></li>
+            <li><a href="/ar/concepts/biometric-voice/">Biometric voice</a></li>
+            <li><a href="/ar/concepts/asylum-credibility/">Asylum & credibility</a></li>
+          </ul>
+        </li>
+
+        <li class="menu-item has-submenu">
+          <button type="button">Media & outputs</button>
+          <ul class="submenu">
+            <li><a href="/ar/reports/">Reports</a></li>
+            <li><a href="/ar/presentations/">Talks & presentations</a></li>
+            <li><a href="/ar/installations/">Artistic work</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="nav-right">
+        <div class="nav-lang">
+          <a href="/en/"
+             class="nav-lang__link">
+            EN
+          </a>
+          <a href="/de/"
+             class="nav-lang__link">
+            DE
+          </a>
+          <a href="/ar/"
+             class="nav-lang__link nav-lang__link--active">
+            العربية
+          </a>
+        </div>
+
+        <a class="btn-nav-cta" href="/ar/map/">
+          Explore the DIAS map
+        </a>
       </div>
+    </nav>
 
-      <button class="nav-toggle" aria-label="Open menu">
-        ☰
-      </button>
-    </div>
-  </header>
+    <button class="hamburger" type="button" aria-label="Menu">
+      <span class="hamburger-box">
+        <span class="hamburger-inner"></span>
+      </span>
+    </button>
+  </div>
+</header>
 
   <main class="site-main">
-    <h1>أرشيف البحث</h1>
-<p>هذا هو الإصدار العربي من الموقع…</p>
+    <section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <h1 class="hero-title">أرشيف DIAS</h1>
+      <h2 class="hero-subtitle">
+        تتبّع تقنيات التعرف الصوتي البيومتري في إجراءات اللجوء الأوروبية.
+      </h2>
+      <div class="hero-left-actions">
+        <a href="/ar/cases/dias/" class="hero-small-btn">
+          الأرقام والإحصاءات
+        </a>
+        <a href="/ar/cases/dias/" class="hero-small-btn">
+          حالات الاستخدام
+        </a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-right-inner">
+        <p class="hero-description">
+          يوثّق أرشيف DIAS الكيفية التي يشكّل بها نظام المساعدة في تحديد اللهجة (DIAS)
+          وأنظمة الصوت البيومترية المرتبطة به الحدود، وفحوصات المصداقية، وحيوات
+          الأشخاص الساعين إلى الحماية.
+        </p>
+        <h3 class="hero-right-title">ما هو DIAS؟</h3>
+        <p class="hero-right-text">
+          DIAS هو أداة تعتمد على الصوت لتصنيف "لهجة" طالبي اللجوء. يتم تحويل الكلام
+          إلى نقاط بيانات تُستخدم في تقييم المصداقية، وتؤثر في القرارات حول مَن يُصدَّق
+          ومَن لا يُصدَّق.
+        </p>
+        <a href="/ar/cases/dias/" class="hero-small-btn">
+          معلومات تفصيلية عن DIAS
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="hero-secondary">
+  <div class="hero-secondary-inner">
+    <div class="hero-secondary-box hero-secondary-left">
+      <h3 class="hero-secondary-title">كيف يُستخدَم DIAS</h3>
+      <p class="hero-secondary-text">
+        تتبّع حضور DIAS في مقابلات اللجوء، وتقييمات اللغة، وفحوصات المصداقية،
+        وكيف تنتقل نتائجه عبر المسارات الإدارية والقانونية.
+      </p>
+      <a href="/ar/methodology/" class="hero-small-btn secondary-btn">
+        نظرة على المنهجية
+      </a>
+    </div>
+    <div class="hero-secondary-box hero-secondary-right">
+      <h3 class="hero-secondary-title">المخاطر والانتقادات</h3>
+      <p class="hero-secondary-text">
+        تعرّف على الحدود التقنية، والرهانات السياسية، والمخاوف الحقوقية المرتبطة
+        بأنظمة اتخاذ القرار المعتمِدة على الصوت عند الحدود.
+      </p>
+      <a href="/ar/concepts/algorithmic-borders/" class="hero-small-btn secondary-btn">
+        المزيد
+      </a>
+    </div>
+  </div>
+</section>
 
   </main>
 

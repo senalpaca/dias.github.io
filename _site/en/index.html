@@ -21,32 +21,189 @@
   
   
 
-  <header class="main-nav">
-    <div class="nav-inner">
-      <a href="/en/" class="nav-logo">SENA ARCHIVE</a>
+  <header id="header" class="main-nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="/en/">
+      DIAS Archive
+    </a>
 
-      <nav class="nav-links">
-        <a href="/en/">Home</a>
-        <a href="/en/cases/dias/">DIAS Case</a>
-        <a href="/en/methodology/">Methodology</a>
-        <a href="/en/about/">About</a>
-      </nav>
+    <nav id="nav" class="nav-main">
+      <ul class="menu">
+        <li class="menu-item has-submenu">
+          <button type="button">About</button>
+          <ul class="submenu">
+            <li><a href="/en/about/">What we document</a></li>
+            <li><a href="/en/who-we-are/">Who we are</a></li>
+            <li><a href="/en/methodology/">Our methodology</a></li>
+            <li><a href="/en/publications/">Publications</a></li>
+          </ul>
+        </li>
 
-      <div class="nav-lang">
-        <a href="/en/" class="nav-lang__link">EN</a>
-        <a href="/de/" class="nav-lang__link">DE</a>
-        <a href="/ar/" class="nav-lang__link">العربية</a>
+        <li class="menu-item has-submenu">
+          <button type="button">Cases & Evidence</button>
+          <ul class="submenu">
+            <li><a href="/en/cases/dias/">DIAS case file</a></li>
+            <li><a href="/en/timeline/">Timeline & actors</a></li>
+            <li><a href="/en/documents/">Documents & data</a></li>
+            <li><a href="/en/testimonies/">Testimonies & accounts</a></li>
+          </ul>
+        </li>
+
+        <li class="menu-item has-submenu">
+          <button type="button">Key concepts</button>
+          <ul class="submenu">
+            <li><a href="/en/concepts/algorithmic-borders/">Algorithmic borders</a></li>
+            <li><a href="/en/concepts/biometric-voice/">Biometric voice</a></li>
+            <li><a href="/en/concepts/asylum-credibility/">Asylum & credibility</a></li>
+          </ul>
+        </li>
+
+        <li class="menu-item has-submenu">
+          <button type="button">Media & outputs</button>
+          <ul class="submenu">
+            <li><a href="/en/reports/">Reports</a></li>
+            <li><a href="/en/presentations/">Talks & presentations</a></li>
+            <li><a href="/en/installations/">Artistic work</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="nav-right">
+        <div class="nav-lang">
+          <a href="/en/"
+             class="nav-lang__link nav-lang__link--active">
+            EN
+          </a>
+          <a href="/de/"
+             class="nav-lang__link">
+            DE
+          </a>
+          <a href="/ar/"
+             class="nav-lang__link">
+            العربية
+          </a>
+        </div>
+
+        <a class="btn-nav-cta" href="/en/map/">
+          Explore the DIAS map
+        </a>
       </div>
+    </nav>
 
-      <button class="nav-toggle" aria-label="Open menu">
-        ☰
-      </button>
-    </div>
-  </header>
+    <button class="hamburger" type="button" aria-label="Menu">
+      <span class="hamburger-box">
+        <span class="hamburger-inner"></span>
+      </span>
+    </button>
+  </div>
+</header>
 
   <main class="site-main">
-    <h1>Thesis Investigation Archive</h1>
-<p>English intro text…</p>
+    <section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <h1 class="hero-title">DIAS Archive</h1>
+      <h2 class="hero-subtitle">
+        Tracing biometric voice technologies in European asylum procedures.
+      </h2>
+      <div class="hero-left-actions">
+        <a href="/en/cases/dias/" class="hero-small-btn">
+          Figures &amp; Statistics
+        </a>
+        <a href="/en/cases/dias/" class="hero-small-btn">
+          Use Cases
+        </a>
+        <a href="/en/cases/dias/" class="hero-small-btn">
+          More on Voice Biometrics
+        </a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-right-inner">
+        <p class="hero-description">
+          The DIAS Archive documents how the Dialect Identification Assistance System (DIAS)
+          and related voice-based systems shape borders, credibility assessments, and the
+          lives of people seeking protection.
+        </p>
+        <h3 class="hero-right-title">What is DIAS?</h3>
+        <p class="hero-description">
+          DIAS is a voice-based tool used to classify the “dialect” of asylum seekers.
+          It turns spoken language into data points that are used in credibility
+          assessments, shaping decisions about who is believed and who is not.
+        </p>
+        <a href="/en/cases/dias/" class="hero-small-btn">
+          Detailed information on DIAS
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="hero-secondary">
+  <div class="hero-secondary-inner">
+    <div class="hero-secondary-box hero-secondary-left">
+      <h3 class="hero-secondary-title">How DIAS is used</h3>
+      <p class="hero-secondary-text">
+        Follow how DIAS appears in asylum interviews, language assessments, and credibility
+        evaluations, and how its outcomes travel through administrative and legal processes.
+      </p>
+      <a href="/en/methodology/" class="hero-small-btn secondary-btn">
+        Method overview
+      </a>
+    </div>
+    <div class="hero-secondary-box hero-secondary-right">
+      <h3 class="hero-secondary-title">Risks &amp; critiques</h3>
+      <p class="hero-secondary-text">
+        Learn about technical limitations, political stakes, and human rights concerns
+        surrounding voice-based decision systems at the border.
+      </p>
+      <a href="/en/concepts/algorithmic-borders/" class="hero-small-btn secondary-btn">
+        Learn more
+      </a>
+    </div>
+  </div>
+</section>
+<!--
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <h1 class="hero-title">DIAS Archive</h1>
+      <h2 class="hero-subtitle">
+        Tracing biometric voice technologies in European asylum procedures.
+      </h2>
+      <p class="hero-description">
+        The DIAS Archive documents how the Dialect Identification Assistance System (DIAS)
+        and related voice-based systems shape borders, credibility assessments, and the lives
+        of people seeking protection.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="/en/about/" class="hero-btn primary">
+          What we document
+        </a>
+        <a href="/en/methodology/" class="hero-btn secondary">
+          Our methodology
+        </a>
+        <a href="/en/cases/dias/" class="hero-btn secondary">
+          DIAS case file
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-highlight">
+      <h3 class="hero-highlight-title">
+        Testimonies & documents around algorithmic borders
+      </h3>
+      <p class="hero-highlight-text">
+        Explore collected materials, legal documents, interviews, and critical readings that
+        map how biometric voice analysis enters asylum procedures.
+      </p>
+      <a href="/en/map/" class="hero-btn map-btn">
+        Explore the DIAS map
+      </a>
+    </div>
+  </div>
+</section>
+-->
 
   </main>
 
