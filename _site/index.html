@@ -1,118 +1,38 @@
-
-
-
-
-  
-
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-  <meta charset="UTF-8" />
-  <title>
-    Home – Thesis Investigation
-  </title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- IMPORTANT: filename is style.css, not styles.css -->
+  <meta charset="utf-8" />
+  <title>Login – Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
-<body class="lang-en">
+<body class="login-page">
+  <div class="retro-wrap">
+    <div class="retro-window" role="dialog" aria-labelledby="loginTitle" aria-describedby="loginDesc">
 
-  
-  
 
-  <header id="header" class="main-nav">
-  <div class="nav-inner">
-    <a class="nav-logo" href="/en/">
-      DIAS Archive
-    </a>
+      <div class="retro-body">
+        <p class="retro-desc" id="loginDesc">Enter authorization code to proceed.</p>
 
-    <nav id="nav" class="nav-main">
-      <ul class="menu">
-        <li class="menu-item has-submenu">
-          <button type="button">About</button>
-          <ul class="submenu">
-            <li><a href="/en/about/">What we document</a></li>
-            <li><a href="/en/who-we-are/">Who we are</a></li>
-            <li><a href="/en/methodology/">Our methodology</a></li>
-            <li><a href="/en/publications/">Publications</a></li>
-          </ul>
-        </li>
+        <form id="loginForm" class="retro-form" action="/en/" method="get" autocomplete="off" novalidate>
+          <fieldset class="retro-fieldset">
 
-        <li class="menu-item has-submenu">
-          <button type="button">Cases & Evidence</button>
-          <ul class="submenu">
-            <li><a href="/en/cases/dias/">DIAS case file</a></li>
-            <li><a href="/en/timeline/">Timeline & actors</a></li>
-            <li><a href="/en/documents/">Documents & data</a></li>
-            <li><a href="/en/testimonies/">Testimonies & accounts</a></li>
-          </ul>
-        </li>
+            <label for="code" class="retro-label">Enter code:</label>
+            <div class="retro-row">
+              <input id="code" name="code" type="password" inputmode="numeric" pattern="[0-9]*"
+                     placeholder="••••" class="retro-input" aria-label="Access code" required />
+              <button class="retro-btn" type="submit">LOGIN</button>
+            </div>
 
-        <li class="menu-item has-submenu">
-          <button type="button">Key concepts</button>
-          <ul class="submenu">
-            <li><a href="/en/concepts/algorithmic-borders/">Algorithmic borders</a></li>
-            <li><a href="/en/concepts/biometric-voice/">Biometric voice</a></li>
-            <li><a href="/en/concepts/asylum-credibility/">Asylum & credibility</a></li>
-          </ul>
-        </li>
+            <div id="err" class="retro-err" role="alert" aria-live="polite"></div>
+          </fieldset>
 
-        <li class="menu-item has-submenu">
-          <button type="button">Media & outputs</button>
-          <ul class="submenu">
-            <li><a href="/en/reports/">Reports</a></li>
-            <li><a href="/en/presentations/">Talks & presentations</a></li>
-            <li><a href="/en/installations/">Artistic work</a></li>
-          </ul>
-        </li>
-      </ul>
-
-      <div class="nav-right">
-        <div class="nav-lang">
-          <a href="/en/"
-             class="nav-lang__link nav-lang__link--active">
-            EN
-          </a>
-          <a href="/de/"
-             class="nav-lang__link">
-            DE
-          </a>
-          <a href="/ar/"
-             class="nav-lang__link">
-            العربية
-          </a>
-        </div>
-
-        <a class="btn-nav-cta" href="/en/map/">
-          Explore the DIAS map
-        </a>
+        </form>
       </div>
-    </nav>
 
-    <button class="hamburger" type="button" aria-label="Menu">
-      <span class="hamburger-box">
-        <span class="hamburger-inner"></span>
-      </span>
-    </button>
+    </div>
   </div>
-</header>
 
-  <main class="site-main">
-    <h1>Thesis Investigation Archive</h1>
-<p>This site hosts the practical, open-source investigation component of my Master's thesis.<br>
-It focuses on biometric voice analysis, asylum procedures, and algorithmic governmentality.</p>
-<ul>
-<li><strong><a href="/cases/dias/">DIAS Case</a></strong> – investigation of the Dialect Identification Assistance System</li>
-<li>More cases and material will be added as the research progresses.</li>
-</ul>
-
-  </main>
-
-  <footer class="site-footer">
-    <p>Archival platform for my Master's thesis. Built with Eleventy & vanilla JS.</p>
-  </footer>
-
-  <script src="/assets/main.js"></script>
+  <script src="/assets/scripts/login.js"></script>
 </body>
 </html>

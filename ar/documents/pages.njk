@@ -1,0 +1,15 @@
+---
+pagination:
+  data: documents.ar
+  size: 1
+  alias: docitem
+permalink: "/ar/documents/{{ docitem.slug }}/"
+layout: "layouts/document_pdf.njk"
+eleventyComputed:
+  title: "{{ docitem.title }}"
+  lang: "ar"
+  dir: "rtl"
+  doc:
+    pdf: "{{ docitem.pdf }}"
+    annotations: "{{ docitem.annotations }}"
+---

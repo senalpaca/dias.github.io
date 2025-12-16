@@ -5,98 +5,89 @@
   
 
 
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
-  <title>
-    Dialect Identification Assistance System (DIAS) – Thesis Investigation
-  </title>
+  <title>Dialect Identification Assistance System (DIAS) – Thesis Investigation</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- IMPORTANT: filename is style.css, not styles.css -->
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body class="lang-en">
-
-  
   
 
   <header id="header" class="main-nav">
-  <div class="nav-inner">
-    <a class="nav-logo" href="/en/">
-      DIAS Archive
-    </a>
+    <div class="nav-inner">
+      <a class="nav-logo" href="/en/">HOME</a>
 
-    <nav id="nav" class="nav-main">
-      <ul class="menu">
-        <li class="menu-item has-submenu">
-          <button type="button">About</button>
-          <ul class="submenu">
-            <li><a href="/en/about/">What we document</a></li>
-            <li><a href="/en/who-we-are/">Who we are</a></li>
-            <li><a href="/en/methodology/">Our methodology</a></li>
-            <li><a href="/en/publications/">Publications</a></li>
-          </ul>
-        </li>
+      <nav id="nav" class="nav-main" aria-label="Primary">
+        <ul class="menu">
+          <!-- ARCHIVE -->
+          <li class="menu-item has-submenu">
+            <a class="menu-toplink" href="/en/cases/dias/">Archive</a>
+            <ul class="submenu" aria-label="Archive submenu">
+              <li><a href="/en/cases/dias/">Documents &amp; data</a></li>
+              <li><a href="/en/timeline/">Timeline &amp; actors</a></li>
+              <li><a href="/en/documents/">Media &amp; Outputs</a></li>
+            </ul>
+          </li>
 
-        <li class="menu-item has-submenu">
-          <button type="button">Cases & Evidence</button>
-          <ul class="submenu">
-            <li><a href="/en/cases/dias/">DIAS case file</a></li>
-            <li><a href="/en/timeline/">Timeline & actors</a></li>
-            <li><a href="/en/documents/">Documents & data</a></li>
-            <li><a href="/en/testimonies/">Testimonies & accounts</a></li>
-          </ul>
-        </li>
+          <!-- ABOUT -->
+          <li class="menu-item has-submenu">
+            <a class="menu-toplink" href="/en/about/">Methodology</a>
+            <ul class="submenu" aria-label="About submenu">
+              <li><a href="/en/about/#what-we-document">What we document</a></li>
+              <li><a href="/en/methodology/">Investigating DIAS: A Manual</a></li>
+              <li><a href="/en/publications/">Curriculum</a></li>
+            </ul>
+          </li>
 
-        <li class="menu-item has-submenu">
-          <button type="button">Key concepts</button>
-          <ul class="submenu">
-            <li><a href="/en/concepts/algorithmic-borders/">Algorithmic borders</a></li>
-            <li><a href="/en/concepts/biometric-voice/">Biometric voice</a></li>
-            <li><a href="/en/concepts/asylum-credibility/">Asylum & credibility</a></li>
-          </ul>
-        </li>
+          <!-- KEY CONCEPTS -->
+          <li class="menu-item has-submenu">
+            <a class="menu-toplink" href="/en/concepts/algorithmic-borders/">Key concepts</a>
+            <ul class="submenu" aria-label="Key concepts submenu">
+              <li><a href="/en/concepts/algorithmic-borders/">Algorithmic Borders</a></li>
+              <li><a href="/en/concepts/biometric-voice/">Voice Biometrics</a></li>
+            </ul>
+          </li>
 
-        <li class="menu-item has-submenu">
-          <button type="button">Media & outputs</button>
-          <ul class="submenu">
-            <li><a href="/en/reports/">Reports</a></li>
-            <li><a href="/en/presentations/">Talks & presentations</a></li>
-            <li><a href="/en/installations/">Artistic work</a></li>
-          </ul>
-        </li>
-      </ul>
+        </ul>
 
-      <div class="nav-right">
-        <div class="nav-lang">
-          <a href="/en/"
-             class="nav-lang__link nav-lang__link--active">
-            EN
-          </a>
-          <a href="/de/"
-             class="nav-lang__link">
-            DE
-          </a>
-          <a href="/ar/"
-             class="nav-lang__link">
-            العربية
+
+        <div class="nav-right">
+          <div class="nav-lang" aria-label="Language">
+            <a href="/en/cases/dias/" class="nav-lang__link nav-lang__link--active">
+              EN
+            </a>
+            <a href="/de/cases/dias/" class="nav-lang__link">
+              DE
+            </a>
+            <a href="/ar/cases/dias/" class="nav-lang__link">
+              العربية
+            </a>
+          </div>
+
+          <a class="btn-nav-cta" href="/en/map/">
+            WHAT NOW?
           </a>
         </div>
+      </nav>
 
-        <a class="btn-nav-cta" href="/en/map/">
-          Explore the DIAS map
-        </a>
-      </div>
-    </nav>
-
-    <button class="hamburger" type="button" aria-label="Menu">
-      <span class="hamburger-box">
-        <span class="hamburger-inner"></span>
-      </span>
-    </button>
-  </div>
-</header>
+      <button class="hamburger" type="button" aria-label="Menu">
+        <span class="hamburger-box"><span class="hamburger-inner"></span></span>
+      </button>
+    </div>
+  </header>
 
   <main class="site-main">
     
@@ -191,9 +182,9 @@ It reconstructs the socio-technical infrastructure, the actors involved, and the
   </main>
 
   <footer class="site-footer">
-    <p>Archival platform for my Master's thesis. Built with Eleventy & vanilla JS.</p>
+    <p>Archival platform for my Master's thesis. Built with Eleventy &amp; vanilla JS.</p>
   </footer>
 
-  <script src="/assets/main.js"></script>
+  <script src="/assets/scripts/main.js"></script>
 </body>
 </html>

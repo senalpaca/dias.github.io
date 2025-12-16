@@ -1,0 +1,88 @@
+---
+layout: layouts/base.njk
+title: "Documents"
+lang: "en"
+dir: "ltr"
+---
+
+<section class="docs-index">
+  <div class="docs-inner">
+    <h1 class="docs-title">Documents</h1>
+    <p class="docs-intro">
+      Browse primary documents concerning Dialect Identification Assistance System.
+      Click any document to open the interactive viewer.
+    </p>
+
+    <!-- Filter Bar -->
+    <div class="docs-filter" id="docsFilter">
+      <form class="docs-filter__form" onsubmit="return false;">
+        <fieldset class="docs-filter__group" aria-label="Type">
+          <label><input type="checkbox" name="type" value="document" checked> Documents</label>
+          <label><input type="checkbox" name="type" value="media" checked> Media</label>
+          <label><input type="checkbox" name="type" value="legal" checked> Legal</label>
+        </fieldset>
+
+        <fieldset class="docs-filter__group" aria-label="Search">
+          <input
+            type="search"
+            name="q"
+            placeholder="Search title, summary, tags…"
+            class="docs-filter__search"
+          />
+        </fieldset>
+
+        <div class="docs-filter__meta">
+          <span id="docsCount" aria-live="polite">
+            Found {{ documents.en | length }} document(s).
+          </span>
+          <noscript><em>(Enable JavaScript to filter.)</em></noscript>
+        </div>
+      </form>
+    </div>
+
+    <!-- Cards -->
+    <div class="docs-grid" id="docsGrid">
+      {% for d in documents.en %}
+        {% set t = d.type or "document" %}
+        {% set y = d.year or "" %}
+        {% set tagsList = d.tags or [] %}
+        {% set tags = tagsList | join(", ") %}
+
+        <article
+          class="doc-card"
+          data-type="{{ t | lower }}"
+          data-year="{{ y }}"
+          data-tags="{{ tags | lower }}"
+        >
+          <a class="doc-card__link" href="/en/documents/{{ d.slug }}/">
+            <div class="doc-card__thumb">
+              {% if d.thumb %}
+                <img src="{{ d.thumb }}" alt="{{ d.title }}">
+              {% else %}
+                <div class="doc-card__thumb--placeholder">PDF</div>
+              {% endif %}
+            </div>
+
+            <div class="doc-card__body">
+              <h3 class="doc-card__title">{{ d.title }}</h3>
+              <p class="doc-card__summary">{{ d.summary }}</p>
+              <p class="doc-card__meta">
+                <span>{{ t | capitalize }}</span>
+                {% if y %} • <span>{{ y }}</span>{% endif %}
+                {% if tags %} • <span>{{ tags }}</span>{% endif %}
+              </p>
+            </div>
+          </a>
+
+        </article>
+      {% endfor %}
+    </div> <!-- /docs-grid -->
+
+    <!-- Empty state -->
+    <p id="docsEmpty" style="display:none; opacity:.8; margin-top:1rem;">
+      No documents match the current filters.
+    </p>
+  </div>
+
+  <script src="/assets/scripts/docs-filter.js" defer></script>
+</section>

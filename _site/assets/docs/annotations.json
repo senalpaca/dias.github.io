@@ -1,0 +1,28 @@
+{
+  "title": "DIAS Internal Memo (Excerpt)",
+  "hotspots": [
+    {
+  "id": "h_1765473390167",
+  "page": 2,
+  "x": 20.9,
+  "y": 58.9,
+  "w": 32.4,
+  "h": 13.1,
+  "title": "Yearly Cost of DIAS",
+  "short": "-",
+  "panelHtml": "This table shows how much money was spent on DIAS on a yearly basis."
+    },
+    {
+  "id": "h_1765473700465",
+  "page": 2,
+  "x": 17.6,
+  "y": 84.8,
+  "w": 53.7,
+  "h": 4.4,
+  "title": "Case Count",
+  "short": "",
+  "panelHtml": "Since the introduction of DIAS in 2017 till 2023, system has been used in 81,726 cases"
+}
+  ]
+}
+

@@ -1,0 +1,56 @@
+---
+layout: layouts/base.njk
+title: "Timeline"
+lang: "en"
+dir: "ltr"
+---
+
+<section class="tline-page">
+  <div class="tline-shell">
+    <!-- gradient edge for mobile when fixed -->
+    <div class="tline-gradient"></div>
+
+    <!-- top strip with border -->
+    <div class="tline-strip">
+      <div class="tline-track">
+        <!-- markers get injected here -->
+        <div class="tline-rail" id="tlineRail"></div>
+        <div class="tline-markers" id="tlineMarkers" aria-label="Timeline events"></div>
+      </div>
+    </div>
+
+    <!-- row of tiny dots (purely visual) -->
+    <div class="tline-dots">
+      <div class="tline-dots__track" id="tlineDots"></div>
+    </div>
+
+    <!-- slider + bubble date -->
+    <div class="tline-sliderRow">
+      <div class="tline-sliderWrap">
+        <div class="tline-sliderBar">
+          <div class="tline-sliderFill" id="tlineFill" style="left:100%;width:0%"></div>
+        </div>
+        <div class="tline-sliderBubble" id="tlineBubble" style="--p: 100%;">1 Oct 2025</div>
+        <div class="tline-sliderBubbleCaret" style="--p: 100%;"></div>
+        <input class="tline-range" id="tlineRange" type="range" min="0" max="0" step="1" value="0" aria-label="Timeline position">
+      </div>
+    </div>
+  </div>
+
+  <!-- Data blob (edit dates & events here) -->
+  <script id="tlineData" type="application/json">
+  {
+    "start": "2023-10-07",
+    "end":   "2025-10-01",
+    "events": [
+      { "date": "2023-10-07", "title": "Bombing campaign begins", "side":"top" },
+      { "date": "2023-10-27", "title": "Invasion begins (north)", "side":"bottom" },
+      { "date": "2023-11-24", "title": "Ceasefire", "side":"top", "rangeEnd": "2023-11-30" },
+      { "date": "2023-12-04", "title": "Invasion begins (south)", "side":"bottom" },
+      { "date": "2024-01-26", "title": "ICJ Order I", "side":"top" },
+      { "date": "2024-03-28", "title": "ICJ Order II", "side":"bottom" },
+      { "date": "2024-05-06", "title": "Invasion of Rafah begins", "side":"top" }
+    ]
+  }
+  </script>
+</section>

@@ -1,0 +1,31 @@
+---
+layout: layouts/base.njk
+title: "Dokumente"
+lang: "de"
+dir: "ltr"
+---
+
+<section class="docs-index">
+  <div class="docs-inner">
+    <h1 class="docs-title">Dokumente</h1>
+    <p class="docs-intro">Primärquellen und Materialien. Klicke ein Dokument, um den interaktiven Viewer zu öffnen.</p>
+
+    <div class="docs-grid">
+      {% for d in documents.de %}
+      <article class="doc-card">
+        <a class="doc-card__link" href="/de/documents/{{ d.slug }}/">
+          <div class="doc-card__thumb">
+            {% if d.thumb %}
+              <img src="{{ d.thumb }}" alt="{{ d.title }}">
+            {% else %}
+              <div class="doc-card__thumb--placeholder">PDF</div>
+            {% endif %}
+          </div>
+          <h3 class="doc-card__title">{{ d.title }}</h3>
+          <p class="doc-card__summary">{{ d.summary }}</p>
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>

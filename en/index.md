@@ -10,8 +10,13 @@ dir: "ltr"
     <div class="hero-left">
       <h1 class="hero-title">DIAS Archive</h1>
       <h2 class="hero-subtitle">
-        Tracing biometric voice technologies in European asylum procedures.
+        This site hosts the practical, open-source investigation component of our Master's thesis. It traces biometric voice technologies in European asylum procedures. 
       </h2>
+      <p class="hero-subtitle"> 
+          The Archive documents how the Dialect Identification Assistance System (DIAS)
+          and related voice-based systems shape borders, credibility assessments, and the
+          lives of people seeking protection.
+        </p>
       <div class="hero-left-actions">
         <a href="/en/cases/dias/" class="hero-small-btn">
           Figures &amp; Statistics
@@ -24,10 +29,10 @@ dir: "ltr"
         </a>
       </div>
     </div>
-    <div class="hero-right">
+    <!-- <div class="hero-right">
       <div class="hero-right-inner">
-        <p class="hero-description">
-          The DIAS Archive documents how the Dialect Identification Assistance System (DIAS)
+        <p class="hero-description"> 
+          The Archive documents how the Dialect Identification Assistance System (DIAS)
           and related voice-based systems shape borders, credibility assessments, and the
           lives of people seeking protection.
         </p>
@@ -39,14 +44,24 @@ dir: "ltr"
         </p>
         <a href="/en/cases/dias/" class="hero-small-btn">
           Detailed information on DIAS
-        </a>
-      </div>
-    </div>
+        </a> 
+      </div> 
+    </div>-->
   </div>
 </section>
-
 <section class="hero-secondary">
   <div class="hero-secondary-inner">
+  <div class="hero-secondary-box hero-secondary-left">
+      <h3 class="hero-secondary-title">What is DIAS?</h3>
+      <p class="hero-secondary-text">
+          DIAS is a voice-based tool used to classify the “dialect” of asylum seekers.
+          It turns spoken language into data points that are used in credibility
+          assessments, shaping decisions about who is believed and who is not.
+      </p>
+      <a href="/en/concepts/algorithmic-borders/" class="hero-small-btn secondary-btn">
+        Detailed information on DIAS
+      </a>
+    </div>
     <div class="hero-secondary-box hero-secondary-left">
       <h3 class="hero-secondary-title">How DIAS is used</h3>
       <p class="hero-secondary-text">

@@ -1,0 +1,15 @@
+---
+pagination:
+  data: documents.de
+  size: 1
+  alias: docitem
+permalink: "/de/documents/{{ docitem.slug }}/"
+layout: "layouts/document_pdf.njk"
+eleventyComputed:
+  title: "{{ docitem.title }}"
+  lang: "de"
+  dir: "ltr"
+  doc:
+    pdf: "{{ docitem.pdf }}"
+    annotations: "{{ docitem.annotations }}"
+---

@@ -9,107 +9,122 @@
   {% set currentDir = "ltr" %}
 {% endif %}
 
+{# ---------- Path-preserving language switcher (with double-strip) ---------- #}
+{% set currentPath = page.url or '/' %}
+{% set restPath = currentPath %}
+
+{# Pass 1: strip one leading /en or /de or /ar (with/without trailing slash) #}
+{% if restPath | slice(0,4) == '/en/' %}
+  {% set restPath = restPath | replace('/en/', '/') %}
+{% elseif restPath | slice(0,3) == '/en' %}
+  {% set restPath = restPath | replace('/en', '/') %}
+{% elseif restPath | slice(0,4) == '/de/' %}
+  {% set restPath = restPath | replace('/de/', '/') %}
+{% elseif restPath | slice(0,3) == '/de' %}
+  {% set restPath = restPath | replace('/de', '/') %}
+{% elseif restPath | slice(0,4) == '/ar/' %}
+  {% set restPath = restPath | replace('/ar/', '/') %}
+{% elseif restPath | slice(0,3) == '/ar' %}
+  {% set restPath = restPath | replace('/ar', '/') %}
+{% endif %}
+
+{# Pass 2: strip again (cleans cases like /de/ar/about/ -> /about/) #}
+{% if restPath | slice(0,4) == '/en/' %}
+  {% set restPath = restPath | replace('/en/', '/') %}
+{% elseif restPath | slice(0,3) == '/en' %}
+  {% set restPath = restPath | replace('/en', '/') %}
+{% elseif restPath | slice(0,4) == '/de/' %}
+  {% set restPath = restPath | replace('/de/', '/') %}
+{% elseif restPath | slice(0,3) == '/de' %}
+  {% set restPath = restPath | replace('/de', '/') %}
+{% elseif restPath | slice(0,4) == '/ar/' %}
+  {% set restPath = restPath | replace('/ar/', '/') %}
+{% elseif restPath | slice(0,3) == '/ar' %}
+  {% set restPath = restPath | replace('/ar', '/') %}
+{% endif %}
+
 <!DOCTYPE html>
 <html lang="{{ currentLang }}" dir="{{ currentDir }}">
 <head>
   <meta charset="UTF-8" />
-  <title>
-    {% if title %}{{ title }} – {% endif %}Thesis Investigation
-  </title>
+  <title>{% if title %}{{ title }} – {% endif %}Thesis Investigation</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- IMPORTANT: filename is style.css, not styles.css -->
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body class="lang-{{ currentLang }}">
-
-  {# Translation labels for nav #}
   {% set t = translations[currentLang] %}
 
   <header id="header" class="main-nav">
-  <div class="nav-inner">
-    <a class="nav-logo" href="/{{ currentLang }}/">
-      DIAS Archive
-    </a>
+    <div class="nav-inner">
+      <a class="nav-logo" href="/{{ currentLang }}/">HOME</a>
 
-    <nav id="nav" class="nav-main">
-      <ul class="menu">
-        <li class="menu-item has-submenu">
-          <button type="button">About</button>
-          <ul class="submenu">
-            <li><a href="/{{ currentLang }}/about/">What we document</a></li>
-            <li><a href="/{{ currentLang }}/who-we-are/">Who we are</a></li>
-            <li><a href="/{{ currentLang }}/methodology/">Our methodology</a></li>
-            <li><a href="/{{ currentLang }}/publications/">Publications</a></li>
-          </ul>
-        </li>
+      <nav id="nav" class="nav-main" aria-label="Primary">
+        <ul class="menu">
+          <!-- ARCHIVE -->
+          <li class="menu-item has-submenu">
+            <a class="menu-toplink" href="/{{ currentLang }}/cases/dias/">Archive</a>
+            <ul class="submenu" aria-label="Archive submenu">
+              <li><a href="/{{ currentLang }}/cases/dias/">Documents &amp; data</a></li>
+              <li><a href="/{{ currentLang }}/timeline/">Timeline &amp; actors</a></li>
+              <li><a href="/{{ currentLang }}/documents/">Media &amp; Outputs</a></li>
+            </ul>
+          </li>
 
-        <li class="menu-item has-submenu">
-          <button type="button">Cases & Evidence</button>
-          <ul class="submenu">
-            <li><a href="/{{ currentLang }}/cases/dias/">DIAS case file</a></li>
-            <li><a href="/{{ currentLang }}/timeline/">Timeline & actors</a></li>
-            <li><a href="/{{ currentLang }}/documents/">Documents & data</a></li>
-            <li><a href="/{{ currentLang }}/testimonies/">Testimonies & accounts</a></li>
-          </ul>
-        </li>
+          <!-- ABOUT -->
+          <li class="menu-item has-submenu">
+            <a class="menu-toplink" href="/{{ currentLang }}/about/">Methodology</a>
+            <ul class="submenu" aria-label="About submenu">
+              <li><a href="/{{ currentLang }}/about/#what-we-document">What we document</a></li>
+              <li><a href="/{{ currentLang }}/methodology/">Investigating DIAS: A Manual</a></li>
+              <li><a href="/{{ currentLang }}/publications/">Curriculum</a></li>
+            </ul>
+          </li>
 
-        <li class="menu-item has-submenu">
-          <button type="button">Key concepts</button>
-          <ul class="submenu">
-            <li><a href="/{{ currentLang }}/concepts/algorithmic-borders/">Algorithmic borders</a></li>
-            <li><a href="/{{ currentLang }}/concepts/biometric-voice/">Biometric voice</a></li>
-            <li><a href="/{{ currentLang }}/concepts/asylum-credibility/">Asylum & credibility</a></li>
-          </ul>
-        </li>
+          <!-- KEY CONCEPTS -->
+          <li class="menu-item has-submenu">
+            <a class="menu-toplink" href="/{{ currentLang }}/concepts/algorithmic-borders/">Key concepts</a>
+            <ul class="submenu" aria-label="Key concepts submenu">
+              <li><a href="/{{ currentLang }}/concepts/algorithmic-borders/">Algorithmic Borders</a></li>
+              <li><a href="/{{ currentLang }}/concepts/biometric-voice/">Voice Biometrics</a></li>
+            </ul>
+          </li>
 
-        <li class="menu-item has-submenu">
-          <button type="button">Media & outputs</button>
-          <ul class="submenu">
-            <li><a href="/{{ currentLang }}/reports/">Reports</a></li>
-            <li><a href="/{{ currentLang }}/presentations/">Talks & presentations</a></li>
-            <li><a href="/{{ currentLang }}/installations/">Artistic work</a></li>
-          </ul>
-        </li>
-      </ul>
+        </ul>
 
-      <div class="nav-right">
-        <div class="nav-lang">
-          <a href="/en/"
-             class="nav-lang__link{% if currentLang == 'en' %} nav-lang__link--active{% endif %}">
-            {{ translations.en.lang_en }}
-          </a>
-          <a href="/de/"
-             class="nav-lang__link{% if currentLang == 'de' %} nav-lang__link--active{% endif %}">
-            {{ translations.de.lang_de }}
-          </a>
-          <a href="/ar/"
-             class="nav-lang__link{% if currentLang == 'ar' %} nav-lang__link--active{% endif %}">
-            {{ translations.ar.lang_ar }}
+
+        <div class="nav-right">
+          <div class="nav-lang" aria-label="Language">
+            <a href="/en{{ restPath }}" class="nav-lang__link{% if currentLang == 'en' %} nav-lang__link--active{% endif %}">
+              {{ translations.en.lang_en }}
+            </a>
+            <a href="/de{{ restPath }}" class="nav-lang__link{% if currentLang == 'de' %} nav-lang__link--active{% endif %}">
+              {{ translations.de.lang_de }}
+            </a>
+            <a href="/ar{{ restPath }}" class="nav-lang__link{% if currentLang == 'ar' %} nav-lang__link--active{% endif %}">
+              {{ translations.ar.lang_ar }}
+            </a>
+          </div>
+
+          <a class="btn-nav-cta" href="/{{ currentLang }}/map/">
+            WHAT NOW?
           </a>
         </div>
+      </nav>
 
-        <a class="btn-nav-cta" href="/{{ currentLang }}/map/">
-          Explore the DIAS map
-        </a>
-      </div>
-    </nav>
-
-    <button class="hamburger" type="button" aria-label="Menu">
-      <span class="hamburger-box">
-        <span class="hamburger-inner"></span>
-      </span>
-    </button>
-  </div>
-</header>
+      <button class="hamburger" type="button" aria-label="Menu">
+        <span class="hamburger-box"><span class="hamburger-inner"></span></span>
+      </button>
+    </div>
+  </header>
 
   <main class="site-main">
     {{ content | safe }}
   </main>
 
   <footer class="site-footer">
-    <p>Archival platform for my Master's thesis. Built with Eleventy & vanilla JS.</p>
+    <p>Archival platform for my Master's thesis. Built with Eleventy &amp; vanilla JS.</p>
   </footer>
 
-  <script src="/assets/main.js"></script>
+  <script src="/assets/scripts/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,31 @@
+---
+layout: layouts/base.njk
+title: "الوثائق"
+lang: "ar"
+dir: "rtl"
+---
+
+<section class="docs-index">
+  <div class="docs-inner">
+    <h1 class="docs-title">الوثائق</h1>
+    <p class="docs-intro">تصفح المصادر الأولية. انقر أي وثيقة لفتح العارض التفاعلي.</p>
+
+    <div class="docs-grid">
+      {% for d in documents.ar %}
+      <article class="doc-card">
+        <a class="doc-card__link" href="/ar/documents/{{ d.slug }}/">
+          <div class="doc-card__thumb">
+            {% if d.thumb %}
+              <img src="{{ d.thumb }}" alt="{{ d.title }}">
+            {% else %}
+              <div class="doc-card__thumb--placeholder">PDF</div>
+            {% endif %}
+          </div>
+          <h3 class="doc-card__title">{{ d.title }}</h3>
+          <p class="doc-card__summary">{{ d.summary }}</p>
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
