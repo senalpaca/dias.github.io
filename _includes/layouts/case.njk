@@ -2,10 +2,11 @@
 layout: layouts/base.njk
 ---
 
-<article class="case">
-  <header class="case-header">
-    <p class="case-kicker">Case File</p>
-    <h1 class="case-title">{{ title }}</h1>
+<main class="case-page">
+
+  <!-- HEADER -->
+  <div class="case-page__header">
+    <h1>{{ title }}</h1>
 
     <div class="case-meta">
       {% if case_id %}
@@ -19,12 +20,12 @@ layout: layouts/base.njk
       {% endif %}
     </div>
 
-    {# Case-level language switcher #}
     {% if translations %}
       <div class="lang-switcher">
         {% for code, url in translations %}
-          <a href="{{ url }}"
-             class="lang-switcher__link{% if code == lang %} lang-switcher__link--active{% endif %}">
+          <a
+            href="{{ url }}"
+            class="lang-switcher__link{% if code == lang %} lang-switcher__link--active{% endif %}">
             {% if code == "ar" %}
               العربية
             {% else %}
@@ -34,28 +35,104 @@ layout: layouts/base.njk
         {% endfor %}
       </div>
     {% endif %}
-  </header>
-
-  <div class="case-layout">
-    <aside class="case-sidebar">
-      {% if tags %}
-        <h2>Keywords</h2>
-        <ul>
-          {% for tag in tags %}
-            <li>{{ tag }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-
-      {# hook for JS-based evidence filter #}
-      <div id="evidence-filter"></div>
-    </aside>
-
-    <section class="case-content">
-      {{ content | safe }}
-
-      {# hook for JS-based evidence list #}
-      <div id="evidence-list"></div>
-    </section>
   </div>
-</article>
+
+  <!-- SEARCH -->
+  <input
+    type="text"
+    id="table-search"
+    class="case-page__search"
+    placeholder="Search"
+  >
+
+  <!-- TAG FILTER -->
+  {% if tags %}
+    <div class="case-page__tags">
+      {% for tag in tags %}
+        <a class="tag-chip" href="?tag={{ tag | url }}">{{ tag }}</a>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- TABLE -->
+  <div class="case-page__table">
+    <table class="table searchable-table searchable-table-reports">
+
+      <tbody>
+        <!-- ===== Example row for testing ===== -->
+          <tr>
+            <td data-label="Title">
+              <a href="/documents/sample-report">
+                <picture>
+                  <img
+                    src="/uploads/report/image/sample-report-thumbnail.png"
+                    alt="Sample Report Thumbnail"
+                  >
+                </picture>
+                <h4>Sample Monthly Report – January 2025</h4>
+              </a>
+            </td>
+
+            <td data-label="Date">
+              January 31, 2025
+            </td>
+
+            <td data-label="Tags">
+              <a class="chip" href="?tag=border-violence">Border Violence</a>
+              <a class="chip" href="?tag=pushbacks">Pushbacks</a>
+              <a class="chip" href="?tag=asylum">Asylum</a>
+            </td>
+
+            <td data-label="Download">
+              <a
+                class="btn btn-filled-positive download"
+                href="/uploads/documents/sample-report-jan-2025.pdf"
+                aria-label="Download Sample Monthly Report – January 2025">
+                Download
+              </a>
+            </td>
+          </tr>
+
+          <tr>
+            <td data-label="Title">
+              <a href="/documents/sample-report">
+                <picture>
+                  <img
+                    src="/uploads/report/image/sample-report-thumbnail.png"
+                    alt="Sample Report Thumbnail"
+                  >
+                </picture>
+                <h4>Sample Monthly Report – January 2025</h4>
+              </a>
+            </td>
+
+            <td data-label="Date">
+              January 31, 2025
+            </td>
+
+            <td data-label="Tags">
+              <a class="chip" href="?tag=border-violence">Border Violence</a>
+              <a class="chip" href="?tag=pushbacks">Pushbacks</a>
+              <a class="chip" href="?tag=asylum">Asylum</a>
+            </td>
+
+            <td data-label="Download">
+              <a
+                class="btn btn-filled-positive download"
+                href="/uploads/documents/sample-report-jan-2025.pdf"
+                aria-label="Download Sample Monthly Report – January 2025">
+                Download
+              </a>
+            </td>
+          </tr>
+
+          <!-- ===== END Example row ===== -->
+
+        {{ content | safe }}
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+

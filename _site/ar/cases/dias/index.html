@@ -91,10 +91,11 @@
 
   <main class="site-main">
     
-<article class="case">
-  <header class="case-header">
-    <p class="case-kicker">Case File</p>
-    <h1 class="case-title">نظام المساعدة في تحديد اللهجة (DIAS)</h1>
+<main class="case-page">
+
+  <!-- HEADER -->
+  <div class="case-page__header">
+    <h1>نظام المساعدة في تحديد اللهجة (DIAS)</h1>
 
     <div class="case-meta">
       
@@ -109,25 +110,27 @@
     </div>
 
     
-    
       <div class="lang-switcher">
         
-          <a href="[object Object]"
-             class="lang-switcher__link">
+          <a
+            href="[object Object]"
+            class="lang-switcher__link">
             
               EN
             
           </a>
         
-          <a href="[object Object]"
-             class="lang-switcher__link">
+          <a
+            href="[object Object]"
+            class="lang-switcher__link">
             
               DE
             
           </a>
         
-          <a href="[object Object]"
-             class="lang-switcher__link lang-switcher__link--active">
+          <a
+            href="[object Object]"
+            class="lang-switcher__link lang-switcher__link--active">
             
               العربية
             
@@ -135,27 +138,104 @@
         
       </div>
     
-  </header>
+  </div>
 
-  <div class="case-layout">
-    <aside class="case-sidebar">
-      
+  <!-- SEARCH -->
+  <input
+    type="text"
+    id="table-search"
+    class="case-page__search"
+    placeholder="Search"
+  >
 
-      
-      <div id="evidence-filter"></div>
-    </aside>
+  <!-- TAG FILTER -->
+  
 
-    <section class="case-content">
-      <h2>نظرة عامة</h2>
+  <!-- TABLE -->
+  <div class="case-page__table">
+    <table class="table searchable-table searchable-table-reports">
+
+      <tbody>
+        <!-- ===== Example row for testing ===== -->
+          <tr>
+            <td data-label="Title">
+              <a href="/documents/sample-report">
+                <picture>
+                  <img
+                    src="/uploads/report/image/sample-report-thumbnail.png"
+                    alt="Sample Report Thumbnail"
+                  >
+                </picture>
+                <h4>Sample Monthly Report – January 2025</h4>
+              </a>
+            </td>
+
+            <td data-label="Date">
+              January 31, 2025
+            </td>
+
+            <td data-label="Tags">
+              <a class="chip" href="?tag=border-violence">Border Violence</a>
+              <a class="chip" href="?tag=pushbacks">Pushbacks</a>
+              <a class="chip" href="?tag=asylum">Asylum</a>
+            </td>
+
+            <td data-label="Download">
+              <a
+                class="btn btn-filled-positive download"
+                href="/uploads/documents/sample-report-jan-2025.pdf"
+                aria-label="Download Sample Monthly Report – January 2025">
+                Download
+              </a>
+            </td>
+          </tr>
+
+          <tr>
+            <td data-label="Title">
+              <a href="/documents/sample-report">
+                <picture>
+                  <img
+                    src="/uploads/report/image/sample-report-thumbnail.png"
+                    alt="Sample Report Thumbnail"
+                  >
+                </picture>
+                <h4>Sample Monthly Report – January 2025</h4>
+              </a>
+            </td>
+
+            <td data-label="Date">
+              January 31, 2025
+            </td>
+
+            <td data-label="Tags">
+              <a class="chip" href="?tag=border-violence">Border Violence</a>
+              <a class="chip" href="?tag=pushbacks">Pushbacks</a>
+              <a class="chip" href="?tag=asylum">Asylum</a>
+            </td>
+
+            <td data-label="Download">
+              <a
+                class="btn btn-filled-positive download"
+                href="/uploads/documents/sample-report-jan-2025.pdf"
+                aria-label="Download Sample Monthly Report – January 2025">
+                Download
+              </a>
+            </td>
+          </tr>
+
+          <!-- ===== END Example row ===== -->
+
+        <h2>نظرة عامة</h2>
 <p>يبحث هذا الملف في استخدام نظام المساعدة في تحديد اللهجة (DIAS) في إجراءات اللجوء،
 ويعيد بناء البنية الاجتماعية-التقنية والجهات الفاعلة المعنية وتأثير ذلك على حقوق طالبي اللجوء.</p>
 
-
-      
-      <div id="evidence-list"></div>
-    </section>
+      </tbody>
+    </table>
   </div>
-</article>
+
+</main>
+
+
 
   </main>
 

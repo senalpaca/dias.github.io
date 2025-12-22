@@ -91,10 +91,11 @@
 
   <main class="site-main">
     
-<article class="case">
-  <header class="case-header">
-    <p class="case-kicker">Case File</p>
-    <h1 class="case-title">Dialect Identification Assistance System (DIAS)</h1>
+<main class="case-page">
+
+  <!-- HEADER -->
+  <div class="case-page__header">
+    <h1>Dialect Identification Assistance System (DIAS)</h1>
 
     <div class="case-meta">
       
@@ -109,25 +110,27 @@
     </div>
 
     
-    
       <div class="lang-switcher">
         
-          <a href="[object Object]"
-             class="lang-switcher__link">
+          <a
+            href="[object Object]"
+            class="lang-switcher__link">
             
               EN
             
           </a>
         
-          <a href="[object Object]"
-             class="lang-switcher__link">
+          <a
+            href="[object Object]"
+            class="lang-switcher__link">
             
               DE
             
           </a>
         
-          <a href="[object Object]"
-             class="lang-switcher__link">
+          <a
+            href="[object Object]"
+            class="lang-switcher__link">
             
               العربية
             
@@ -135,29 +138,104 @@
         
       </div>
     
-  </header>
+  </div>
 
-  <div class="case-layout">
-    <aside class="case-sidebar">
-      
-        <h2>Keywords</h2>
-        <ul>
-          
-            <li>biometric voice analysis</li>
-          
-            <li>asylum procedure</li>
-          
-            <li>algorithmic governmentality</li>
-          
-        </ul>
-      
+  <!-- SEARCH -->
+  <input
+    type="text"
+    id="table-search"
+    class="case-page__search"
+    placeholder="Search"
+  >
 
+  <!-- TAG FILTER -->
+  
+    <div class="case-page__tags">
       
-      <div id="evidence-filter"></div>
-    </aside>
+        <a class="tag-chip" href="?tag=biometric voice analysis">biometric voice analysis</a>
+      
+        <a class="tag-chip" href="?tag=asylum procedure">asylum procedure</a>
+      
+        <a class="tag-chip" href="?tag=algorithmic governmentality">algorithmic governmentality</a>
+      
+    </div>
+  
 
-    <section class="case-content">
-      <h2>Overview</h2>
+  <!-- TABLE -->
+  <div class="case-page__table">
+    <table class="table searchable-table searchable-table-reports">
+
+      <tbody>
+        <!-- ===== Example row for testing ===== -->
+          <tr>
+            <td data-label="Title">
+              <a href="/documents/sample-report">
+                <picture>
+                  <img
+                    src="/uploads/report/image/sample-report-thumbnail.png"
+                    alt="Sample Report Thumbnail"
+                  >
+                </picture>
+                <h4>Sample Monthly Report – January 2025</h4>
+              </a>
+            </td>
+
+            <td data-label="Date">
+              January 31, 2025
+            </td>
+
+            <td data-label="Tags">
+              <a class="chip" href="?tag=border-violence">Border Violence</a>
+              <a class="chip" href="?tag=pushbacks">Pushbacks</a>
+              <a class="chip" href="?tag=asylum">Asylum</a>
+            </td>
+
+            <td data-label="Download">
+              <a
+                class="btn btn-filled-positive download"
+                href="/uploads/documents/sample-report-jan-2025.pdf"
+                aria-label="Download Sample Monthly Report – January 2025">
+                Download
+              </a>
+            </td>
+          </tr>
+
+          <tr>
+            <td data-label="Title">
+              <a href="/documents/sample-report">
+                <picture>
+                  <img
+                    src="/uploads/report/image/sample-report-thumbnail.png"
+                    alt="Sample Report Thumbnail"
+                  >
+                </picture>
+                <h4>Sample Monthly Report – January 2025</h4>
+              </a>
+            </td>
+
+            <td data-label="Date">
+              January 31, 2025
+            </td>
+
+            <td data-label="Tags">
+              <a class="chip" href="?tag=border-violence">Border Violence</a>
+              <a class="chip" href="?tag=pushbacks">Pushbacks</a>
+              <a class="chip" href="?tag=asylum">Asylum</a>
+            </td>
+
+            <td data-label="Download">
+              <a
+                class="btn btn-filled-positive download"
+                href="/uploads/documents/sample-report-jan-2025.pdf"
+                aria-label="Download Sample Monthly Report – January 2025">
+                Download
+              </a>
+            </td>
+          </tr>
+
+          <!-- ===== END Example row ===== -->
+
+        <h2>Overview</h2>
 <p>This case investigates the use of the Dialect Identification Assistance System (DIAS) in asylum procedures.<br>
 It reconstructs the socio-technical infrastructure, the actors involved, and the implications for migrants' rights.</p>
 <h2>Key Questions</h2>
@@ -172,12 +250,13 @@ It reconstructs the socio-technical infrastructure, the actors involved, and the
 <p>Below is a very small mock dataset of evidence items. The filter on the left is powered by vanilla JavaScript.</p>
 <div id="evidence-list"></div>
 
-
-      
-      <div id="evidence-list"></div>
-    </section>
+      </tbody>
+    </table>
   </div>
-</article>
+
+</main>
+
+
 
   </main>
 
