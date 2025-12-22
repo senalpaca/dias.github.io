@@ -1,82 +1,137 @@
 ---
 layout: layouts/base.njk
-title: "Documents"
+title: "Documents and Data"
 lang: "en"
 dir: "ltr"
 ---
 
-<section class="docs-index">
-  <div class="docs-inner">
-    <h1 class="docs-title">Documents</h1>
-    <p class="docs-intro">
-      Browse primary documents concerning Dialect Identification Assistance System.
-      Click any document to open the interactive viewer.
-    </p>
+<main class="case-page">
 
-    <!-- Filter Bar -->
-    <div class="docs-filter" id="docsFilter">
-      <form class="docs-filter__form" onsubmit="return false;">
-        <fieldset class="docs-filter__group" aria-label="Type">
-          <label><input type="checkbox" name="type" value="document" checked> Documents</label>
-          <label><input type="checkbox" name="type" value="media" checked> Media</label>
-          <label><input type="checkbox" name="type" value="legal" checked> Legal</label>
-        </fieldset>
+  <!-- HEADER -->
+  <div class="case-page__header">
+    <h1>{{ title }}</h1>
 
-        <fieldset class="docs-filter__group" aria-label="Search">
-          <input
-            type="search"
-            name="q"
-            placeholder="Search title, summary, tags…"
-            class="docs-filter__search"
-          />
-        </fieldset>
-
-        <div class="docs-filter__meta">
-          <span id="docsCount" aria-live="polite">
-            Found {{ documents.en | length }} document(s).
-          </span>
-          <noscript><em>(Enable JavaScript to filter.)</em></noscript>
-        </div>
-      </form>
+    <div class="case-meta">
+      {% if case_id %}
+        <span><strong>ID:</strong> {{ case_id }}</span>
+      {% endif %}
+      {% if date_range %}
+        <span><strong>Period:</strong> {{ date_range }}</span>
+      {% endif %}
+      {% if location %}
+        <span><strong>Location:</strong> {{ location }}</span>
+      {% endif %}
     </div>
 
-    <!-- Cards -->
-    <div class="docs-grid" id="docsGrid">
-      {% for d in documents.en %}
-        {% set t = d.type or "document" %}
-        {% set y = d.year or "" %}
-        {% set tagsList = d.tags or [] %}
-        {% set tags = tagsList | join(", ") %}
-
-        <article
-          class="doc-card"
-          data-type="{{ t | lower }}"
-          data-year="{{ y }}"
-          data-tags="{{ tags | lower }}"
-        >
-          <a class="doc-card__link" href="/en/documents/{{ d.slug }}/">
-            <div class="doc-card__thumb">
-              {% if d.thumb %}
-                <img src="{{ d.thumb }}" alt="{{ d.title }}">
-              {% else %}
-                <div class="doc-card__thumb--placeholder">PDF</div>
-              {% endif %}
-            </div>
-
-            <div class="doc-card__body">
-              <h3 class="doc-card__title">{{ d.title }}</h3>
-              <p class="doc-card__summary">{{ d.summary }}</p>
-              <p class="doc-card__meta">
-                <span>{{ t | capitalize }}</span>
-                {% if y %} • <span>{{ y }}</span>{% endif %}
-                {% if tags %} • <span>{{ tags }}</span>{% endif %}
-              </p>
-            </div>
+    {% if translations %}
+      <div class="lang-switcher">
+        {% for code, url in translations %}
+          <a
+            href="{{ url }}"
+            class="lang-switcher__link{% if code == lang %} lang-switcher__link--active{% endif %}">
+            {% if code == "ar" %}العربية{% else %}{{ code | upper }}{% endif %}
           </a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
 
-        </article>
-      {% endfor %}
-    </div> <!-- /docs-grid -->
+    <!-- SEARCH -->
+  <input
+    type="text"
+    id="table-search"
+    class="case-page__search"
+    placeholder="Search"
+  >
+
+  <!-- FILTER BAR (added) -->
+  <div class="docs-filter" id="docsFilter" style="margin: 0 0 1rem;">
+    <form class="docs-filter__form" onsubmit="return false;">
+      <fieldset class="docs-filter__group" aria-label="Type" style="display:flex;gap:.8rem;flex-wrap:wrap;">
+        <label><input type="checkbox" name="type" value="document" checked> Documents</label>
+        <label><input type="checkbox" name="type" value="media" checked> Media</label>
+        <label><input type="checkbox" name="type" value="legal" checked> Legal</label>
+      </fieldset>
+
+
+      <div class="docs-filter__meta" style="margin-top:.5rem;opacity:.8">
+        <span id="docsCount" aria-live="polite">
+          {% if documents and documents.en %}Found {{ documents.en | length }} item(s).{% else %}Found 0 item(s).{% endif %}
+        </span>
+        <noscript><em>(Enable JavaScript to filter.)</em></noscript>
+      </div>
+    </form>
+  </div>
+
+  <!-- TABLE (kept) -->
+  <div class="case-page__table">
+    <table class="table searchable-table searchable-table-reports">
+      <tbody id="docsTableBody">
+
+        {# ——— real rows from data ——— #}
+        {% for d in documents.en %}
+          {% set t = (d.type or 'document') | lower %}
+          {% set y = d.year or '' %}
+          {% set tagsList = d.tags or [] %}
+          {% set tags = tagsList | join(', ') %}
+
+          <tr
+            class="doc-row"
+            data-type="{{ (d.type or 'document') | lower }}"
+            data-tags="{{ (d.tags or []) | join(' ') | lower }}"
+            data-year="{{ d.year }}"
+            data-title="{{ (d.title or '') | lower }}"
+          >
+            <td data-label="Title">
+              <a class="view-doc"
+                 href="/en/documents/{{ d.slug }}/"
+                 data-view="/en/documents/{{ d.slug }}/"
+                 aria-label="Open {{ d.title }}">
+                <picture>
+                  {% if d.thumb %}
+                    <img src="{{ d.thumb }}" alt="{{ d.title }}">
+                  {% else %}
+                    <img src="/assets/thumbs/pdf-placeholder.png" alt="PDF" />
+                  {% endif %}
+                </picture>
+                <h4>{{ d.title }}</h4>
+              </a>
+            </td>
+
+            <td data-label="Date / Year">
+              {{ d.displayDate or y }}
+            </td>
+
+            <td data-label="Tags">
+              {% for tg in tagsList %}
+                <a class="chip" href="?tag={{ tg | url }}">{{ tg }}</a>
+              {% endfor %}
+            </td>
+
+            <td data-label="Open">
+              <a
+                class="btn btn-filled-positive view-doc"
+                href="/en/documents/{{ d.slug }}/"
+                data-view="/en/documents/{{ d.slug }}/"
+                aria-label="Open {{ d.title }} in viewer">
+                View
+              </a>
+              {% if d.pdf %}
+              <a
+                class="btn download"
+                href="{{ d.pdf }}"
+                aria-label="Download {{ d.title }}">
+                Download
+              </a>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+
+        {# ——— (optional) keep any static content rows you render via {{ content | safe }} ——— #}
+        {{ content | safe }}
+      </tbody>
+    </table>
 
     <!-- Empty state -->
     <p id="docsEmpty" style="display:none; opacity:.8; margin-top:1rem;">
@@ -84,5 +139,15 @@ dir: "ltr"
     </p>
   </div>
 
-  <script src="/assets/scripts/docs-filter.js" defer></script>
-</section>
+</main>
+
+{# === Inline viewer modal (opens the existing PDF viewer page in an iframe) === #}
+<div id="docModal" class="doc-modal" hidden>
+  <div class="doc-modal__backdrop" data-close></div>
+  <div class="doc-modal__dialog" role="dialog" aria-modal="true" aria-label="Document viewer">
+    <button class="doc-modal__close" type="button" data-close aria-label="Close viewer">×</button>
+    <iframe id="docFrame" class="doc-modal__frame" src="about:blank" allow="fullscreen"></iframe>
+  </div>
+</div>
+
+<script src="/assets/scripts/docs-filter.js" defer></script>

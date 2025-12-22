@@ -1,45 +1,72 @@
-(function() {
-  const grid = document.getElementById('docsGrid');
-  if (!grid) return;
+(function () {
+  const filterRoot = document.getElementById("docsFilter");
+  const searchInput = document.getElementById("table-search"); // your existing search
+  const tbody = document.querySelector(".case-page__table tbody");
+  const rows = Array.from(document.querySelectorAll("tr.doc-row"));
+  const countEl = document.getElementById("docsCount");
+  const emptyEl = document.getElementById("docsEmpty");
 
-  const cards   = Array.from(grid.querySelectorAll('.doc-card'));
-  const filter  = document.getElementById('docsFilter');
-  const countEl = document.getElementById('docsCount');
-  const emptyEl = document.getElementById('docsEmpty');
+  if (!tbody || rows.length === 0) return;
 
-  const getCheckedTypes = () =>
-    Array.from(filter.querySelectorAll('input[name="type"]:checked')).map(i => i.value);
-  const getQuery = () =>
-    (filter.querySelector('input[name="q"]')?.value || '').trim().toLowerCase();
+  // Read active tag from URL (?tag=...)
+  const params = new URLSearchParams(window.location.search);
+  const activeTag = (params.get("tag") || "").toLowerCase();
 
-  function matches(card, types, q) {
-    const type = (card.getAttribute('data-type') || '').toLowerCase();
+  function getCheckedTypes() {
+    if (!filterRoot) return [];
+    return Array.from(
+      filterRoot.querySelectorAll('input[name="type"]:checked')
+    ).map((i) => (i.value || "").toLowerCase());
+  }
+
+  function getQuery() {
+    return (searchInput?.value || "").trim().toLowerCase();
+  }
+
+  function rowMatches(row, types, q, tag) {
+    const type = (row.dataset.type || "document").toLowerCase();
+    const tags = (row.dataset.tags || "").toLowerCase();
+    const title = (row.dataset.title || "").toLowerCase();
+
+    // type filter
     if (types.length && !types.includes(type)) return false;
+
+    // tag filter (from URL)
+    if (tag && !tags.includes(tag)) return false;
+
+    // search filter
     if (q) {
-      const title = card.querySelector('.doc-card__title')?.textContent.toLowerCase() || '';
-      const summary = card.querySelector('.doc-card__summary')?.textContent.toLowerCase() || '';
-      const tags = (card.getAttribute('data-tags') || '').toLowerCase();
-      if (!(title + ' ' + summary + ' ' + tags).includes(q)) return false;
+      // include visible text too (title in <h4>, etc.)
+      const text = (row.textContent || "").toLowerCase();
+      if (!(title + " " + tags + " " + text).includes(q)) return false;
     }
+
     return true;
   }
 
-  function applyFilters() {
+  function apply() {
     const types = getCheckedTypes();
-    const q     = getQuery();
+    const q = getQuery();
     let visible = 0;
 
-    cards.forEach(card => {
-      const ok = matches(card, types, q);
-      card.style.display = ok ? 'block' : 'none';
+    rows.forEach((row) => {
+      const ok = rowMatches(row, types, q, activeTag);
+      row.style.display = ok ? "" : "none";
       if (ok) visible++;
     });
 
-    if (countEl) countEl.textContent = `Found ${visible} document(s).`;
-    if (emptyEl) emptyEl.style.display = visible ? 'none' : 'block';
+    if (countEl) countEl.textContent = `Found ${visible} item(s).`;
+    if (emptyEl) emptyEl.style.display = visible ? "none" : "block";
   }
 
-  filter.addEventListener('change', applyFilters);
-  filter.addEventListener('input',  applyFilters);
-  applyFilters();
+  // events
+  if (filterRoot) {
+    filterRoot.addEventListener("change", apply);
+  }
+  if (searchInput) {
+    searchInput.addEventListener("input", apply);
+  }
+
+  // initial
+  apply();
 })();

@@ -19,7 +19,7 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
-  <title>Documents – Thesis Investigation</title>
+  <title>Documents and Data – Thesis Investigation</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
@@ -36,9 +36,9 @@
           <li class="menu-item has-submenu">
             <a class="menu-toplink" href="/en/cases/dias/">Archive</a>
             <ul class="submenu" aria-label="Archive submenu">
-              <li><a href="/en/cases/dias/">Documents &amp; data</a></li>
+              <li><a href="/en/documents/">Documents &amp; data</a></li>
+              <li><a href="/en/cases/dias/">Media &amp; Outputs</a></li>
               <li><a href="/en/timeline/">Timeline &amp; actors</a></li>
-              <li><a href="/en/documents/">Media &amp; Outputs</a></li>
             </ul>
           </li>
 
@@ -91,169 +91,308 @@
 
   <main class="site-main">
     
-<section class="docs-index">
-  <div class="docs-inner">
-    <h1 class="docs-title">Documents</h1>
-    <p class="docs-intro">
-      Browse primary documents concerning Dialect Identification Assistance System.
-      Click any document to open the interactive viewer.
-    </p>
+<main class="case-page">
 
-    <!-- Filter Bar -->
-    <div class="docs-filter" id="docsFilter">
-      <form class="docs-filter__form" onsubmit="return false;">
-        <fieldset class="docs-filter__group" aria-label="Type">
-          <label><input type="checkbox" name="type" value="document" checked> Documents</label>
-          <label><input type="checkbox" name="type" value="media" checked> Media</label>
-          <label><input type="checkbox" name="type" value="legal" checked> Legal</label>
-        </fieldset>
+  <!-- HEADER -->
+  <div class="case-page__header">
+    <h1>Documents and Data</h1>
 
-        <fieldset class="docs-filter__group" aria-label="Search">
-          <input
-            type="search"
-            name="q"
-            placeholder="Search title, summary, tags…"
-            class="docs-filter__search"
-          />
-        </fieldset>
-
-        <div class="docs-filter__meta">
-          <span id="docsCount" aria-live="polite">
-            Found 4 document(s).
-          </span>
-          <noscript><em>(Enable JavaScript to filter.)</em></noscript>
-        </div>
-      </form>
+    <div class="case-meta">
+      
+      
+      
     </div>
 
-    <!-- Cards -->
-    <div class="docs-grid" id="docsGrid">
-      
+    
+      <div class="lang-switcher">
         
-        
-        
-        
-
-        <article
-          class="doc-card"
-          data-type="document"
-          data-year=""
-          data-tags=""
-        >
-          <a class="doc-card__link" href="/en/documents/dias-memo/">
-            <div class="doc-card__thumb">
-              
-                <img src="/assets/docs/dias-memo/thumb.jpg" alt="Freedom of Information Request - 03/2023">
-              
-            </div>
-
-            <div class="doc-card__body">
-              <h3 class="doc-card__title">Freedom of Information Request - 03/2023</h3>
-              <p class="doc-card__summary">Freedom of information request on DIAS filed in March 2023.</p>
-              <p class="doc-card__meta">
-                <span>Document</span>
-                
-                
-              </p>
-            </div>
+          <a
+            href="[object Object]"
+            class="lang-switcher__link lang-switcher__link--active">
+            EN
           </a>
-
-        </article>
-      
         
-        
-        
-        
-
-        <article
-          class="doc-card"
-          data-type="document"
-          data-year="2025"
-          data-tags="procedure, policy"
-        >
-          <a class="doc-card__link" href="/en/documents/Freedom of Information Request - 01/2025/">
-            <div class="doc-card__thumb">
-              
-                <img src="/assets/docs/bamf-guideline-2020/thumb.jpg" alt="Freedom of Information Request - 01/2025">
-              
-            </div>
-
-            <div class="doc-card__body">
-              <h3 class="doc-card__title">Freedom of Information Request - 01/2025</h3>
-              <p class="doc-card__summary">Freedom of information request on DIAS filed by us in January 2025.</p>
-              <p class="doc-card__meta">
-                <span>Document</span>
-                 • <span>2025</span>
-                 • <span>procedure, policy</span>
-              </p>
-            </div>
+          <a
+            href="[object Object]"
+            class="lang-switcher__link">
+            DE
           </a>
-
-        </article>
-      
         
-        
-        
-        
-
-        <article
-          class="doc-card"
-          data-type="document"
-          data-year="2023"
-          data-tags="vendor, marketing"
-        >
-          <a class="doc-card__link" href="/en/documents/belehrungsdokument/">
-            <div class="doc-card__thumb">
-              
-                <img src="/assets/docs/vendor-brochure-2019/thumb.jpg" alt="Instruction Document for Asylum Seekers">
-              
-            </div>
-
-            <div class="doc-card__body">
-              <h3 class="doc-card__title">Instruction Document for Asylum Seekers</h3>
-              <p class="doc-card__summary">Instruction document for asylum seeker to give a speech sample. </p>
-              <p class="doc-card__meta">
-                <span>Document</span>
-                 • <span>2023</span>
-                 • <span>vendor, marketing</span>
-              </p>
-            </div>
+          <a
+            href="[object Object]"
+            class="lang-switcher__link">
+            العربية
           </a>
+        
+      </div>
+    
+  </div>
 
-        </article>
-      
-        
-        
-        
-        
+    <!-- SEARCH -->
+  <input
+    type="text"
+    id="table-search"
+    class="case-page__search"
+    placeholder="Search"
+  >
 
-        <article
-          class="doc-card"
-          data-type="document"
-          data-year="2020"
-          data-tags="procedure, policy"
-        >
-          <a class="doc-card__link" href="/en/documents/Official Instructions - 2023/">
-            <div class="doc-card__thumb">
+  <!-- FILTER BAR (added) -->
+  <div class="docs-filter" id="docsFilter" style="margin: 0 0 1rem;">
+    <form class="docs-filter__form" onsubmit="return false;">
+      <fieldset class="docs-filter__group" aria-label="Type" style="display:flex;gap:.8rem;flex-wrap:wrap;">
+        <label><input type="checkbox" name="type" value="document" checked> Documents</label>
+        <label><input type="checkbox" name="type" value="media" checked> Media</label>
+        <label><input type="checkbox" name="type" value="legal" checked> Legal</label>
+      </fieldset>
+
+
+      <div class="docs-filter__meta" style="margin-top:.5rem;opacity:.8">
+        <span id="docsCount" aria-live="polite">
+          Found 4 item(s).
+        </span>
+        <noscript><em>(Enable JavaScript to filter.)</em></noscript>
+      </div>
+    </form>
+  </div>
+
+  <!-- TABLE (kept) -->
+  <div class="case-page__table">
+    <table class="table searchable-table searchable-table-reports">
+      <tbody id="docsTableBody">
+
+        
+        
+          
+          
+          
+          
+
+          <tr
+            class="doc-row"
+            data-type="document"
+            data-tags="foi"
+            data-year="2025"
+            data-title="freedom of information request - 03/2023"
+          >
+            <td data-label="Title">
+              <a class="view-doc"
+                 href="/en/documents/dias-memo/"
+                 data-view="/en/documents/dias-memo/"
+                 aria-label="Open Freedom of Information Request - 03/2023">
+                <picture>
+                  
+                    <img src="/assets/docs/dias-memo/thumb.jpg" alt="Freedom of Information Request - 03/2023">
+                  
+                </picture>
+                <h4>Freedom of Information Request - 03/2023</h4>
+              </a>
+            </td>
+
+            <td data-label="Date / Year">
+              2025
+            </td>
+
+            <td data-label="Tags">
               
-                <img src="/assets/docs/bamf-guideline-2020/thumb.jpg" alt="Official Instructions - 2023">
+                <a class="chip" href="?tag=FOI">FOI</a>
               
-            </div>
+            </td>
 
-            <div class="doc-card__body">
-              <h3 class="doc-card__title">Official Instructions - 2023</h3>
-              <p class="doc-card__summary">Official instructions for BAMF officers on how to use DIAS.</p>
-              <p class="doc-card__meta">
-                <span>Document</span>
-                 • <span>2020</span>
-                 • <span>procedure, policy</span>
-              </p>
-            </div>
-          </a>
+            <td data-label="Open">
+              <a
+                class="btn btn-filled-positive view-doc"
+                href="/en/documents/dias-memo/"
+                data-view="/en/documents/dias-memo/"
+                aria-label="Open Freedom of Information Request - 03/2023 in viewer">
+                View
+              </a>
+              
+              <a
+                class="btn download"
+                href="/assets/docs/dias-memo/doc.pdf"
+                aria-label="Download Freedom of Information Request - 03/2023">
+                Download
+              </a>
+              
+            </td>
+          </tr>
+        
+          
+          
+          
+          
 
-        </article>
-      
-    </div> <!-- /docs-grid -->
+          <tr
+            class="doc-row"
+            data-type="document"
+            data-tags="foi"
+            data-year="2025"
+            data-title="freedom of information request - 01/2025"
+          >
+            <td data-label="Title">
+              <a class="view-doc"
+                 href="/en/documents/Freedom of Information Request - 01/2025/"
+                 data-view="/en/documents/Freedom of Information Request - 01/2025/"
+                 aria-label="Open Freedom of Information Request - 01/2025">
+                <picture>
+                  
+                    <img src="/assets/docs/bamf-guideline-2020/thumb.jpg" alt="Freedom of Information Request - 01/2025">
+                  
+                </picture>
+                <h4>Freedom of Information Request - 01/2025</h4>
+              </a>
+            </td>
+
+            <td data-label="Date / Year">
+              2025
+            </td>
+
+            <td data-label="Tags">
+              
+                <a class="chip" href="?tag=FOI">FOI</a>
+              
+            </td>
+
+            <td data-label="Open">
+              <a
+                class="btn btn-filled-positive view-doc"
+                href="/en/documents/Freedom of Information Request - 01/2025/"
+                data-view="/en/documents/Freedom of Information Request - 01/2025/"
+                aria-label="Open Freedom of Information Request - 01/2025 in viewer">
+                View
+              </a>
+              
+              <a
+                class="btn download"
+                href="/assets/docs/FOI - omar/foi-omar.pdf"
+                aria-label="Download Freedom of Information Request - 01/2025">
+                Download
+              </a>
+              
+            </td>
+          </tr>
+        
+          
+          
+          
+          
+
+          <tr
+            class="doc-row"
+            data-type="document"
+            data-tags="created by bamf for asylum seeker"
+            data-year="2023"
+            data-title="instruction document for asylum seekers"
+          >
+            <td data-label="Title">
+              <a class="view-doc"
+                 href="/en/documents/belehrungsdokument/"
+                 data-view="/en/documents/belehrungsdokument/"
+                 aria-label="Open Instruction Document for Asylum Seekers">
+                <picture>
+                  
+                    <img src="/assets/docs/vendor-brochure-2019/thumb.jpg" alt="Instruction Document for Asylum Seekers">
+                  
+                </picture>
+                <h4>Instruction Document for Asylum Seekers</h4>
+              </a>
+            </td>
+
+            <td data-label="Date / Year">
+              2023
+            </td>
+
+            <td data-label="Tags">
+              
+                <a class="chip" href="?tag=created by BAMF">created by BAMF</a>
+              
+                <a class="chip" href="?tag=for asylum seeker">for asylum seeker</a>
+              
+            </td>
+
+            <td data-label="Open">
+              <a
+                class="btn btn-filled-positive view-doc"
+                href="/en/documents/belehrungsdokument/"
+                data-view="/en/documents/belehrungsdokument/"
+                aria-label="Open Instruction Document for Asylum Seekers in viewer">
+                View
+              </a>
+              
+              <a
+                class="btn download"
+                href="/assets/docs/belehrung/ast-2023.pdf"
+                aria-label="Download Instruction Document for Asylum Seekers">
+                Download
+              </a>
+              
+            </td>
+          </tr>
+        
+          
+          
+          
+          
+
+          <tr
+            class="doc-row"
+            data-type="document"
+            data-tags="procedure created by bamf for bamf officer"
+            data-year="2020"
+            data-title="official instructions - 2023"
+          >
+            <td data-label="Title">
+              <a class="view-doc"
+                 href="/en/documents/Official Instructions - 2023/"
+                 data-view="/en/documents/Official Instructions - 2023/"
+                 aria-label="Open Official Instructions - 2023">
+                <picture>
+                  
+                    <img src="/assets/docs/bamf-guideline-2020/thumb.jpg" alt="Official Instructions - 2023">
+                  
+                </picture>
+                <h4>Official Instructions - 2023</h4>
+              </a>
+            </td>
+
+            <td data-label="Date / Year">
+              2020
+            </td>
+
+            <td data-label="Tags">
+              
+                <a class="chip" href="?tag=procedure">procedure</a>
+              
+                <a class="chip" href="?tag=created by BAMF">created by BAMF</a>
+              
+                <a class="chip" href="?tag=for BAMF officer">for BAMF officer</a>
+              
+            </td>
+
+            <td data-label="Open">
+              <a
+                class="btn btn-filled-positive view-doc"
+                href="/en/documents/Official Instructions - 2023/"
+                data-view="/en/documents/Official Instructions - 2023/"
+                aria-label="Open Official Instructions - 2023 in viewer">
+                View
+              </a>
+              
+              <a
+                class="btn download"
+                href="/assets/docs/guideline/2023_da-avs_DIAS.pdf"
+                aria-label="Download Official Instructions - 2023">
+                Download
+              </a>
+              
+            </td>
+          </tr>
+        
+
+        
+        
+      </tbody>
+    </table>
 
     <!-- Empty state -->
     <p id="docsEmpty" style="display:none; opacity:.8; margin-top:1rem;">
@@ -261,8 +400,18 @@
     </p>
   </div>
 
-  <script src="/assets/scripts/docs-filter.js" defer></script>
-</section>
+</main>
+
+
+<div id="docModal" class="doc-modal" hidden>
+  <div class="doc-modal__backdrop" data-close></div>
+  <div class="doc-modal__dialog" role="dialog" aria-modal="true" aria-label="Document viewer">
+    <button class="doc-modal__close" type="button" data-close aria-label="Close viewer">×</button>
+    <iframe id="docFrame" class="doc-modal__frame" src="about:blank" allow="fullscreen"></iframe>
+  </div>
+</div>
+
+<script src="/assets/scripts/docs-filter.js" defer></script>
 
   </main>
 
