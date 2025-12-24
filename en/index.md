@@ -8,15 +8,21 @@ dir: "ltr"
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-left">
-      <h1 class="hero-title">DIAS Archive</h1>
-      <h2 class="hero-subtitle">
-        This site hosts the practical, open-source investigation component of our Master's thesis. It traces biometric voice technologies in European asylum procedures. 
-      </h2>
-      <p class="hero-subtitle"> 
-          The Archive documents how the Dialect Identification Assistance System (DIAS)
-          and related voice-based systems shape borders, credibility assessments, and the
-          lives of people seeking protection.
+      <div class="hero-left-title">
+        <h1 class="hero-title">DIAS Archive</h1>
+      </div>
+      <div class="hero-left-subtitle">
+        <p class="hero-subtitle">
+            This site hosts the practical, open-source investigation component of our Master's thesis. It traces biometric voice technologies in European asylum procedures.
         </p>
+      </div>
+      <div class="hero-left-subtitle">
+        <p class="hero-subtitle"> 
+            The Archive documents how the Dialect Identification Assistance System (DIAS)
+            and related voice-based systems shape borders, credibility assessments, and the
+            lives of people seeking protection. 
+        </p>
+      </div>
       <div class="hero-left-actions">
         <a href="/en/cases/dias/" class="hero-small-btn">
           Figures &amp; Statistics

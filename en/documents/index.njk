@@ -9,20 +9,28 @@ dir: "ltr"
 
   <!-- HEADER -->
   <div class="case-page__header">
-    <h1>{{ title }}</h1>
 
-    <div class="case-meta">
-      {% if case_id %}
-        <span><strong>ID:</strong> {{ case_id }}</span>
-      {% endif %}
-      {% if date_range %}
-        <span><strong>Period:</strong> {{ date_range }}</span>
-      {% endif %}
-      {% if location %}
-        <span><strong>Location:</strong> {{ location }}</span>
+    <!-- LEFT SIDE -->
+    <div class="case-page__title">
+      <h1>{{ title }}</h1>
+
+      {% if case_id or date_range or location %}
+        <div class="case-meta">
+          {% if case_id %}
+            <span><strong>ID:</strong> {{ case_id }}</span>
+          {% endif %}
+          {% if date_range %}
+            <span><strong>Period:</strong> {{ date_range }}</span>
+          {% endif %}
+          {% if location %}
+            <span><strong>Location:</strong> {{ location }}</span>
+          {% endif %}
+        </div>
       {% endif %}
     </div>
 
+    <!-- RIGHT SIDE -->
+    {#
     {% if translations %}
       <div class="lang-switcher">
         {% for code, url in translations %}
@@ -34,9 +42,10 @@ dir: "ltr"
         {% endfor %}
       </div>
     {% endif %}
+    #}
   </div>
 
-    <!-- SEARCH -->
+  <!-- SEARCH -->
   <input
     type="text"
     id="table-search"
@@ -45,9 +54,9 @@ dir: "ltr"
   >
 
   <!-- FILTER BAR (added) -->
-  <div class="docs-filter" id="docsFilter" style="margin: 0 0 1rem;">
+  <div class="docs-filter" id="docsFilter">
     <form class="docs-filter__form" onsubmit="return false;">
-      <fieldset class="docs-filter__group" aria-label="Type" style="display:flex;gap:.8rem;flex-wrap:wrap;">
+      <fieldset class="docs-filter__group" aria-label="Type">
         <label><input type="checkbox" name="type" value="document" checked> Documents</label>
         <label><input type="checkbox" name="type" value="media" checked> Media</label>
         <label><input type="checkbox" name="type" value="legal" checked> Legal</label>
