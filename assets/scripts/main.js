@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initTimelinePro();
   initEvidenceModule();
   initPdfViewer();
+  initTimeline3Details();
 });
 
 function initNavMenu() {
@@ -214,6 +215,177 @@ function initTimelinePro() {
     return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 }
+document.querySelectorAll(".tline3__wrap").forEach(wrap => {
+  const dots = wrap.querySelector(".tline3__dots");
+  if (!dots) return;
+
+  const items = Number(getComputedStyle(wrap).getPropertyValue("--items").trim()) || 0;
+  dots.innerHTML = "";
+  for (let i = 0; i < items; i++) {
+    const s = document.createElement("span");
+    s.className = "tline3__dot";
+    dots.appendChild(s);
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const dataEl = document.getElementById("tlineDetailData");
+  const detail = document.getElementById("tlineDetail");
+  const titleEl = document.getElementById("tlineDetailTitle");
+  const metaEl = document.getElementById("tlineDetailMeta");
+  const listEl = document.getElementById("tlineDetailList");
+  const closeBtn = document.getElementById("tlineDetailClose");
+
+  if (!dataEl || !detail || !titleEl || !metaEl || !listEl) return;
+
+  let data = {};
+  try { data = JSON.parse(dataEl.textContent || "{}"); }
+  catch (e) { console.error("Bad tlineDetailData JSON", e); return; }
+
+  function openKey(key) {
+    const payload = data[key];
+    if (!payload) return;
+
+    titleEl.textContent = payload.title || key;
+    metaEl.textContent = payload.meta || "";
+
+    listEl.innerHTML = "";
+    (payload.entries || []).forEach(entry => {
+      const li = document.createElement("li");
+
+      const t = document.createElement("time");
+      t.textContent = entry.date || "";
+      li.appendChild(t);
+
+      const p = document.createElement("p");
+      p.textContent = entry.text || "";
+      li.appendChild(p);
+
+      listEl.appendChild(li);
+    });
+
+    detail.hidden = false;
+    detail.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  // attach click + keyboard support
+  document.querySelectorAll(".tline3__event:not(.is-empty)").forEach(ev => {
+    const key = ev.getAttribute("data-key");
+    const card = ev.querySelector(".tline3__card");
+    if (!key || !card) return;
+
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", `Open details for ${key}`);
+
+    card.addEventListener("click", () => openKey(key));
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openKey(key);
+      }
+    });
+  });
+
+  closeBtn?.addEventListener("click", () => {
+    detail.hidden = true;
+  });
+});
+
+function initTimeline3Details() {
+  const modal = document.getElementById("tline3Modal");
+  const titleEl = document.getElementById("tline3ModalTitle");
+  const subEl = document.getElementById("tline3ModalSub");
+  const listEl = document.getElementById("tline3ModalList");
+  const closeBtn = document.getElementById("tline3ModalClose");
+  const dataEl = document.getElementById("tline3DetailData");
+
+  // If this page doesn't include tline3 + modal, do nothing.
+  if (!modal || !titleEl || !subEl || !listEl || !closeBtn || !dataEl) return;
+
+  let data = {};
+  try {
+    data = JSON.parse(dataEl.textContent || "{}");
+  } catch (e) {
+    console.error("Bad tline3DetailData JSON:", e);
+  }
+
+  const cards = Array.from(document.querySelectorAll(".tline3__card[data-key]"));
+  if (!cards.length) return;
+
+  // Accessibility: make div-cards keyboard-openable
+  cards.forEach(card => {
+    if (!card.hasAttribute("tabindex")) card.setAttribute("tabindex", "0");
+
+    const open = () => openForKey(card.getAttribute("data-key"));
+
+    card.addEventListener("click", open);
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        open();
+      }
+    });
+  });
+
+  closeBtn.addEventListener("click", () => modal.close());
+
+  // Click backdrop to close
+  modal.addEventListener("click", (e) => {
+    const rect = modal.getBoundingClientRect();
+    const inDialog =
+      e.clientX >= rect.left &&
+      e.clientX <= rect.right &&
+      e.clientY >= rect.top &&
+      e.clientY <= rect.bottom;
+
+    if (!inDialog) modal.close();
+  });
+
+  function openForKey(key) {
+    const entry = data[key];
+
+    // fallback if you forgot to add JSON for a card
+    const safe = entry || {
+      title: key || "Timeline detail",
+      subtitle: "No detail entries yet.",
+      items: []
+    };
+
+    titleEl.textContent = safe.title || key || "";
+    subEl.textContent = safe.subtitle || "";
+
+    listEl.innerHTML = "";
+
+    const items = Array.isArray(safe.items) ? safe.items : [];
+    if (!items.length) {
+      const li = document.createElement("li");
+      const p = document.createElement("p");
+      p.textContent = "No entries yet. Add items in #tline3DetailData.";
+      li.appendChild(p);
+      listEl.appendChild(li);
+    } else {
+      items.forEach(it => {
+        const li = document.createElement("li");
+
+        if (it.date) {
+          const t = document.createElement("time");
+          t.textContent = it.date;
+          li.appendChild(t);
+        }
+
+        const p = document.createElement("p");
+        p.textContent = it.text || "";
+        li.appendChild(p);
+
+        listEl.appendChild(li);
+      });
+    }
+
+    modal.showModal();
+  }
+}
+
 
 
 // --- Evidence filter module --------------------------------------------
