@@ -165,3 +165,84 @@
     })[c]);
   }
 })();
+
+/* =========================================================
+   OPEN INLINE TIMELINE (tline3)
+   ========================================================= */
+(function initTline3Interaction() {
+  const tline = document.querySelector(".tline3");
+  if (!tline) return;
+
+  const stage = tline.querySelector(".tline3__stage");
+  const cards = tline.querySelectorAll(".tline3__card");
+
+  const dataEl = document.getElementById("tlineDetailData");
+  if (!dataEl) return;
+
+  let data;
+  try {
+    data = JSON.parse(dataEl.textContent);
+  } catch (e) {
+    console.error("Bad tlineDetailData JSON", e);
+    return;
+  }
+
+  let activeKey = null;
+
+  cards.forEach(card => {
+    card.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      const key = card.dataset.key;
+      if (!key || !data[key]) return;
+
+      // TOGGLE OFF
+      if (activeKey === key) {
+        tline.classList.remove("is-expanded"); //class first
+        stage.innerHTML = "";
+        activeKey = null;
+        return;
+      }
+
+      // OPEN / SWITCH
+      activeKey = key;
+      renderStage(data[key]);
+      tline.classList.add("is-expanded");
+    });
+  });
+
+  // click outside closes
+  document.addEventListener("click", (e) => {
+    if (!tline.contains(e.target)) {
+      tline.classList.remove("is-expanded");
+      stage.innerHTML = "";
+      activeKey = null;
+    }
+  });
+
+  function renderStage(detail) {
+  const headerDate = detail.entries[0]?.date || "";
+
+  stage.innerHTML = `
+    <aside class="inline-timeline">
+      <header class="inline-timeline__head">
+        <div class="inline-timeline__head-row">
+          <div class="inline-timeline__date">${headerDate}</div>
+          <div class="inline-timeline__title">${detail.title}</div>
+        </div>
+        <div class="inline-timeline__desc">${detail.meta}</div>
+      </header>
+
+      <div class="inline-timeline__entries">
+        ${detail.entries.map(entry => `
+          <div class="inline-timeline__entry">
+            <div class="inline-timeline__entry-date">${entry.date}</div>
+            <div class="inline-timeline__entry-text">${entry.text}</div>
+          </div>
+        `).join("")}
+      </div>
+    </aside>
+  `;
+}
+
+})();

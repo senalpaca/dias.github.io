@@ -1,16 +1,17 @@
 (function () {
   const filterRoot = document.getElementById("docsFilter");
-  const searchInput = document.getElementById("table-search"); // your existing search
+  const searchInput = document.getElementById("table-search");
   const tbody = document.querySelector(".case-page__table tbody");
   const rows = Array.from(document.querySelectorAll("tr.doc-row"));
   const countEl = document.getElementById("docsCount");
   const emptyEl = document.getElementById("docsEmpty");
+  const resetBtn = document.getElementById("resetFilterBtn");
 
   if (!tbody || rows.length === 0) return;
 
   // Read active tag from URL (?tag=...)
-  const params = new URLSearchParams(window.location.search);
-  const activeTag = (params.get("tag") || "").toLowerCase();
+  let params = new URLSearchParams(window.location.search);
+  let activeTag = (params.get("tag") || "").toLowerCase();
 
   function getCheckedTypes() {
     if (!filterRoot) return [];
@@ -31,12 +32,11 @@
     // type filter
     if (types.length && !types.includes(type)) return false;
 
-    // tag filter (from URL)
+    // tag filter
     if (tag && !tags.includes(tag)) return false;
 
     // search filter
     if (q) {
-      // include visible text too (title in <h4>, etc.)
       const text = (row.textContent || "").toLowerCase();
       if (!(title + " " + tags + " " + text).includes(q)) return false;
     }
@@ -59,7 +59,7 @@
     if (emptyEl) emptyEl.style.display = visible ? "none" : "block";
   }
 
-  // events
+  // EVENTS
   if (filterRoot) {
     filterRoot.addEventListener("change", apply);
   }
@@ -67,6 +67,30 @@
     searchInput.addEventListener("input", apply);
   }
 
-  // initial
+  // RESET BUTTON
+  if (resetBtn) {
+    resetBtn.addEventListener("click", () => {
+      // clear search input
+      if (searchInput) searchInput.value = "";
+
+      // reset checkboxes
+      if (filterRoot) {
+        filterRoot.querySelectorAll('input[name="type"]').forEach((cb) => cb.checked = true);
+      }
+
+      // clear active tag
+      activeTag = "";
+
+      // remove 'tag' from URL without reloading the page
+      const url = new URL(window.location);
+      url.searchParams.delete('tag');
+      window.history.replaceState({}, '', url);
+
+      // re-apply filter
+      apply();
+    });
+  }
+
+  // initial filter
   apply();
 })();

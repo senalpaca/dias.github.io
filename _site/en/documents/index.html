@@ -35,6 +35,7 @@
 
       <nav id="nav" class="nav-main" aria-label="Primary">
         <ul class="menu">
+          
           <!-- ARCHIVE -->
           <li class="menu-item has-submenu">
             <a class="menu-toplink" href="/en/cases/dias/">Archive</a>
@@ -49,7 +50,7 @@
           <li class="menu-item has-submenu">
             <a class="menu-toplink" href="/en/about/">Methodology</a>
             <ul class="submenu" aria-label="About submenu">
-              <li><a href="/en/about/#what-we-document">What we document</a></li>
+              
               <li><a href="/en/methodology/">Investigating DIAS: A Manual</a></li>
               <li><a href="/en/publications/">Curriculum</a></li>
             </ul>
@@ -71,7 +72,6 @@
           </li>
 
         </ul>
-
 
         <div class="nav-right">
           <div class="nav-lang" aria-label="Language">
@@ -121,22 +121,31 @@
   >
 
   <!-- FILTER BAR (added) -->
-  <div class="docs-filter" id="docsFilter">
-    <form class="docs-filter__form" onsubmit="return false;">
-      <fieldset class="docs-filter__group" aria-label="Type">
-        <label><input type="checkbox" name="type" value="document" checked> Documents</label>
-        <label><input type="checkbox" name="type" value="media" checked> Media</label>
-        <label><input type="checkbox" name="type" value="legal" checked> Legal</label>
-      </fieldset>
+    <div class="docs-filter-row">
+    <!-- Left: Filter form -->
+    <div class="docs-filter-wrapper">
+      <div class="docs-filter" id="docsFilter">
+        <form class="docs-filter__form" onsubmit="return false;">
+          <fieldset class="docs-filter__group" aria-label="Type">
+            <label><input type="checkbox" name="type" value="document" checked> Documents</label>
+            <label><input type="checkbox" name="type" value="media" checked> Media</label>
+            <label><input type="checkbox" name="type" value="legal" checked> Legal</label>
+          </fieldset>
 
-
-      <div class="docs-filter__meta" style="margin-top:.5rem;opacity:.8">
-        <span id="docsCount" aria-live="polite">
-          Found 4 item(s).
-        </span>
-        <noscript><em>(Enable JavaScript to filter.)</em></noscript>
+          <div class="docs-filter__meta">
+            <span id="docsCount" aria-live="polite">
+              Found 4 item(s).
+            </span>
+            <noscript><em>(Enable JavaScript to filter.)</em></noscript>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
+
+    <!-- Right: Reset button -->
+    <div class="docs-filter-reset">
+      <button id="resetFilterBtn" class="btn btn-outline">Reset Filter</button>
+    </div>
   </div>
 
   <!-- TABLE (kept) -->

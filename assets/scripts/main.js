@@ -1,390 +1,179 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM loaded");
   initNavMenu();
-  initTimelinePro();
   initEvidenceModule();
   initPdfViewer();
-  initTimeline3Details();
+  initHeroSecondary();
 });
 
 function initNavMenu() {
-  const nav = document.getElementById("nav");
+  const nav = document.querySelector(".main-nav");
+  const navInner = document.querySelector(".nav-inner");
   const hamburger = document.querySelector(".hamburger");
+  const items = document.querySelectorAll(".menu-item.has-submenu");
 
-  // Mobile hamburger toggle
+  let openItem = null;
+
+  /* ------------------
+     Mobile hamburger
+  ------------------ */
   if (hamburger && nav) {
     hamburger.addEventListener("click", () => {
       nav.classList.toggle("open");
     });
   }
-  // Close mobile with ESC
+
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && nav.classList.contains("open")) {
+    if (e.key === "Escape") {
+      closeSubmenu();
       nav.classList.remove("open");
       hamburger?.focus();
     }
   });
 
-  const items = Array.from(document.querySelectorAll(".menu-item.has-submenu"));
+  /* ------------------
+     Submenu helpers
+  ------------------ */
+  function openSubmenu(item) {
+    if (openItem === item) return;
 
-  // Helper: is 'child' inside 'parent'?
-  const contains = (parent, child) => parent && child && parent.contains(child);
+    closeSubmenu();
 
-  // Desktop pointer behavior (no flicker)
-  items.forEach((item) => {
-    let closeTimer = null;
+    const submenu = item.querySelector(".submenu");
+    if (!submenu) return;
 
-    const open = () => {
-      clearTimeout(closeTimer);
-      item.classList.add("open");
-    };
-    const scheduleClose = () => {
-      clearTimeout(closeTimer);
-      closeTimer = setTimeout(() => item.classList.remove("open"), 180);
-    };
+    item.classList.add("open");
+    openItem = item;
 
-    // Use pointer events for better device coverage
-    item.addEventListener("pointerenter", open);
-    item.addEventListener("pointerleave", (e) => {
-      // Only close if pointer actually left the whole item (including submenu)
-      const toEl = e.relatedTarget;
-      if (!contains(item, toEl)) scheduleClose();
-    });
+    const h = submenu.offsetHeight;
+    nav.style.setProperty("--submenu-height", `${h}px`);
+    nav.classList.add("submenu-open");
+  }
 
-    // Keyboard: keep open while focus is inside
-    item.addEventListener("focusin", open);
-    item.addEventListener("focusout", (e) => {
-      if (!contains(item, e.relatedTarget)) scheduleClose();
-    });
+  function closeSubmenu() {
+    if (!openItem) return;
+
+    openItem.classList.remove("open");
+    openItem = null;
+
+    nav.classList.remove("submenu-open");
+    nav.style.removeProperty("--submenu-height");
+  }
+
+   /* ------------------
+     Desktop hover (OPEN only)
+  ------------------ */
+  items.forEach(item => {
+    item.addEventListener("pointerenter", () => openSubmenu(item));
+    item.addEventListener("focusin", () => openSubmenu(item));
   });
 
-  // Touch behavior: first tap opens, second tap follows the link
-  // We only enable this on touch-capable devices
+  /* ------------------
+     Close when leaving NAV
+  ------------------ */
+  nav.addEventListener("pointerleave", closeSubmenu);
+
+  /* ------------------
+     Touch behavior
+  ------------------ */
   const isTouch = window.matchMedia("(hover: none)").matches;
   if (isTouch) {
-    items.forEach((item) => {
+    items.forEach(item => {
       const topLink = item.querySelector(".menu-toplink");
       if (!topLink) return;
 
-      let armed = false; // first tap opens; second tap navigates
-
       topLink.addEventListener("click", (e) => {
-        // If submenu is not open, open it and block navigation once
         if (!item.classList.contains("open")) {
           e.preventDefault();
-          // close others
-          items.forEach(i => { if (i !== item) i.classList.remove("open"); });
-          item.classList.add("open");
-          armed = true;
-          return;
-        }
-        // If it is open: first click after opening navigates
-        if (armed) {
-          armed = false; // allow navigation
-          return;        // let the browser follow the link
-        }
-      });
-
-      // Close when tapping anywhere outside header
-      document.addEventListener("pointerdown", (ev) => {
-        const header = document.getElementById("header");
-        if (!header.contains(ev.target)) {
-          items.forEach(i => i.classList.remove("open"));
-          armed = false;
+          openSubmenu(item);
         }
       });
     });
   }
 
-  // Click outside (desktop) closes submenus
-  const header = document.getElementById("header");
+  /* ------------------
+     Click outside
+  ------------------ */
   document.addEventListener("click", (e) => {
-    if (!header.contains(e.target)) {
-      items.forEach((i) => i.classList.remove("open"));
+    if (!nav.contains(e.target)) {
+      closeSubmenu();
     }
   });
 }
 
+// ======================
+// HERO SECONDARY TOGGLE
+// ======================
+(function initHeroSecondary() {
+  const hero = document.querySelector(".hero");
+  const secondary = document.querySelector(".hero-secondary");
+  const boxes = secondary?.querySelectorAll(".hero-secondary-box");
+  const dataEl = document.getElementById("heroSecondaryData");
 
-document.addEventListener("DOMContentLoaded", () => {
-  initTimelinePro();
-});
+  if (!hero || !secondary || !boxes?.length || !dataEl) return;
 
-function initTimelinePro() {
-  const dataEl = document.getElementById("tlineData");
-  const rail = document.getElementById("tlineRail");
-  const markersWrap = document.getElementById("tlineMarkers");
-  const dotsWrap = document.getElementById("tlineDots");
-  const range = document.getElementById("tlineRange");
-  const fill = document.getElementById("tlineFill");
-  const bubble = document.getElementById("tlineBubble");
-
-  if (!dataEl || !rail || !markersWrap || !dotsWrap || !range || !fill || !bubble) return;
-
-  const { start, end, events } = JSON.parse(dataEl.textContent);
-  const startD = new Date(start + "T00:00:00Z");
-  const endD   = new Date(end   + "T00:00:00Z");
-  const totalMs = endD - startD;
-
-  const toDate = (d) => new Date(d + "T00:00:00Z");
-  const pct = (d) => ( (toDate(d) - startD) / totalMs ) * 100;
-
-  // Render markers + labels
-  markersWrap.innerHTML = "";
-  events.forEach((ev, i) => {
-    const leftPct = pct(ev.date);
-
-    // marker dot
-    const dot = document.createElement("div");
-    dot.className = "tline-marker";
-    dot.style.left = leftPct + "%";
-
-    // label
-    const pop = document.createElement("div");
-    const side = (ev.side === "bottom") ? "bottom" : "top";
-    pop.className = "tline-pop tline-pop--" + side;
-    pop.style.left = leftPct + "%";
-
-    const dateText = ev.rangeEnd
-      ? fmtDate(ev.date) + " – " + fmtDate(ev.rangeEnd)
-      : fmtDate(ev.date);
-
-    pop.innerHTML = `
-      <div class="tline-pop__title">${escapeHtml(ev.title)}</div>
-      <div class="tline-pop__date">${escapeHtml(dateText)}</div>
-    `;
-
-    // click: move slider to this event
-    dot.addEventListener("click", () => moveToDate(ev.date));
-
-    markersWrap.appendChild(pop);
-    markersWrap.appendChild(dot);
-  });
-
-  // Decorative mini dots (same positions)
-  dotsWrap.innerHTML = "";
-  events.forEach((ev) => {
-    const d = document.createElement("div");
-    d.className = "tline-dot";
-    d.style.left = pct(ev.date) + "%";
-    dotsWrap.appendChild(d);
-  });
-
-  // Slider setup
-  const totalDays = Math.max(1, Math.round(totalMs / (24*3600*1000)));
-  range.max = String(totalDays);
-  range.value = String(totalDays); // start at end
-  updateSliderUI();
-
-  range.addEventListener("input", updateSliderUI);
-
-  function updateSliderUI() {
-    const days = Number(range.value);
-    const p = (days / totalDays) * 100;
-    // fill bar grows from left to thumb (like your reference uses left+width approach)
-    fill.style.left = "0%";
-    fill.style.width = p + "%";
-
-    const d = new Date(startD.getTime() + days * 24*3600*1000);
-    const label = fmtDateISO(d);
-    bubble.style.setProperty("--p", `calc(${p}% )`);
-    bubble.textContent = label;
-  }
-
-  function moveToDate(iso) {
-    const ms = toDate(iso) - startD;
-    const days = Math.round(ms / (24*3600*1000));
-    range.value = String(Math.min(Math.max(0, days), totalDays));
-    updateSliderUI();
-  }
-
-  function fmtDate(iso) {
-    const d = toDate(iso);
-    return fmtDateISO(d);
-  }
-
-  function fmtDateISO(d) {
-    // e.g., "7 Oct 2023"
-    const day = d.getUTCDate();
-    const mon = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][d.getUTCMonth()];
-    const year = d.getUTCFullYear();
-    return `${day} ${mon} ${year}`;
-  }
-
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  }
-}
-document.querySelectorAll(".tline3__wrap").forEach(wrap => {
-  const dots = wrap.querySelector(".tline3__dots");
-  if (!dots) return;
-
-  const items = Number(getComputedStyle(wrap).getPropertyValue("--items").trim()) || 0;
-  dots.innerHTML = "";
-  for (let i = 0; i < items; i++) {
-    const s = document.createElement("span");
-    s.className = "tline3__dot";
-    dots.appendChild(s);
-  }
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const dataEl = document.getElementById("tlineDetailData");
-  const detail = document.getElementById("tlineDetail");
-  const titleEl = document.getElementById("tlineDetailTitle");
-  const metaEl = document.getElementById("tlineDetailMeta");
-  const listEl = document.getElementById("tlineDetailList");
-  const closeBtn = document.getElementById("tlineDetailClose");
-
-  if (!dataEl || !detail || !titleEl || !metaEl || !listEl) return;
-
-  let data = {};
-  try { data = JSON.parse(dataEl.textContent || "{}"); }
-  catch (e) { console.error("Bad tlineDetailData JSON", e); return; }
-
-  function openKey(key) {
-    const payload = data[key];
-    if (!payload) return;
-
-    titleEl.textContent = payload.title || key;
-    metaEl.textContent = payload.meta || "";
-
-    listEl.innerHTML = "";
-    (payload.entries || []).forEach(entry => {
-      const li = document.createElement("li");
-
-      const t = document.createElement("time");
-      t.textContent = entry.date || "";
-      li.appendChild(t);
-
-      const p = document.createElement("p");
-      p.textContent = entry.text || "";
-      li.appendChild(p);
-
-      listEl.appendChild(li);
-    });
-
-    detail.hidden = false;
-    detail.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
-  // attach click + keyboard support
-  document.querySelectorAll(".tline3__event:not(.is-empty)").forEach(ev => {
-    const key = ev.getAttribute("data-key");
-    const card = ev.querySelector(".tline3__card");
-    if (!key || !card) return;
-
-    card.tabIndex = 0;
-    card.setAttribute("role", "button");
-    card.setAttribute("aria-label", `Open details for ${key}`);
-
-    card.addEventListener("click", () => openKey(key));
-    card.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        openKey(key);
-      }
-    });
-  });
-
-  closeBtn?.addEventListener("click", () => {
-    detail.hidden = true;
-  });
-});
-
-function initTimeline3Details() {
-  const modal = document.getElementById("tline3Modal");
-  const titleEl = document.getElementById("tline3ModalTitle");
-  const subEl = document.getElementById("tline3ModalSub");
-  const listEl = document.getElementById("tline3ModalList");
-  const closeBtn = document.getElementById("tline3ModalClose");
-  const dataEl = document.getElementById("tline3DetailData");
-
-  // If this page doesn't include tline3 + modal, do nothing.
-  if (!modal || !titleEl || !subEl || !listEl || !closeBtn || !dataEl) return;
-
-  let data = {};
+  let data;
   try {
-    data = JSON.parse(dataEl.textContent || "{}");
+    data = JSON.parse(dataEl.textContent);
   } catch (e) {
-    console.error("Bad tline3DetailData JSON:", e);
+    console.error("Bad heroSecondaryData JSON", e);
+    return;
   }
 
-  const cards = Array.from(document.querySelectorAll(".tline3__card[data-key]"));
-  if (!cards.length) return;
+  // Track open boxes (MULTIPLE allowed)
+  const openKeys = new Set();
 
-  // Accessibility: make div-cards keyboard-openable
-  cards.forEach(card => {
-    if (!card.hasAttribute("tabindex")) card.setAttribute("tabindex", "0");
+  boxes.forEach(box => {
+    box.addEventListener("click", (e) => {
+      e.stopPropagation();
 
-    const open = () => openForKey(card.getAttribute("data-key"));
+      const key = box.dataset.heroKey;
+      if (!key || !data[key]) return;
 
-    card.addEventListener("click", open);
-    card.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        open();
+      // TOGGLE OFF
+      if (openKeys.has(key)) {
+        openKeys.delete(key);
+        box.classList.remove("is-active");
+        clearBox(box);
       }
+      // OPEN
+      else {
+        openKeys.add(key);
+        box.classList.add("is-active");
+        renderBox(box, data[key]);
+      }
+
+      updateHeroState();
     });
   });
 
-  closeBtn.addEventListener("click", () => modal.close());
-
-  // Click backdrop to close
-  modal.addEventListener("click", (e) => {
-    const rect = modal.getBoundingClientRect();
-    const inDialog =
-      e.clientX >= rect.left &&
-      e.clientX <= rect.right &&
-      e.clientY >= rect.top &&
-      e.clientY <= rect.bottom;
-
-    if (!inDialog) modal.close();
-  });
-
-  function openForKey(key) {
-    const entry = data[key];
-
-    // fallback if you forgot to add JSON for a card
-    const safe = entry || {
-      title: key || "Timeline detail",
-      subtitle: "No detail entries yet.",
-      items: []
-    };
-
-    titleEl.textContent = safe.title || key || "";
-    subEl.textContent = safe.subtitle || "";
-
-    listEl.innerHTML = "";
-
-    const items = Array.isArray(safe.items) ? safe.items : [];
-    if (!items.length) {
-      const li = document.createElement("li");
-      const p = document.createElement("p");
-      p.textContent = "No entries yet. Add items in #tline3DetailData.";
-      li.appendChild(p);
-      listEl.appendChild(li);
+  function updateHeroState() {
+    if (openKeys.size > 0) {
+      hero.classList.add("is-compressed");
+      secondary.classList.add("is-expanded");
     } else {
-      items.forEach(it => {
-        const li = document.createElement("li");
-
-        if (it.date) {
-          const t = document.createElement("time");
-          t.textContent = it.date;
-          li.appendChild(t);
-        }
-
-        const p = document.createElement("p");
-        p.textContent = it.text || "";
-        li.appendChild(p);
-
-        listEl.appendChild(li);
-      });
+      hero.classList.remove("is-compressed");
+      secondary.classList.remove("is-expanded");
     }
-
-    modal.showModal();
   }
-}
+
+  function renderBox(box, detail) {
+    const container = box.querySelector(".hero-secondary-content");
+    if (!container) return;
+
+    container.innerHTML = `
+      <p class="hero-secondary-text">${detail.text}</p>
+      <a href="${detail.link.href}" class="hero-small-btn secondary-btn">
+        ${detail.link.label}
+      </a>
+    `;
+  }
+
+  function clearBox(box) {
+    const container = box.querySelector(".hero-secondary-content");
+    if (container) container.innerHTML = "";
+  }
+})();
 
 
 
@@ -466,10 +255,6 @@ function initEvidenceModule() {
 
   renderEvidence();
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  initPdfViewer(); // <— add this
-});
 
 /** -------- PDF viewer with hotspots (PDF.js) -------- */
 function initPdfViewer() {
@@ -624,11 +409,12 @@ function escapeHtml(s) {
   })[c]);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function initPdfCursor() {
   const host = document.querySelector(".pdf-canvas");
   if (!host) return;
 
   let cursor;
+
   host.addEventListener("mousemove", (e) => {
     const page = e.target.closest(".pdf-page");
     if (!page) return;
@@ -642,14 +428,17 @@ document.addEventListener("DOMContentLoaded", () => {
       cursor.className = "doc-cursor";
       page.appendChild(cursor);
     }
-    cursor.textContent = `${xPct.toFixed(1)}%, ${yPct.toFixed(1)}%`;
 
-    // keep label inside the page
+    cursor.textContent = `${xPct.toFixed(1)}%, ${yPct.toFixed(1)}%`;
     cursor.style.left = Math.min(e.clientX - r.left + 12, r.width - 90) + "px";
     cursor.style.top = Math.min(e.clientY - r.top + 12, r.height - 28) + "px";
   });
 
   host.addEventListener("mouseleave", () => {
-    if (cursor) { cursor.remove(); cursor = null; }
+    if (cursor) {
+      cursor.remove();
+      cursor = null;
+    }
   });
-});
+}
+

@@ -54,22 +54,31 @@ dir: "ltr"
   >
 
   <!-- FILTER BAR (added) -->
-  <div class="docs-filter" id="docsFilter">
-    <form class="docs-filter__form" onsubmit="return false;">
-      <fieldset class="docs-filter__group" aria-label="Type">
-        <label><input type="checkbox" name="type" value="document" checked> Documents</label>
-        <label><input type="checkbox" name="type" value="media" checked> Media</label>
-        <label><input type="checkbox" name="type" value="legal" checked> Legal</label>
-      </fieldset>
+    <div class="docs-filter-row">
+    <!-- Left: Filter form -->
+    <div class="docs-filter-wrapper">
+      <div class="docs-filter" id="docsFilter">
+        <form class="docs-filter__form" onsubmit="return false;">
+          <fieldset class="docs-filter__group" aria-label="Type">
+            <label><input type="checkbox" name="type" value="document" checked> Documents</label>
+            <label><input type="checkbox" name="type" value="media" checked> Media</label>
+            <label><input type="checkbox" name="type" value="legal" checked> Legal</label>
+          </fieldset>
 
-
-      <div class="docs-filter__meta" style="margin-top:.5rem;opacity:.8">
-        <span id="docsCount" aria-live="polite">
-          {% if documents and documents.en %}Found {{ documents.en | length }} item(s).{% else %}Found 0 item(s).{% endif %}
-        </span>
-        <noscript><em>(Enable JavaScript to filter.)</em></noscript>
+          <div class="docs-filter__meta">
+            <span id="docsCount" aria-live="polite">
+              {% if documents and documents.en %}Found {{ documents.en | length }} item(s).{% else %}Found 0 item(s).{% endif %}
+            </span>
+            <noscript><em>(Enable JavaScript to filter.)</em></noscript>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
+
+    <!-- Right: Reset button -->
+    <div class="docs-filter-reset">
+      <button id="resetFilterBtn" class="btn btn-outline">Reset Filter</button>
+    </div>
   </div>
 
   <!-- TABLE (kept) -->

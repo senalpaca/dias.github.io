@@ -5,17 +5,46 @@ lang: "en"
 dir: "ltr"
 ---
 
-<h1>Timeline</h1>
-<p>
-  A rough chronology of key moments around DIAS — meant as an orienting map while we’re still collecting documents, actors, and dates.
-</p>
+<!-- TIMELINE HEADER -->
+<section class="timeline-header">
+  <div class="timeline-header__title-box">
+    <h1>Timeline</h1>
+  </div>
 
+  <div class="timeline-header__desc-box">
+    <p>
+      A rough chronology of key moments around DIAS — meant as an orienting map 
+      while we’re still collecting documents, actors, and dates.
+    </p>
+  </div>
+</section>
 
+<!-- TIMELINE SECTION -->
 <section class="tline3">
+  
+  <div class="tline3__stage">
+    <aside class="inline-timeline" aria-hidden="true">
+      <ul class="inline-timeline__list">
+        <li>
+          <time>2014</time>
+          <p>Initial investigation</p>
+        </li>
+        <li>
+          <time>2016</time>
+          <p>Public disclosure</p>
+        </li>
+        <li>
+          <time>2019</time>
+          <p>Legal proceedings</p>
+        </li>
+      </ul>
+    </aside>
+  </div>
+
   <div class="tline3__wrap" style="--items: 7;">
     <div class="tline3__row tline3__row--top">
       <div class="tline3__event">
-        <div class="tline3__card">
+        <div class="tline3__card" data-key="2013">
           <h3 class="tline3__when">2013</h3>
           <p class="tline3__what">Early system pilots / procurement groundwork (placeholder)</p>
         </div>
@@ -24,7 +53,7 @@ dir: "ltr"
       <div class="tline3__event is-empty"></div>
 
       <div class="tline3__event">
-        <div class="tline3__card" data-key="2017>
+        <div class="tline3__card" data-key="2017">
           <h3 class="tline3__when">2017</h3>
           <p class="tline3__what">DIAS introduced into parts of asylum procedure (placeholder)</p>
         </div>
@@ -33,7 +62,7 @@ dir: "ltr"
       <div class="tline3__event is-empty"></div>
 
       <div class="tline3__event">
-        <div class="tline3__card">
+        <div class="tline3__card" data-key="2021">
           <h3 class="tline3__when">2021</h3>
           <p class="tline3__what">Policy/legal debates and expert evidence framing (placeholder)</p>
         </div>
@@ -42,7 +71,7 @@ dir: "ltr"
       <div class="tline3__event is-empty"></div>
 
       <div class="tline3__event">
-        <div class="tline3__card">
+        <div class="tline3__card" data-key="2025">
           <h3 class="tline3__when">2025</h3>
           <p class="tline3__what">Thesis investigation updates; mapping actors & documents (placeholder)</p>
         </div>
@@ -65,7 +94,7 @@ dir: "ltr"
       <div class="tline3__event is-empty"></div>
 
       <div class="tline3__event">
-        <div class="tline3__card">
+        <div class="tline3__card" data-key="2014">
           <h3 class="tline3__when">2014</h3>
           <p class="tline3__what">Institutional rollout discussions (placeholder)</p>
         </div>
@@ -74,7 +103,7 @@ dir: "ltr"
       <div class="tline3__event is-empty"></div>
 
       <div class="tline3__event">
-        <div class="tline3__card">
+        <div class="tline3__card" data-key="2019">
           <h3 class="tline3__when">2019</h3>
           <p class="tline3__what">Critique intensifies (opacity, bias, evidentiary role) (placeholder)</p>
         </div>
@@ -83,7 +112,7 @@ dir: "ltr"
       <div class="tline3__event is-empty"></div>
 
       <div class="tline3__event">
-        <div class="tline3__card">
+        <div class="tline3__card" data-key="2023">
           <h3 class="tline3__when">2023</h3>
           <p class="tline3__what">Ongoing reporting + civil society attention (placeholder)</p>
         </div>
@@ -98,22 +127,10 @@ dir: "ltr"
   Click a node to open a smaller, vertical timeline with the traces we’ve collected (draft / in progress).
 </p>
 
-<section class="tline-detail" id="tlineDetail" hidden>
-  <div class="tline-detail__bar">
-    <div>
-      <h3 class="tline-detail__title" id="tlineDetailTitle">Details</h3>
-      <p class="tline-detail__meta" id="tlineDetailMeta"></p>
-    </div>
-    <button class="tline-detail__close" type="button" id="tlineDetailClose" aria-label="Close details">×</button>
-  </div>
-
-  <ol class="vtline" id="tlineDetailList"></ol>
-</section>
-
 <script type="application/json" id="tlineDetailData">
 {
   "2013": {
-    "title": "2013 — Early pilots",
+    "title": "Early pilots",
     "meta": "Procurement groundwork, early technical framings (placeholder).",
     "entries": [
       { "date": "2013", "text": "Initial procurement / early pilot phase (placeholder)." },
@@ -121,42 +138,42 @@ dir: "ltr"
     ]
   },
   "2014": {
-    "title": "2014 — Rollout discussions",
+    "title": "Rollout discussions",
     "meta": "Institutionalization pathways (placeholder).",
     "entries": [
       { "date": "2014", "text": "Rollout discussions and internal alignment (placeholder)." }
     ]
   },
   "2017": {
-    "title": "2017 — Enters procedure",
+    "title": "Enters procedure",
     "meta": "Operational uptake expands (placeholder).",
     "entries": [
       { "date": "2017", "text": "DIAS introduced into parts of procedure (placeholder)." }
     ]
   },
   "2019": {
-    "title": "2019 — Critique intensifies",
+    "title": "Critique intensifies",
     "meta": "Opacity, bias, evidentiary role (placeholder).",
     "entries": [
       { "date": "2019", "text": "Public critique + reporting intensifies (placeholder)." }
     ]
   },
   "2021": {
-    "title": "2021 — Policy/legal debates",
+    "title": "Policy/legal debates",
     "meta": "Expert evidence framing (placeholder).",
     "entries": [
       { "date": "2021", "text": "Policy/legal debates around expert evidence (placeholder)." }
     ]
   },
   "2023": {
-    "title": "2023 — Ongoing attention",
+    "title": "Ongoing attention",
     "meta": "Civil society documentation & reporting (placeholder).",
     "entries": [
       { "date": "2023", "text": "Ongoing reporting + civil society attention (placeholder)." }
     ]
   },
   "2025": {
-    "title": "2025 — Thesis investigation",
+    "title": "Thesis investigation",
     "meta": "Our mapping of actors, documents, and technical unknowns (placeholder).",
     "entries": [
       { "date": "2025", "text": "Thesis investigation updates (placeholder)." },
@@ -165,17 +182,5 @@ dir: "ltr"
   }
 }
 </script>
-<dialog class="tline3modal" id="tline3Modal" aria-label="Timeline details">
-  <div class="tline3modal__head">
-    <div>
-      <h3 class="tline3modal__title" id="tline3ModalTitle"></h3>
-      <p class="tline3modal__sub" id="tline3ModalSub"></p>
-    </div>
-    <button class="tline3modal__close" id="tline3ModalClose" type="button" aria-label="Close">×</button>
-  </div>
 
-  <ol class="vtline" id="tline3ModalList"></ol>
-</dialog>
-
-
-<script src="/assets/scripts/main.js" defer></script>
+<script src="/assets/scripts/timeline.js" defer></script>
