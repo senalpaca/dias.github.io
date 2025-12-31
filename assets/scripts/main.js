@@ -120,41 +120,57 @@ function initNavMenu() {
     return;
   }
 
-  // Track open boxes (MULTIPLE allowed)
-  const openKeys = new Set();
+  let activeKey = null;
 
-  boxes.forEach(box => {
+  boxes.forEach((box) => {
     box.addEventListener("click", (e) => {
       e.stopPropagation();
 
       const key = box.dataset.heroKey;
       if (!key || !data[key]) return;
 
-      // TOGGLE OFF
-      if (openKeys.has(key)) {
-        openKeys.delete(key);
-        box.classList.remove("is-active");
-        clearBox(box);
-      }
-      // OPEN
-      else {
-        openKeys.add(key);
-        box.classList.add("is-active");
-        renderBox(box, data[key]);
+      // If clicking the currently active box -> collapse all
+      if (activeKey === key) {
+        activeKey = null;
+        boxes.forEach((b) => {
+          b.classList.remove("is-active");
+          clearBox(b);
+        });
+        updateHeroState();
+        return;
       }
 
-      updateHeroState();
+      // Otherwise: deactivate others immediately (no width animation yet)
+      activeKey = key;
+      boxes.forEach((b) => {
+        if (b.dataset.heroKey !== key) {
+          b.classList.remove("is-active");
+          clearBox(b);
+        }
+      });
+
+      // IMPORTANT: render content first (still not active)
+      renderBox(box, data[key]);
+
+      // Next frame: activate (this is when flex width animation starts)
+      requestAnimationFrame(() => {
+        box.classList.add("is-active");
+        updateHeroState();
+      });
     });
   });
 
+
   function updateHeroState() {
-    if (openKeys.size > 0) {
+    if (activeKey) {
       hero.classList.add("is-compressed");
       secondary.classList.add("is-expanded");
     } else {
       hero.classList.remove("is-compressed");
       secondary.classList.remove("is-expanded");
     }
+    // NEW: lets CSS increase site-main padding-bottom while expanded
+    document.body.classList.toggle("hero-secondary-open", !!activeKey);
   }
 
   function renderBox(box, detail) {
@@ -174,7 +190,6 @@ function initNavMenu() {
     if (container) container.innerHTML = "";
   }
 })();
-
 
 
 // --- Evidence filter module --------------------------------------------

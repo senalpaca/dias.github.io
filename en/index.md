@@ -9,7 +9,7 @@ dir: "ltr"
   <div class="hero-inner">
     <div class="hero-left">
       <div class="hero-left-title">
-        <h1 class="hero-title">DIAS Archive</h1>
+        <h1 class="hero-title">Thesis</h1>
       </div>
       <div class="hero-left-subtitle">
         <p class="hero-subtitle">
@@ -36,6 +36,19 @@ dir: "ltr"
         </a>
       </div>
     </div>
+    <div class="hero-right">
+      <div class="hero-right-inner">
+        <!-- <div class="hero-right-title">
+          <h3>Image Box</h3>
+        </div>
+        <div class="hero-right-text">
+          <p>put image here</p>
+        </div> -->
+        <div class="hero-right-media">
+          <img src="/assets/images/your-image.jpg" alt="DIAS Archive visual" loading="lazy" />
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -43,18 +56,17 @@ dir: "ltr"
 
   <div class="hero-secondary-inner">
     <div class="hero-secondary-box" data-hero-key="what">
-  <h3 class="hero-secondary-title">What is DIAS?</h3>
-  <div class="hero-secondary-content"></div>
-  </div>
-
-  <div class="hero-secondary-box" data-hero-key="how">
-    <h3 class="hero-secondary-title">How DIAS is used</h3>
-    <div class="hero-secondary-content"></div>
-  </div>
-
-  <div class="hero-secondary-box" data-hero-key="risks">
-    <h3 class="hero-secondary-title">Risks &amp; critiques</h3>
-    <div class="hero-secondary-content"></div>
+      <h3 class="hero-secondary-title">What is DIAS?</h3>
+      <div class="hero-secondary-content"></div>
+    </div>
+    <div class="hero-secondary-box" data-hero-key="how">
+      <h3 class="hero-secondary-title">How DIAS is used</h3>
+      <div class="hero-secondary-content"></div>
+    </div>
+    <div class="hero-secondary-box" data-hero-key="risks">
+      <h3 class="hero-secondary-title">Risks &amp; critiques</h3>
+      <div class="hero-secondary-content"></div>
+    </div>
   </div>
 
 </section>
