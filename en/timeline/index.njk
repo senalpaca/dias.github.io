@@ -46,7 +46,7 @@ dir: "ltr"
       <div class="tline3__event">
         <div class="tline3__card" data-key="2013">
           <h3 class="tline3__when">2013</h3>
-          <p class="tline3__what">Early system pilots / procurement groundwork (placeholder)</p>
+         <p class="tline3__what">Early system pilots / procurement groundwork (placeholder)</p>
         </div>
       </div>
 
@@ -123,64 +123,110 @@ dir: "ltr"
   </div>
 </section>
 
-<p class="tline3__intro">
-  Click a node to open a smaller, vertical timeline with the traces we’ve collected (draft / in progress).
-</p>
-
 <script type="application/json" id="tlineDetailData">
 {
   "2013": {
-    "title": "Early pilots",
-    "meta": "Procurement groundwork, early technical framings (placeholder).",
-    "entries": [
-      { "date": "2013", "text": "Initial procurement / early pilot phase (placeholder)." },
-      { "date": "2013", "text": "Early discussions on dialect inference as evidence (placeholder)." }
+    "panels": [
+      {
+        "title": "Early pilots",
+        "meta": "Procurement groundwork, early technical framings (placeholder).",
+        "entries": [
+          { "media": "Media", "text": "Bla Zeitung article about early pilots (placeholder).", "href": "https://www.sueddeutsche.de/wissen/migration-die-grenzen-der-sprache-1.3193855" },
+          { "document": "Document", "text": "Our internal summary page (placeholder).", "href": "/en/documents/dias-pilots/" }
+        ]
+      },
+      {
+        "title": "Later additions",
+        "meta": "Some other information than the first (placeholder).",
+        "entries": [
+          { "media": "Media", "text": "XXX article about later additions (placeholder).", "href": "https://secondlink" },
+          { "document": "Document", "text": "another document.", "href": "/en/documents/dias-pilots/" }
+        ]
+      },
+      {
+        "title": "Third box title",
+        "meta": "Anything else (placeholder).",
+        "entries": [
+          { "document": "Document", "text": "Third panel doc.", "href": "/en/documents/third/" }
+        ]
+      }
     ]
   },
+
   "2014": {
-    "title": "Rollout discussions",
-    "meta": "Institutionalization pathways (placeholder).",
-    "entries": [
-      { "date": "2014", "text": "Rollout discussions and internal alignment (placeholder)." }
+    "panels": [
+      {
+        "title": "Rollout discussions",
+        "meta": "Institutionalization pathways (placeholder).",
+        "entries": [
+          { "document": "Document", "text": "Rollout discussions and internal alignment (placeholder).", "href": "/en/documents/rollout-2014/" }
+        ]
+      }
     ]
   },
+
   "2017": {
-    "title": "Enters procedure",
-    "meta": "Operational uptake expands (placeholder).",
-    "entries": [
-      { "date": "2017", "text": "DIAS introduced into parts of procedure (placeholder)." }
+    "panels": [
+      {
+        "title": "Enters procedure",
+        "meta": "Operational uptake expands (placeholder).",
+        "entries": [
+          { "document": "Document", "text": "DIAS introduced into parts of procedure (placeholder).", "href": "/en/documents/dias-2017/" }
+        ]
+      }
     ]
   },
+
   "2019": {
-    "title": "Critique intensifies",
-    "meta": "Opacity, bias, evidentiary role (placeholder).",
-    "entries": [
-      { "date": "2019", "text": "Public critique + reporting intensifies (placeholder)." }
+    "panels": [
+      {
+        "title": "Critique intensifies",
+        "meta": "Opacity, bias, evidentiary role (placeholder).",
+        "entries": [
+          { "media": "Media", "text": "Public critique + reporting intensifies (placeholder).", "href": "https://example.com/2019-article" }
+        ]
+      }
     ]
   },
+
   "2021": {
-    "title": "Policy/legal debates",
-    "meta": "Expert evidence framing (placeholder).",
-    "entries": [
-      { "date": "2021", "text": "Policy/legal debates around expert evidence (placeholder)." }
+    "panels": [
+      {
+        "title": "Policy/legal debates",
+        "meta": "Expert evidence framing (placeholder).",
+        "entries": [
+          { "document": "Document", "text": "Policy/legal debates around expert evidence (placeholder).", "href": "/en/documents/policy-2021/" }
+        ]
+      }
     ]
   },
+
   "2023": {
-    "title": "Ongoing attention",
-    "meta": "Civil society documentation & reporting (placeholder).",
-    "entries": [
-      { "date": "2023", "text": "Ongoing reporting + civil society attention (placeholder)." }
+    "panels": [
+      {
+        "title": "Ongoing attention",
+        "meta": "Civil society documentation & reporting (placeholder).",
+        "entries": [
+          { "media": "Media", "text": "Ongoing reporting + civil society attention (placeholder).", "href": "https://example.com/2023-article" }
+        ]
+      }
     ]
   },
+
   "2025": {
-    "title": "Thesis investigation",
-    "meta": "Our mapping of actors, documents, and technical unknowns (placeholder).",
-    "entries": [
-      { "date": "2025", "text": "Thesis investigation updates (placeholder)." },
-      { "date": "2025", "text": "Mapping actors & documents (placeholder)." }
+    "panels": [
+      {
+        "title": "Thesis investigation",
+        "meta": "Our mapping of actors, documents, and technical unknowns (placeholder).",
+        "entries": [
+          { "document": "Document", "text": "Thesis investigation updates (placeholder).", "href": "/en/documents/thesis-updates-2025/" },
+          { "document": "Document", "text": "Mapping actors & documents (placeholder).", "href": "/en/documents/actors-mapping-2025/" }
+        ]
+      }
     ]
   }
 }
 </script>
+
 
 <script src="/assets/scripts/timeline.js" defer></script>

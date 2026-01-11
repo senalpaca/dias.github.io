@@ -198,7 +198,7 @@
 
       // TOGGLE OFF
       if (activeKey === key) {
-        tline.classList.remove("is-expanded"); //class first
+        tline.classList.remove("is-expanded");
         stage.innerHTML = "";
         activeKey = null;
         return;
@@ -206,7 +206,10 @@
 
       // OPEN / SWITCH
       activeKey = key;
-      renderStage(data[key]);
+
+      // ✅ CHANGED: pass the key (year) into renderStage
+      renderStage(key, data[key]);
+
       tline.classList.add("is-expanded");
     });
   });
@@ -220,29 +223,72 @@
     }
   });
 
-  function renderStage(detail) {
-  const headerDate = detail.entries[0]?.date || "";
+  function renderStage(yearKey, detail) {
+    const panels = Array.isArray(detail.panels) ? detail.panels : [detail];
 
-  stage.innerHTML = `
-    <aside class="inline-timeline">
-      <header class="inline-timeline__head">
-        <div class="inline-timeline__head-row">
-          <div class="inline-timeline__date">${headerDate}</div>
-          <div class="inline-timeline__title">${detail.title}</div>
+    stage.innerHTML = `
+      <aside class="inline-timeline">
+        <div class="inline-timeline__stack">
+          ${panels.map((panelData, idx) => renderPanel(yearKey, panelData, idx)).join("")}
         </div>
-        <div class="inline-timeline__desc">${detail.meta}</div>
-      </header>
+      </aside>
+    `;
+  }
 
-      <div class="inline-timeline__entries">
-        ${detail.entries.map(entry => `
-          <div class="inline-timeline__entry">
-            <div class="inline-timeline__entry-date">${entry.date}</div>
-            <div class="inline-timeline__entry-text">${entry.text}</div>
-          </div>
-        `).join("")}
+  /* NEW/CHANGED: idx lets you optionally vary the year label per panel */
+  function renderPanel(yearKey, panelData, idx) {
+    // If you want the year label to change per panel, do it here:
+    // const yearLabel = idx === 0 ? yearKey : `${yearKey} (panel ${idx + 1})`;
+    const yearLabel = yearKey;
+
+    return `
+      <div class="inline-timeline__panel">
+        <div class="inline-timeline__head-row">
+          <div class="inline-timeline__date">${escapeHtml(yearLabel)}</div>
+          <div class="inline-timeline__title">${escapeHtml(panelData.title || "")}</div>
+        </div>
+
+        <div class="inline-timeline__desc">${escapeHtml(panelData.meta || "")}</div>
+
+        <div class="inline-timeline__entries">
+          ${(panelData.entries || []).map(entry => {
+            const { type, label } = getEntryType(entry);
+            const href = entry.href ? String(entry.href) : "";
+
+            const isExternal = (type === "media");
+            const tag = href ? "a" : "div";
+
+            const attrs = href
+              ? `href="${escapeHtml(href)}"
+                class="inline-timeline__entry inline-timeline__entry--${type} is-link"
+                ${isExternal ? `target="_blank" rel="noopener"` : ``}`
+              : `class="inline-timeline__entry inline-timeline__entry--${type}"`;
+
+            return `
+              <${tag} ${attrs}>
+                <div class="inline-timeline__entry-label">${escapeHtml(label)}</div>
+                <div class="inline-timeline__entry-body">
+                  <div class="inline-timeline__entry-text">${escapeHtml(entry.text || "")}</div>
+                </div>
+              </${tag}>
+            `;
+          }).join("")}
+        </div>
       </div>
-    </aside>
-  `;
-}
+    `;
+  }
 
+  function getEntryType(entry) {
+    if (entry.media) return { type: "media", label: entry.media };
+    if (entry.document) return { type: "document", label: entry.document };
+
+    // Optional fallback if you still have date entries somewhere:
+    return { type: "date", label: entry.date || "" };
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    })[c]);
+  }
 })();
