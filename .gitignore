@@ -1,0 +1,14 @@
+
+# build output
+_site/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# build output
+_site/
+
+# macOS
+.DS_Store
+**/.DS_Store
