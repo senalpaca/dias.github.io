@@ -174,20 +174,19 @@
   if (!tline) return;
 
   const stage = tline.querySelector(".tline3__stage");
-  const cards = tline.querySelectorAll(".tline3__card");
-
+  const cards = Array.from(tline.querySelectorAll(".tline3__card"));
   const dataEl = document.getElementById("tlineDetailData");
   if (!dataEl) return;
 
   let data;
-  try {
-    data = JSON.parse(dataEl.textContent);
-  } catch (e) {
-    console.error("Bad tlineDetailData JSON", e);
-    return;
-  }
+  try { data = JSON.parse(dataEl.textContent); }
+  catch (e) { console.error("Bad tlineDetailData JSON", e); return; }
 
   let activeKey = null;
+
+  function clearActiveCardUI() {
+    cards.forEach(c => c.classList.remove("is-active"));
+  }
 
   cards.forEach(card => {
     card.addEventListener("click", (e) => {
@@ -196,74 +195,65 @@
       const key = card.dataset.key;
       if (!key || !data[key]) return;
 
-      // TOGGLE OFF
+      // toggle off
       if (activeKey === key) {
         tline.classList.remove("is-expanded");
         stage.innerHTML = "";
         activeKey = null;
+        clearActiveCardUI();
         return;
       }
 
-      // OPEN / SWITCH
+      // switch active
       activeKey = key;
+      clearActiveCardUI();
+      card.classList.add("is-active");
 
-      // ✅ CHANGED: pass the key (year) into renderStage
       renderStage(key, data[key]);
-
       tline.classList.add("is-expanded");
     });
   });
 
-  // click outside closes
   document.addEventListener("click", (e) => {
     if (!tline.contains(e.target)) {
       tline.classList.remove("is-expanded");
       stage.innerHTML = "";
       activeKey = null;
+      clearActiveCardUI();
     }
   });
 
   function renderStage(yearKey, detail) {
     const panels = Array.isArray(detail.panels) ? detail.panels : [detail];
-
     stage.innerHTML = `
       <aside class="inline-timeline">
         <div class="inline-timeline__stack">
-          ${panels.map((panelData, idx) => renderPanel(yearKey, panelData, idx)).join("")}
+          ${panels.map((p, idx) => renderPanel(yearKey, p, idx)).join("")}
         </div>
       </aside>
     `;
   }
 
-  /* NEW/CHANGED: idx lets you optionally vary the year label per panel */
   function renderPanel(yearKey, panelData, idx) {
-    // If you want the year label to change per panel, do it here:
-    // const yearLabel = idx === 0 ? yearKey : `${yearKey} (panel ${idx + 1})`;
-    const yearLabel = yearKey;
+    // prefer panel-specific label; fall back to year
+    const dateLabel = panelData.dateLabel || panelData.month || panelData.date || yearKey;
 
     return `
       <div class="inline-timeline__panel">
         <div class="inline-timeline__head-row">
-          <div class="inline-timeline__date">${escapeHtml(yearLabel)}</div>
+          <div class="inline-timeline__date">${escapeHtml(dateLabel)}</div>
           <div class="inline-timeline__title">${escapeHtml(panelData.title || "")}</div>
         </div>
-
         <div class="inline-timeline__desc">${escapeHtml(panelData.meta || "")}</div>
-
         <div class="inline-timeline__entries">
           ${(panelData.entries || []).map(entry => {
             const { type, label } = getEntryType(entry);
             const href = entry.href ? String(entry.href) : "";
-
             const isExternal = (type === "media");
             const tag = href ? "a" : "div";
-
             const attrs = href
-              ? `href="${escapeHtml(href)}"
-                class="inline-timeline__entry inline-timeline__entry--${type} is-link"
-                ${isExternal ? `target="_blank" rel="noopener"` : ``}`
+              ? `href="${escapeHtml(href)}" class="inline-timeline__entry inline-timeline__entry--${type} is-link" ${isExternal ? `target="_blank" rel="noopener"` : ""}`
               : `class="inline-timeline__entry inline-timeline__entry--${type}"`;
-
             return `
               <${tag} ${attrs}>
                 <div class="inline-timeline__entry-label">${escapeHtml(label)}</div>
@@ -278,11 +268,10 @@
     `;
   }
 
+
   function getEntryType(entry) {
     if (entry.media) return { type: "media", label: entry.media };
     if (entry.document) return { type: "document", label: entry.document };
-
-    // Optional fallback if you still have date entries somewhere:
     return { type: "date", label: entry.date || "" };
   }
 
