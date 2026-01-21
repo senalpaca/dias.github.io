@@ -64,6 +64,7 @@ dir: "ltr"
             <label><input type="checkbox" name="type" value="document" checked>Inquiry</label>
             <label><input type="checkbox" name="type" value="media" checked>Internal Guidelines</label>
             <label><input type="checkbox" name="type" value="legal" checked>PR</label>
+            <label><input type="checkbox" name="type" value="legal" checked>Furnishing</label>
           </fieldset>
 
           <div class="docs-filter__meta">
@@ -110,7 +111,7 @@ dir: "ltr"
                   {% if d.thumb %}
                     <img src="{{ d.thumb }}" alt="{{ d.title }}">
                   {% else %}
-                    <img src="/assets/thumbs/pdf-placeholder.png" alt="PDF" />
+                    <img src="/assets/thumbs/pdf-placeholder.png" alt="" />
                   {% endif %}
                 </picture>
                 <h4>{{ d.title }}</h4>

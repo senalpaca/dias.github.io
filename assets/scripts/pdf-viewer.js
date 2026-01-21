@@ -135,6 +135,56 @@
 
   /* ---------- Editor-only placement mode ---------- */
   function enablePlacementMode(hostEl){
+
+  /* ---------- Helper: show snippet overlay + fallback copy ---------- */
+  function fallbackCopy(text){
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    // Visually hidden but selectable
+    ta.style.position = 'fixed'; ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch(e) { console.warn('fallback copy failed', e); }
+    ta.remove();
+  }
+
+  function showSnippetOverlay(snippet){
+    // remove existing
+    const old = document.getElementById('snippetOverlay'); if(old) old.remove();
+    const ov = document.createElement('div');
+    ov.id = 'snippetOverlay';
+    Object.assign(ov.style, {
+      position: 'fixed', right: '12px', bottom: '12px', zIndex: 10000,
+      background: '#fff', color: '#000', border: '1px solid #000', padding: '12px',
+      maxWidth: '60vw', maxHeight: '50vh', overflow: 'auto', fontSize: '12px', boxShadow: '0 6px 20px rgba(0,0,0,.2)'
+    });
+
+    const pre = document.createElement('pre');
+    pre.textContent = snippet;
+    pre.style.whiteSpace = 'pre-wrap';
+    pre.style.margin = '0 0 8px 0';
+
+    const btnWrap = document.createElement('div');
+    btnWrap.style.display = 'flex';
+    btnWrap.style.gap = '8px';
+
+    const copyBtn = document.createElement('button');
+    copyBtn.textContent = 'Copy JSON';
+    copyBtn.addEventListener('click', async ()=>{
+      try {
+        if(navigator.clipboard?.writeText){ await navigator.clipboard.writeText(snippet); alert('Copied to clipboard.'); }
+        else { fallbackCopy(snippet); alert('Copied via fallback.'); }
+      } catch(e){ fallbackCopy(snippet); alert('Copied via fallback.'); }
+    });
+
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = 'Close';
+    closeBtn.addEventListener('click', ()=> ov.remove());
+
+    btnWrap.appendChild(copyBtn); btnWrap.appendChild(closeBtn);
+    ov.appendChild(pre); ov.appendChild(btnWrap);
+    document.body.appendChild(ov);
+  }
     let placing=false, ghost=null, startX=0,startY=0, activePage=null;
 
     document.addEventListener('keydown',(e)=>{

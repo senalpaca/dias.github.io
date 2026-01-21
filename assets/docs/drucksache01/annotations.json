@@ -1,6 +1,17 @@
 {
   "title": "DIAS Internal Memo (Excerpt)",
   "hotspots": [
+    {
+  "id": "h_1769016937204",
+  "page": 13,
+  "x": 13.7,
+  "y": 10.2,
+  "w": 54.5,
+  "h": 5.4,
+  "title": "Deneme",
+  "short": "deneme",
+  "panelHtml": "deneme"
+}
   ]
 }
 

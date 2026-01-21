@@ -1888,12 +1888,6 @@ html[dir="rtl"] .doc-grid {
   object-fit: cover;
 }
 
-.manual-diagram svg,
-.manual-diagram svg text,
-.manual-diagram svg tspan {
-  font-family: unset !important;
-  color: unset !important;
-}
 
 
 
