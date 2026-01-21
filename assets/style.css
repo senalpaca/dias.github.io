@@ -22,7 +22,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--main-font);
 }
 
-body, p, span, div, a, li {
+body, p, a, li {
   font-family: var(--main-font);
   color: var(--color-text-main);
   margin: 0;
@@ -812,6 +812,7 @@ html[dir="rtl"] .nav-lang { flex-direction: row-reverse; }
   margin: 0;
   font-size: 1rem;
   font-weight: 600;
+  color: var(--color-text-main)
 }
 
 /* Hover/active gets only transform (visual) */
@@ -983,6 +984,7 @@ html[dir="rtl"] .nav-lang { flex-direction: row-reverse; }
   font-size: 0.8rem;
   line-height: 1.4;
   background: var(--color-bg-main);
+  color: var(--color-text-main);
 }
 
 /* =========================
@@ -1031,6 +1033,7 @@ html[dir="rtl"] .nav-lang { flex-direction: row-reverse; }
 .inline-timeline__entry-text {
   font-size: 0.8rem;
   line-height: 1.35;
+  color: var(--color-text-main);
 }
 
 /* =========================
@@ -1801,7 +1804,6 @@ html[dir="rtl"] .doc-grid {
   border-radius: 0 !important;
 }
 
-
 /* Make hotspots feel clickable */
 .manual-diagram svg .hotspot {
   cursor: pointer;
@@ -1857,14 +1859,12 @@ html[dir="rtl"] .doc-grid {
 /* A stage that uses the screen, but leaves space for your header/menu */
 /* Make the diagram stage full-bleed (cover the main content area) */
 .manual-diagram-stage{
-  /* break out of the centered container to span the full viewport width */
   width: 100vw;
   position: relative;
   left: 50%;
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
-  /* adjust this value to your actual header height */
   min-height: calc(100vh - 90px);
   padding-top: 0;
 }
@@ -1885,20 +1885,15 @@ html[dir="rtl"] .doc-grid {
   height: 100%;
   max-width: none;
   display: block;
-  /* Try to behave like a cover: if the svg has a viewBox and preserveAspectRatio="xMidYMid slice"
-     it will crop while filling the area. CSS fallback below will stretch to fill. */
   object-fit: cover;
 }
 
-/* Reset only typography inside the inline SVG so body rules don't inherit into it.
-   Do NOT touch `fill`/`stroke` here — that would break the graphic colors. */
 .manual-diagram svg,
 .manual-diagram svg text,
 .manual-diagram svg tspan {
   font-family: unset !important;
   color: unset !important;
 }
-
 
 
 
