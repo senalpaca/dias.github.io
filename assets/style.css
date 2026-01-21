@@ -35,7 +35,7 @@ a {
 }
 
 h1{
-  font-size: 2.4rem;
+  font-size: 2rem;
   text-transform: uppercase;
 }
 
@@ -1153,19 +1153,17 @@ html[dir="rtl"] .nav-lang {
 /* ------------------ */
 
 .hero {
-  /* padding: 3rem 0 2rem; */
   transition: flex-grow 400ms ease;
   flex-grow: 1;
 }
 
-.hero-inner {
+.hero-inner{
   margin: 0 auto;
-  padding: 0 0rem;
+  width: min(100%, var(--content-width, 72ch));
+  padding: 0 1.25rem; 
   display: flex;
-  align-items: stretch;
-  gap: 2rem;
   flex-direction: column;
-  width: 45vw
+  gap: 2rem;
 }
 
 .hero-right {
@@ -1174,6 +1172,30 @@ html[dir="rtl"] .nav-lang {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
+}
+
+.hero-right-inner {
+  margin-top: 0rem;
+  position: relative;
+}
+
+.hero-right-media{
+  flex: 2 1 0;
+  min-height: 360px;
+  overflow: hidden;
+  display: flex;
+}
+
+.hero-right-media img{
+  flex: 1 1 auto; 
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  max-width: none;
+  max-height: none;
 }
 
 .hero-left {
@@ -1199,15 +1221,75 @@ html[dir="rtl"] .nav-lang {
   line-height: 1.3rem;
 }
 
-.hero-title-table {
-  border-collapse: collapse;
-  width: 100%;
-  margin-top: 12px;
+.hero-subtitle {
+  display: block;
+  margin: 0 0 1rem;
+  line-height: 1.3rem;
 }
 
+.hero-title-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 12px;
+  table-layout: fixed;
+  margin-bottom: 4rem;
+}
+
+/* card look per cell */
 .hero-title-table td {
+  position: relative;
+  vertical-align: top;
+  padding: 18px 18px 22px;
   border: 1px solid var(--color-text-main);
-  padding: 10px;
+  background: transparent;
+  overflow: hidden;
+}
+
+/* avoid double-thick borders inside the grid */
+.hero-title-table tr + tr td { 
+  border-top: 0; 
+}
+
+.hero-title-table td + td { 
+  border-left: 0; 
+}
+
+/* label like Forensis h3 */
+.hero-title-table .kicker {
+  display: block;
+  margin-bottom: 0.5em;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: 0.85rem;
+  line-height: 1.2;
+}
+
+/* content text */
+.hero-title-table .val {
+  display: block;
+  min-height: 2.5em; /* similar to Forensis */
+  font-size: 0.85rem;
+  line-height: 1.2rem;
+}
+
+/* subtle bottom gradient overlay */
+.hero-title-table td::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background: linear-gradient(
+    to bottom,
+    transparent 55%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+}
+
+/* optional hover feel */
+.hero-title-table td:hover {
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .hero-left-actions {
@@ -1219,7 +1301,7 @@ html[dir="rtl"] .nav-lang {
 
 .hero-left-secondbox {
   display: flex;
-  margin-top: 2rem;
+  margin: 2rem 0rem;
   border: 1px solid var(--color-text-main);
   padding: 0.2rem 0.8rem 0.2rem 0.8rem;
 }
@@ -1249,48 +1331,6 @@ html[dir="rtl"] .nav-lang {
   text-decoration: none;
   background: var(--color-accent);
   color: var(--color-text-main);
-}
-
-.hero-right {
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-right-inner {
-  margin-top: 4rem;
-  position: relative;
-  padding: 1.6rem 1.6rem 1.8rem;
-  border: 1px solid var(--color-text-main);
-}
-
-.hero-right-title {
-  margin: 0 0 0.5rem;
-  font-size: 1.1rem;
-}
-
-.hero-right-text {
-  margin: 0 0 1rem;
-  font-size: 0.95rem;
-  color: var(--color-text-main);
-  line-height: 1.6;
-}
-
-.hero-right-media{
-  flex: 2 1 0;
-  min-height: 360px;
-  overflow: hidden;
-  display: flex;
-}
-
-.hero-right-media img{
-  flex: 1 1 auto;       /* <-- fill the flex box */
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  object-position: center;
-  max-width: none;      /* <-- override any global img rules */
-  max-height: none;
 }
 
 /* ================================ */
@@ -1425,9 +1465,13 @@ body.hero-secondary-open .site-main{
 
 /* Responsive */
 @media (max-width: 900px) {
-  .hero-inner {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+  .hero-inner{
+    width: min(100%, 1200px);
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .hero-left, .hero-right{
+    justify-content: center;
   }
 
   .hero-right {
@@ -1449,60 +1493,106 @@ body.hero-secondary-open .site-main{
   }
 }
 
+/* responsive: collapse to 1 column on small screens */
+@media (max-width: 760px) {
+  .hero-title-table,
+  .hero-title-table tbody,
+  .hero-title-table tr,
+  .hero-title-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .hero-title-table td + td { border-left: 1px solid var(--color-text-main); } /* reset */
+  .hero-title-table tr + tr td { border-top: 1px solid var(--color-text-main); }
+}
+
 /* -------- DOCUMENT VIEWER (PDF) -------- */
-.doc-viewer { padding: 1.5rem 0 2rem; }
-.doc-grid {
+.doc-viewer { 
+  padding: 1.5rem 0 2rem; 
+}
+
+.doc-grid { 
   max-width: 1100px; 
   margin: 0 auto; 
-  padding: 0 1.5rem;
+  padding: 1rem 1.5rem;
   display: grid; 
   grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
-  gap: 1.5rem;
+  gap: 1rem;
+}
+
+html[dir="rtl"] .doc-grid {
+  grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr);
 }
 
 .pdf-canvas { 
   position: relative; 
   display: flex; 
   flex-direction: column; 
-  gap: 1rem; }
-
-/* Each PDF page: canvas + overlay */
+  /* gap: 1rem; */
+}
 
 .pdf-page {
+  position: relative; 
+  background: var(--color-alternative);
+  border: 1px solid var(--color-text-main); 
+  overflow: hidden;
   width: 100%;
+  margin-bottom: 2rem;
 }
-.pdf-page canvas { display:block; width:100%; height:auto; max-width: 100%; }
+
+.pdf-page canvas { 
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100%;
+}
 
 /* Hotspot overlay */
-.pdf-overlay { position:absolute; inset:0; pointer-events:none; }
+.pdf-overlay { 
+  position:absolute; 
+  inset:0; 
+  pointer-events:none;
+}
+
+.doc-page-header {
+  display: flex;
+  margin: 2rem 0rem;
+  align-items: center;
+  justify-content: center;
+}
+
 .doc-hotspot {
-  position:absolute; border:2px solid rgba(255,221,136,.9);
-  background:rgba(255,221,136,.15); border-radius:4px;
-  box-shadow:0 0 0 1px rgba(0,0,0,.2) inset;
+  position:absolute; 
+  border:2px solid rgba(255,221,136,.9);
+  background:rgba(255,221,136,.15); 
+  box-shadow: 0 0 0 1px rgba(0,0,0,.2) inset;
   cursor:pointer; pointer-events:auto;
   transition: box-shadow .15s ease, background .15s ease;
 }
-.doc-hotspot:hover { background:rgba(255,221,136,.22);
-  box-shadow:0 0 0 2px rgba(255,221,136,.6) inset; }
+
+.doc-hotspot:hover { 
+  background:rgba(255,221,136,.22);
+  box-shadow:0 0 0 2px rgba(255,221,136,.6) inset; 
+}
 
 /* Tooltip and panel (reuse previous styles) */
 .doc-tooltip {
   position:absolute; 
   z-index:10; 
   max-width:260px;
-  background:#11131a; 
-  color:var(--color-bg-main); 
-  border:1px solid #2a2e3f;
-  border-radius:8px; 
+  background:var(--color-bg-main); 
+  color:var(--color-text-main); 
+  border:1px solid var(--color-text-main);
   padding:.5rem .6rem; 
-  font-size:.9rem; 
+  font-size:.9rem;
   line-height:1.4;
-  box-shadow:0 6px 18px rgba(0,0,0,.35);
 }
+
 .doc-panel { 
-  border:1px solid #242637; 
-  border-radius:12px; 
-  background:#0d0f13; 
+  /* border: 1px solid var(--color-text-main);  */
+  background: transparent;
+  position: relative;
 }
 
 /* --- Doc panel layout: title + intro + inner content box --- */
@@ -1510,57 +1600,43 @@ body.hero-secondary-open .site-main{
   margin: 0 0 0.75rem;
   font-size: 0.95rem;
   line-height: 1.5;
-  color: #d4d4d4;
+  color: var(--color-text-main);
 }
 
 .doc-panel__contentBox{
-  border: 1px solid #242637;
-  background: #0f1118;
+  border: 1px solid var(--color-text-main);
+  background: var(--color-bg-main);
   padding: 0.75rem 0.85rem;
+  position: fixed;
+  z-index: 10;
 }
-
-/* --- Floating box next to annotations --- */
-.doc-flyout{
-  position: absolute;
-  z-index: 20;
-  width: min(320px, 70vw);
-  background: #11131a;
-  color: #f5f5f5;
-  border: 1px solid #2a2e3f;
-  padding: 0.6rem 0.7rem;
-  box-shadow: 0 10px 26px rgba(0,0,0,.4);
-}
-
-.doc-flyout h3{
-  margin: 0 0 0.35rem;
-  font-size: 0.95rem;
-}
-
-.doc-flyout p{
-  margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.45;
-}
-
 
 .doc-panel__inner { 
-  padding:1rem 1.2rem; 
+  padding: 1rem 1.2rem; 
 }
 
 .doc-panel__title { 
-  color:white; 
-  margin:0 0 .5rem; 
-  font-size:1.15rem; 
+  color: var(--color-text-main); 
+  margin: 0 0 .5rem; 
+  font-size: 1.15rem; 
 }
 
 .doc-panel__content { 
-  color:#d4d4d4; 
-  line-height:1.6; 
+  color: var(--color-text-main); 
+  line-height: 1.6; 
 }
 
 .doc-panel__content h3 { 
-  margin-top:.6rem; 
-  font-size:1rem; 
+  margin-top: .6rem; 
+  font-size: 1rem; 
+}
+
+.place-ghost {
+  position: absolute;
+  border: 2px dashed var(--color-accent);
+  background: rgba(255,221,136,0.15);
+  pointer-events: none;
+  z-index: 99;
 }
 
 /* RTL: panel on the left */
@@ -1574,16 +1650,13 @@ html[dir="rtl"] .doc-grid {
   bottom: 8px;
   font-size: 12px;
   padding: 2px 6px;
-  background: rgba(0,0,0,.5);
-  border: 1px solid #2a2e3f;
-  border-radius: 6px;
+  border: 1px solid var(--color-text-main);
   pointer-events: none;
-  color: #eee;
+  color: var(--color-accent);
 }
 
 /* ===========================
    RETRO GOV UI — LOGIN ONLY
-   Lighter institutional variant
    =========================== */
 
 .login-page {
