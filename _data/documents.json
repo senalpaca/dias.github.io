@@ -1,16 +1,6 @@
 {
   "en": [
-    {
-      "slug": "dias-memo",
-      "title": "Freedom of Information Request - 03/2023",
-      "summary": "Freedom of information request on DIAS filed in March 2023.",
-      "pdf": "/assets/docs/dias-memo/doc.pdf",
-      "annotations": "/assets/docs/dias-memo/annotations.json",
-      "thumb": "/assets/docs/dias-memo/thumb.jpg",
-      "tags": ["FOI"],
-      "year": 2025
-    },
-    {
+      {
       "slug": "Freedom of Information Request - 01/2025",
       "title": "Freedom of Information Request - 01/2025",
       "summary": "Freedom of information request on DIAS filed by us in January 2025.",
@@ -21,13 +11,23 @@
       "year": 2025
     },
     {
+      "slug": "dias-memo",
+      "title": "Freedom of Information Request - 03/2023",
+      "summary": "Freedom of information request on DIAS filed in March 2023.",
+      "pdf": "/assets/docs/dias-memo/doc.pdf",
+      "annotations": "/assets/docs/dias-memo/annotations.json",
+      "thumb": "/assets/docs/dias-memo/thumb.jpg",
+      "tags": ["FOI"],
+      "year": 2023
+    },
+    {
       "slug": "belehrungsdokument",
       "title": "Instruction Document for Asylum Seekers",
       "summary": "Instruction document for asylum seeker to give a speech sample. ",
       "pdf": "/assets/docs/belehrung/ast-2023.pdf",
       "annotations": "/assets/docs/belehrung/annotations.json",
       "thumb": "/assets/docs/vendor-brochure-2019/thumb.jpg",
-      "tags": ["created by BAMF", "for asylum seeker"],
+      "tags": ["BAMF", "for asylum seeker"],
       "year": 2023
     },
     {
@@ -37,8 +37,28 @@
       "pdf": "/assets/docs/guideline/2023_da-avs_DIAS.pdf",
       "annotations": "/assets/docs/guideline/annotations.json",
       "thumb": "/assets/docs/bamf-guideline-2020/thumb.jpg",
-      "tags": ["procedure", "created by BAMF", "for BAMF officer"],
-      "year": 2020
+      "tags": ["procedure", "BAMF", "for BAMF officer"],
+      "year": 2023
+    },
+    {
+      "slug": "Parliamentary Request 20/3238",
+      "title": "Parliamentary Request 20/3238",
+      "summary": "Official instructions for BAMF officers on how to use DIAS.",
+      "pdf": "/assets/docs/drucksache/drucksache203238.pdf",
+      "annotations": "/assets/docs/drucksache/annotations.json",
+      "thumb": "/assets/docs/drucksache/thumb.jpg",
+      "tags": ["parliamentary request"],
+      "year": 2022
+    },
+    {
+      "slug": "Parliamentary Request 19/6647",
+      "title": "Parliamentary Request 19/6647",
+      "summary": "Official instructions for BAMF officers on how to use DIAS.",
+      "pdf": "/assets/docs/drucksache01/Drucksache_19:6647.pdf",
+      "annotations": "/assets/docs/drucksache01/annotations.json",
+      "thumb": "/assets/docs/drucksache/thumb.jpg",
+      "tags": ["parliamentary request"],
+      "year": 2018
     },
     {
       "slug": "Nuance",
@@ -48,17 +68,7 @@
       "annotations": "/assets/docs/nuance-01/annotations.json",
       "thumb": "/assets/docs/nuance-01/thumb.jpg",
       "tags": ["procedure", "created by BAMF", "for BAMF officer"],
-      "year": 2020
-    },
-    {
-      "slug": "Parliamentary Request 20-3238",
-      "title": "Parliamentary Request 20-3238",
-      "summary": "Official instructions for BAMF officers on how to use DIAS.",
-      "pdf": "/assets/docs/drucksache/drucksache203238.pdf",
-      "annotations": "/assets/docs/drucksache/annotations.json",
-      "thumb": "/assets/docs/drucksache/thumb.jpg",
-      "tags": ["procedure", "created by BAMF", "for BAMF officer"],
-      "year": 2022
+      "year": 2017
     }
   ],
   "de": [

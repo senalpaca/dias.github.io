@@ -1890,5 +1890,15 @@ html[dir="rtl"] .doc-grid {
   object-fit: cover;
 }
 
+/* Reset only typography inside the inline SVG so body rules don't inherit into it.
+   Do NOT touch `fill`/`stroke` here — that would break the graphic colors. */
+.manual-diagram svg,
+.manual-diagram svg text,
+.manual-diagram svg tspan {
+  font-family: unset !important;
+  color: unset !important;
+}
+
+
 
 

@@ -22,6 +22,17 @@
   "title": "Case Count",
   "short": "",
   "panelHtml": "Since the introduction of DIAS in 2017 till 2023, system has been used in 81,726 cases"
+},
+{
+  "id": "h_1769008670523",
+  "page": 3,
+  "x": 13.5,
+  "y": 18.2,
+  "w": 59.5,
+  "h": 12.4,
+  "title": "Deneme",
+  "short": "Deneme",
+  "panelHtml": "deneme"
 }
   ]
 }
