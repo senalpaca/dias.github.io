@@ -39,6 +39,26 @@
       "thumb": "/assets/docs/bamf-guideline-2020/thumb.jpg",
       "tags": ["procedure", "created by BAMF", "for BAMF officer"],
       "year": 2020
+    },
+    {
+      "slug": "Nuance",
+      "title": "Nuance",
+      "summary": "Official instructions for BAMF officers on how to use DIAS.",
+      "pdf": "/assets/docs/nuance-01/nuance-2017.pdf",
+      "annotations": "/assets/docs/nuance-01/annotations.json",
+      "thumb": "/assets/docs/nuance-01/thumb.jpg",
+      "tags": ["procedure", "created by BAMF", "for BAMF officer"],
+      "year": 2020
+    },
+    {
+      "slug": "Parliamentary Request 20-3238",
+      "title": "Parliamentary Request 20-3238",
+      "summary": "Official instructions for BAMF officers on how to use DIAS.",
+      "pdf": "/assets/docs/drucksache/drucksache203238.pdf",
+      "annotations": "/assets/docs/drucksache/annotations.json",
+      "thumb": "/assets/docs/drucksache/thumb.jpg",
+      "tags": ["procedure", "created by BAMF", "for BAMF officer"],
+      "year": 2022
     }
   ],
   "de": [

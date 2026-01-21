@@ -62,6 +62,7 @@ html, body {
   margin: 0;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden; /* prevent horizontal scrolling from full-bleed elements */
 }
 
 .site-main {
@@ -73,7 +74,7 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: stretch; /* ✅ instead of center */
-  padding-bottom: var(--hero-secondary-collapsed);
+  /*padding-bottom: var(--hero-secondary-collapsed);*/
 }
 
 .site-footer {
@@ -1152,17 +1153,19 @@ html[dir="rtl"] .nav-lang {
 /* ------------------ */
 
 .hero {
-  padding: 3rem 0 2rem;
+  /* padding: 3rem 0 2rem; */
   transition: flex-grow 400ms ease;
   flex-grow: 1;
 }
 
 .hero-inner {
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 0rem;
   display: flex;
   align-items: stretch;
   gap: 2rem;
+  flex-direction: column;
+  width: 45vw
 }
 
 .hero-right {
@@ -1196,11 +1199,36 @@ html[dir="rtl"] .nav-lang {
   line-height: 1.3rem;
 }
 
+.hero-title-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.hero-title-table td {
+  border: 1px solid var(--color-text-main);
+  padding: 10px;
+}
+
 .hero-left-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
   margin-top: 2rem;
+}
+
+.hero-left-secondbox {
+  display: flex;
+  margin-top: 2rem;
+  border: 1px solid var(--color-text-main);
+  padding: 0.2rem 0.8rem 0.2rem 0.8rem;
+}
+
+.hero-left-secondbox-headline {
+  font-size: 0.95rem;
+  color: var(--color-text-main);
+  margin: 0;
+  padding: 0.6rem 0;
 }
 
 .hero-small-btn {
@@ -1248,17 +1276,21 @@ html[dir="rtl"] .nav-lang {
 }
 
 .hero-right-media{
-  flex: 1 1 auto;
-  min-height: 220px;
+  flex: 2 1 0;
+  min-height: 360px;
   overflow: hidden;
+  display: flex;
 }
 
 .hero-right-media img{
+  flex: 1 1 auto;       /* <-- fill the flex box */
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
   object-position: center;
+  max-width: none;      /* <-- override any global img rules */
+  max-height: none;
 }
 
 /* ================================ */
@@ -1473,6 +1505,44 @@ body.hero-secondary-open .site-main{
   background:#0d0f13; 
 }
 
+/* --- Doc panel layout: title + intro + inner content box --- */
+.doc-panel__intro{
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #d4d4d4;
+}
+
+.doc-panel__contentBox{
+  border: 1px solid #242637;
+  background: #0f1118;
+  padding: 0.75rem 0.85rem;
+}
+
+/* --- Floating box next to annotations --- */
+.doc-flyout{
+  position: absolute;
+  z-index: 20;
+  width: min(320px, 70vw);
+  background: #11131a;
+  color: #f5f5f5;
+  border: 1px solid #2a2e3f;
+  padding: 0.6rem 0.7rem;
+  box-shadow: 0 10px 26px rgba(0,0,0,.4);
+}
+
+.doc-flyout h3{
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+}
+
+.doc-flyout p{
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+
 .doc-panel__inner { 
   padding:1rem 1.2rem; 
 }
@@ -1656,6 +1726,95 @@ html[dir="rtl"] .doc-grid {
 .pdf-page,
 .doc-cursor {
   border-radius: 0 !important;
+}
+
+
+/* Make hotspots feel clickable */
+.manual-diagram svg .hotspot {
+  cursor: pointer;
+}
+
+.manual-diagram svg .hotspot:hover {
+  opacity: 0.85;
+}
+
+/* Modal */
+.manual-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+}
+
+.manual-modal[hidden] {
+  display: none;
+}
+
+.manual-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+
+.manual-modal__panel {
+  position: relative;
+  width: min(760px, calc(100% - 32px));
+  margin: 8vh auto 0;
+  padding: 18px 18px 22px;
+  background: #fff;
+  border: 2px solid #000;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.manual-modal__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: 2px solid #000;
+  background: #fff;
+  width: 36px;
+  height: 36px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.manual-modal__title {
+  margin: 0 42px 10px 0;
+}
+
+/* A stage that uses the screen, but leaves space for your header/menu */
+/* Make the diagram stage full-bleed (cover the main content area) */
+.manual-diagram-stage{
+  /* break out of the centered container to span the full viewport width */
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  /* adjust this value to your actual header height */
+  min-height: calc(100vh - 90px);
+  padding-top: 0;
+}
+
+/* Center and contain the SVG */
+.manual-diagram{
+  width: 100%;
+  max-width: none; /* allow full bleed */
+  height: calc(100vh - 90px);
+  display: grid;
+  place-items: stretch; /* let the svg fill the container */
+  overflow: hidden;
+}
+
+/* Make the SVG fit inside the available area */
+.manual-diagram svg{
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  display: block;
+  /* Try to behave like a cover: if the svg has a viewBox and preserveAspectRatio="xMidYMid slice"
+     it will crop while filling the area. CSS fallback below will stretch to fill. */
+  object-fit: cover;
 }
 
 

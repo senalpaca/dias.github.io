@@ -1,0 +1,99 @@
+---
+layout: layouts/base.njk
+title: "Manual"
+lang: "en"
+dir: "ltr"
+permalink: /en/manual/
+---
+
+<section class="manual-diagram-stage">
+  <div class="manual-diagram">
+    {% include "diagrams/manual.svg" %}
+  </div>
+</section>
+
+<!-- Modal -->
+<div class="manual-modal" hidden>
+  <div class="manual-modal__backdrop" data-close></div>
+
+  <div class="manual-modal__panel" role="dialog" aria-modal="true" aria-labelledby="manualModalTitle">
+    <button class="manual-modal__close" type="button" data-close aria-label="Close">×</button>
+    <h2 id="manualModalTitle" class="manual-modal__title"></h2>
+    <div class="manual-modal__body"></div>
+  </div>
+</div>
+
+<script type="application/json" id="manualNodeCopy">
+{
+  "articulation": {
+    "title": "Articulation",
+    "body": "Short explanation text for articulation…"
+  },
+  "definition": {
+    "title": "Definition",
+    "body": "Short explanation text for definition…"
+  },
+  "investigation": {
+    "title": "Investigation",
+    "body": "Short explanation text for investigation…"
+  },
+  "construction": {
+    "title": "Construction",
+    "body": "Short explanation text for construction…"
+  }
+}
+</script>
+
+<script>
+(function () {
+  const modal = document.querySelector(".manual-modal");
+  const titleEl = modal.querySelector(".manual-modal__title");
+  const bodyEl = modal.querySelector(".manual-modal__body");
+  const copy = JSON.parse(document.getElementById("manualNodeCopy").textContent);
+
+  function openModal(key) {
+    const item = copy[key];
+    if (!item) return;
+    titleEl.textContent = item.title;
+    bodyEl.textContent = item.body;
+    modal.hidden = false;
+    document.body.style.overflow = "hidden";
+    modal.querySelector(".manual-modal__close").focus();
+  }
+
+  function closeModal() {
+    modal.hidden = true;
+    document.body.style.overflow = "";
+  }
+
+  // Close
+  modal.addEventListener("click", (e) => {
+    if (e.target.matches("[data-close]")) closeModal();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (!modal.hidden && e.key === "Escape") closeModal();
+  });
+
+  // Diagram clicks
+  const svg = document.querySelector(".manual-diagram svg");
+  if (!svg) return;
+
+  svg.addEventListener("click", (e) => {
+    const hotspot = e.target.closest(".hotspot");
+    if (!hotspot) return;
+    e.preventDefault();
+    e.stopPropagation();
+    openModal(hotspot.getAttribute("data-node"));
+  });
+
+  svg.addEventListener("keydown", (e) => {
+    const hotspot = e.target.closest(".hotspot");
+    if (!hotspot) return;
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openModal(hotspot.getAttribute("data-node"));
+    }
+  });
+})();
+</script>

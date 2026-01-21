@@ -1,0 +1,558 @@
+---
+layout: layouts/base.njk
+title: "Figures & Stats"
+lang: "en"
+dir: "ltr"
+---
+
+<!-- FIGURES & STATS HEADER -->
+<section class="timeline-header">
+
+
+</section>
+
+{# ============================
+  DIAS LINE GRAPH (SVG + vanilla JS)
+  Hover tooltip with exact values
+============================ #}
+
+{% set diasStats = [
+  { year: 2017, dias: 5705,  asylum: 222683, share: 2.6 },
+  { year: 2018, dias: 14696, asylum: 185853, share: 7.9 },
+  { year: 2019, dias: 10918, asylum: 165938, share: 6.6 },
+  { year: 2020, dias: 9923,  asylum: 122170, share: 8.1 },
+  { year: 2021, dias: 15043, asylum: 190816, share: 7.9 },
+  { year: 2022, dias: 29632, asylum: 244132, share: 12.1 },
+  { year: 2023, dias: 43593, asylum: 351915, share: 12.4 },
+  { year: 2024, dias: 5428,  asylum: 250945, share: 2.2 }
+] %}
+
+<script type="application/json" id="diasStatsData">
+{{ diasStats | dump | safe }}
+</script>
+
+<section class="stats-block" aria-labelledby="dias-graph-title">
+
+  <!-- Explanation sits ABOVE the selector + title -->
+  <p class="dias-explain">
+    The line chart shows the deployment of DIAS over the years (2017–2024). Hover over points to see the exact values including total asylum applications and deployment ratio. 
+  </p>
+
+  <!-- Dropdown selector -->
+  <div class="dias-controls" aria-label="Figures and stats selector">
+    <label class="dias-controls__label" for="diasMetricSelect">Select statistic:</label>
+    <select id="diasMetricSelect" class="dias-controls__select">
+      <option value="interpreters">Interpreters</option>
+      <option value="budget">DIAS budget</option>
+      <option value="accuracy">Recognition rate</option>
+      <option value="usage" selected>DIAS usage</option>
+      <option value="confirmOrigin">Confirms / doesn’t confirm origin</option>
+    </select>
+  </div>
+
+  <h2 id="dias-graph-title">DIAS Deployments per Year</h2>
+
+  <!-- Panels (selector toggles these) -->
+  <div class="dias-panels">
+    <!-- USAGE PANEL -->
+    <div class="dias-panel" data-panel="usage">
+      <div class="dias-graph-wrap" id="dias-graph-wrap">
+        <svg
+          id="dias-graph"
+          class="dias-graph"
+          viewBox="0 0 920 460"
+          role="img"
+          aria-label="Line chart showing DIAS deployments and DIAS deployment ratio from 2017 to 2024"
+        >
+          <!-- axes + series will be drawn by JS -->
+        </svg>
+
+        <div class="dias-graph-tooltip" id="dias-graph-tooltip" role="tooltip" aria-hidden="true"></div>
+      </div>
+
+      <div class="dias-graph-legend" aria-hidden="true">
+        <span class="dias-legend-item">
+          <span class="dias-legend-swatch"></span> DIAS deployments (left axis)
+        </span>
+        <span class="dias-legend-item">
+          <span class="dias-legend-swatch share"></span> Deployment ratio (%) (right axis)
+        </span>
+      </div>
+    </div>
+
+    <!-- PLACEHOLDERS -->
+    <div class="dias-panel" data-panel="interpreters" hidden>
+      <p class="muted">Interpreters: add chart/table here.</p>
+    </div>
+
+    <div class="dias-panel" data-panel="budget" hidden>
+      <p class="muted">DIAS budget: add chart/table here.</p>
+    </div>
+
+    <div class="dias-panel" data-panel="accuracy" hidden>
+      <p class="muted">Recognition rate: add chart/table here.</p>
+    </div>
+
+    <div class="dias-panel" data-panel="confirmOrigin" hidden>
+      <p class="muted">Confirms / doesn’t confirm origin: add chart/table here.</p>
+    </div>
+  </div>
+
+  <style>
+    /* Explanation a bit higher */
+    .dias-explain{
+      margin: 0 0 0.75rem;
+      opacity: 0.7;
+    }
+
+/* Dropdown row (already there, but keep) */
+.dias-controls{
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid var(--color-text-main);
+  background: var(--color-bg-main);
+  padding: 0.6rem 0.75rem;
+  margin: 0 0 1rem;
+}
+
+/* Make the whole control bar go yellow on hover (nice big target) */
+.dias-controls:hover{
+  background: var(--color-bg-main);
+}
+
+/* Label stays readable */
+.dias-controls__label{
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Select styling */
+.dias-controls__select{
+  color-scheme: light;
+  font-family: var(--main-font);
+  font-size: 0.95rem;
+  border: 1px solid var(--color-text-main);
+  background: var(--color-bg-main);
+  color: var(--color-text-main);
+  padding: 0.45rem 0.6rem;
+  width: min(460px, 100%);
+  cursor: pointer;
+
+  /* remove default OS glow */
+  outline: none;
+
+  /* keep it crisp */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  /* tiny “arrow” using background so we don’t need extra markup */
+  padding-right: 2.2rem;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--color-text-main) 50%),
+    linear-gradient(135deg, var(--color-text-main) 50%, transparent 50%);
+  background-position:
+    calc(100% - 16px) 50%,
+    calc(100% - 10px) 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+
+/* Yellow accent on hover */
+.dias-controls__select:hover{
+  background-color: var(--color-accent);
+}
+
+/* Yellow + clear focus ring for keyboard users */
+.dias-controls__select:focus-visible{
+  background-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-bg-main);
+}
+
+/* Options (limited control across browsers, but safe) */
+.dias-controls__select option{
+  background: var(--color-bg-main);
+  color: var(--color-text-main);
+}
+.dias-controls__select optgroup{
+  background: var(--color-bg-main);
+  color: var(--color-text-main);
+}
+
+
+.dias-graph-wrap{
+  position: relative;              /* ✅ needed for absolute tooltip */
+  height: 520px;
+  border: 1px solid var(--color-text-main);
+  background: var(--color-bg-main);
+  padding: 1.25rem;
+  overflow: hidden;                /* keeps tooltip from spilling outside */
+}
+
+
+/* SVG fills that fixed area */
+.dias-graph{
+  width: 100%;
+  height: 100%;
+  display: block;
+  min-height: 0;          /* remove the min-height behavior */
+}
+
+    .dias-graph .axis-label{
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .dias-graph .tick{
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .dias-graph .gridline{
+      stroke: var(--color-text-main);
+      stroke-opacity: 0.12;
+      stroke-width: 1;
+    }
+
+    .dias-graph .axis{
+      stroke: var(--color-text-main);
+      stroke-width: 1;
+    }
+
+    .dias-graph .series-line{
+      fill: none;
+      stroke: var(--color-text-main);
+      stroke-width: 2;
+    }
+
+    .dias-graph .series-line.share{
+      stroke-dasharray: 4 4;
+    }
+
+    .dias-graph .point{
+      fill: var(--color-bg-main);
+      stroke: var(--color-text-main);
+      stroke-width: 2;
+      cursor: pointer;
+    }
+
+    .dias-graph .point.is-hover{
+      fill: var(--color-accent);
+    }
+
+    .dias-graph-legend{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .dias-legend-item{
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid var(--color-text-main);
+      background: var(--color-bg-main);
+      padding: 0.35rem 0.5rem;
+    }
+
+    .dias-legend-swatch{
+      width: 18px;
+      height: 0;
+      border-top: 2px solid var(--color-text-main);
+      display: inline-block;
+    }
+    .dias-legend-swatch.share{
+      border-top-style: dashed;
+    }
+
+    .dias-graph-tooltip{
+      position: absolute;
+      z-index: 25;
+      min-width: 260px;
+      max-width: 360px;
+      padding: 0.75rem 0.85rem;
+      border: 1px solid var(--color-text-main);
+      background: var(--color-bg-main);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      pointer-events: none;
+    }
+    .dias-graph-tooltip[aria-hidden="true"]{ display: none; }
+
+    .dias-graph-tooltip .tt-title{
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 0.8rem;
+      margin-bottom: 0.35rem;
+    }
+    .dias-graph-tooltip .tt-line{
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.85rem;
+      line-height: 1.35;
+    }
+
+    .muted{ opacity: 0.7; }
+  </style>
+
+  <!-- Selector logic + dynamic title -->
+  <script>
+    (() => {
+      const sel = document.getElementById("diasMetricSelect");
+      const title = document.getElementById("dias-graph-title");
+      if (!sel || !title) return;
+
+      const panels = Array.from(document.querySelectorAll(".dias-panel"));
+
+      const titles = {
+        interpreters: "Interpreters",
+        budget: "DIAS Budget",
+        accuracy: "Recognition Rate",
+        usage: "DIAS Deployment per Year",
+        confirmOrigin: "Confirms/doesn’t confirm origin"
+      };
+
+      function showPanel(key){
+        panels.forEach(p => {
+          const match = p.dataset.panel === key;
+          p.hidden = !match;
+        });
+        title.textContent = titles[key] || "Figures & Stats";
+      }
+
+      // initial
+      showPanel(sel.value);
+
+      sel.addEventListener("change", () => showPanel(sel.value));
+    })();
+  </script>
+
+  <!-- Graph drawing (only runs if usage panel + svg exist) -->
+  <script>
+    (() => {
+      const dataEl = document.getElementById("diasStatsData");
+      if (!dataEl) return;
+
+      let data;
+      try {
+        data = JSON.parse(dataEl.textContent);
+      } catch (e) {
+        console.error("Could not parse DIAS stats JSON", e, dataEl.textContent);
+        return;
+      }
+
+      const svg = document.getElementById("dias-graph");
+      const wrap = document.getElementById("dias-graph-wrap");
+      const tooltip = document.getElementById("dias-graph-tooltip");
+      if (!svg || !wrap || !tooltip || !Array.isArray(data) || data.length === 0) return;
+
+      // SVG dimensions (must match viewBox)
+      const W = 920, H = 460;
+      const pad = { l: 58, r: 58, t: 36, b: 28 };
+      const iw = W - pad.l - pad.r;
+      const ih = H - pad.t - pad.b;
+
+      const years = data.map(d => d.year);
+      const diasVals = data.map(d => d.dias);
+      const shareVals = data.map(d => d.share);
+
+      const max = arr => Math.max.apply(null, arr);
+
+      function niceMax(v){
+        if (v <= 0) return 1;
+        const pow = Math.pow(10, Math.floor(Math.log10(v)));
+        const n = v / pow;
+        let m;
+        if (n <= 1) m = 1;
+        else if (n <= 2) m = 2;
+        else if (n <= 5) m = 5;
+        else m = 10;
+        return m * pow;
+      }
+
+      const diasMax = niceMax(max(diasVals) * 1.08);
+      const shareMax = niceMax(max(shareVals) * 1.12);
+
+      const x = (i) => pad.l + (i * (iw / (data.length - 1)));
+      const yDias = (v) => pad.t + (ih - (v / diasMax) * ih);
+      const yShare = (v) => pad.t + (ih - (v / shareMax) * ih);
+
+      // ENGLISH formatting
+      const nf = new Intl.NumberFormat("en-GB");
+      const pf = new Intl.NumberFormat("en-GB", { maximumFractionDigits: 1 });
+
+      function el(name, attrs = {}, children = []) {
+        const n = document.createElementNS("http://www.w3.org/2000/svg", name);
+        for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+        for (const c of children) n.appendChild(c);
+        return n;
+      }
+
+      function textNode(str){ return document.createTextNode(str); }
+
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+      const g = el("g");
+
+      // y gridlines (left axis)
+      const ticks = 5;
+      for (let t = 0; t <= ticks; t++){
+        const v = (diasMax / ticks) * t;
+        const yy = yDias(v);
+
+        g.appendChild(el("line", { x1: pad.l, y1: yy, x2: W - pad.r, y2: yy, class: "gridline" }));
+        g.appendChild(el("text", { x: pad.l - 10, y: yy + 4, "text-anchor": "end", class: "tick" }, [textNode(nf.format(Math.round(v)))]));
+      }
+
+      // axes
+      g.appendChild(el("line", { x1: pad.l, y1: H - pad.b, x2: W - pad.r, y2: H - pad.b, class: "axis" }));
+      g.appendChild(el("line", { x1: pad.l, y1: pad.t, x2: pad.l, y2: H - pad.b, class: "axis" }));
+      g.appendChild(el("line", { x1: W - pad.r, y1: pad.t, x2: W - pad.r, y2: H - pad.b, class: "axis" }));
+
+      // x ticks (years)
+      for (let i = 0; i < data.length; i++){
+        const xx = x(i);
+        const yy = H - pad.b;
+        g.appendChild(el("text", { x: xx, y: yy + 16, "text-anchor": "middle", class: "tick" }, [textNode(String(years[i]))]));
+      }
+
+      // axis labels (ENGLISH)
+      g.appendChild(el("text", { x: pad.l, y: 14, "text-anchor": "start", class: "axis-label" }, [textNode("DIAS deployments")]));
+      g.appendChild(el("text", { x: W - pad.r, y: 14, "text-anchor": "end", class: "axis-label" }, [textNode("Deployment ratio (%)")]));
+
+      svg.appendChild(g);
+
+      function pathFor(seriesY){
+        let d = "";
+        for (let i = 0; i < data.length; i++){
+          const xx = x(i);
+          const yy = seriesY(i);
+          d += (i === 0 ? `M ${xx} ${yy}` : ` L ${xx} ${yy}`);
+        }
+        return d;
+      }
+
+      const diasPath = el("path", { d: pathFor(i => yDias(data[i].dias)), class: "series-line dias" });
+      const sharePath = el("path", { d: pathFor(i => yShare(data[i].share)), class: "series-line share" });
+
+      svg.appendChild(diasPath);
+      svg.appendChild(sharePath);
+
+      const pointsGroup = el("g");
+      const sharePointsGroup = el("g");
+
+function showTooltip(d, evt, anchorEl){
+  tooltip.innerHTML = `
+    <div class="tt-title">Year ${d.year}</div>
+    <div class="tt-line"><span>DIAS deployments</span><strong>${nf.format(d.dias)}</strong></div>
+    <div class="tt-line"><span>Total asylum applications</span><strong>${nf.format(d.asylum)}</strong></div>
+    <div class="tt-line"><span>Deployment ratio</span><strong>${pf.format(d.share)}%</strong></div>
+  `;
+  tooltip.setAttribute("aria-hidden", "false");
+
+  const wrapRect = wrap.getBoundingClientRect();
+
+  // Prefer mouse coords; fallback to anchor center
+  let clientX = (evt && Number.isFinite(evt.clientX)) ? evt.clientX : null;
+  let clientY = (evt && Number.isFinite(evt.clientY)) ? evt.clientY : null;
+
+  if (clientX === null || clientY === null) {
+    const r = (anchorEl || svg).getBoundingClientRect();
+    clientX = r.left + r.width / 2;
+    clientY = r.top + r.height / 2;
+  }
+
+  // Convert viewport coords -> coords inside wrap
+  let left = (clientX - wrapRect.left) + 12;
+  let top  = (clientY - wrapRect.top) + 12;
+
+  // Clamp using tooltip size (use offsetWidth/Height so it’s reliable)
+  const ttW = tooltip.offsetWidth;
+  const ttH = tooltip.offsetHeight;
+
+  const maxLeft = wrapRect.width - ttW - 8;
+  const maxTop  = wrapRect.height - ttH - 8;
+
+  left = Math.max(8, Math.min(left, maxLeft));
+  top  = Math.max(8, Math.min(top, maxTop));
+
+  tooltip.style.left = left + "px";
+  tooltip.style.top  = top  + "px";
+}
+
+
+
+      function hideTooltip(){
+        tooltip.setAttribute("aria-hidden", "true");
+        svg.querySelectorAll(".point.is-hover").forEach(p => p.classList.remove("is-hover"));
+      }
+
+      for (let i = 0; i < data.length; i++){
+        const d = data[i];
+
+        const p1 = el("circle", {
+          cx: x(i), cy: yDias(d.dias),
+          r: 6,
+          class: "point",
+          tabindex: "0",
+          "aria-label": `Year ${d.year}, DIAS deployments ${d.dias}`
+        });
+
+        const p2 = el("circle", {
+          cx: x(i), cy: yShare(d.share),
+          r: 6,
+          class: "point",
+          tabindex: "0",
+          "aria-label": `Year ${d.year}, deployment ratio ${d.share} percent`
+        });
+
+function onEnter(evt){
+  p1.classList.add("is-hover");
+  p2.classList.add("is-hover");
+  const e = (evt && evt.touches) ? evt.touches[0] : evt;
+  showTooltip(d, e, evt.currentTarget);
+}
+
+        p1.addEventListener("mouseenter", onEnter);
+        p2.addEventListener("mouseenter", onEnter);
+        p1.addEventListener("mousemove", onEnter);
+        p2.addEventListener("mousemove", onEnter);
+
+        p1.addEventListener("focus", () => {
+          p1.classList.add("is-hover");
+          p2.classList.add("is-hover");
+          const rect = wrap.getBoundingClientRect();
+          showTooltip(d, null, p1);
+        });
+
+        p2.addEventListener("focus", () => {
+          p1.classList.add("is-hover");
+          p2.classList.add("is-hover");
+          const rect = wrap.getBoundingClientRect();
+          showTooltip(d, null, p2);
+        });
+
+        pointsGroup.appendChild(p1);
+        sharePointsGroup.appendChild(p2);
+      }
+
+      svg.appendChild(pointsGroup);
+      svg.appendChild(sharePointsGroup);
+
+      svg.addEventListener("mouseleave", hideTooltip);
+      svg.addEventListener("blur", (evt) => {
+        if (!svg.contains(evt.relatedTarget)) hideTooltip();
+      }, true);
+
+      wrap.addEventListener("scroll", hideTooltip, { passive: true });
+      window.addEventListener("resize", hideTooltip, { passive: true });
+      window.addEventListener("scroll", hideTooltip, { passive: true });
+    })();
+  </script>
+</section>

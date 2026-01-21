@@ -281,47 +281,62 @@ function initPdfViewer() {
   if (!pdfUrl || !annUrl) return;
 
   const tooltip = host.querySelector("#docTooltip");
-  const panel = document.querySelector(".doc-panel__content");
+  const panel = document.getElementById("docPanelContent");
+  const flyout = document.getElementById("docFlyout");
+
+  // If you use PDF.js via CDN, make sure worker is set somewhere globally.
+  // (Leave this if you already set it elsewhere.)
+  // pdfjsLib.GlobalWorkerOptions.workerSrc = ".../pdf.worker.min.js";
 
   Promise.all([
     fetch(annUrl + (annUrl.includes("?") ? "&" : "?") + "v=" + Date.now(), { cache: "no-store" })
-    .then(r => r.json()),
+      .then(r => {
+        if (!r.ok) throw new Error("annotations " + r.status);
+        return r.json();
+      }),
     pdfjsLib.getDocument(pdfUrl).promise
   ])
-  .then(([ann, pdf]) => renderPdfWithHotspots(host, pdf, ann, tooltip, panel))
-  .catch(err => console.error("PDF viewer init error:", err));
+    .then(([ann, pdf]) => renderPdfWithHotspots(host, pdf, ann, tooltip, panel, flyout))
+    .catch(err => console.error("PDF viewer init error:", err));
 }
 
-function renderPdfWithHotspots(host, pdf, ann, tooltip, panel) {
+function renderPdfWithHotspots(host, pdf, ann, tooltip, panel, flyout) {
   const hotspotsByPage = groupByPage(ann.hotspots || []);
+
+  // clear old render (important if hot-reloading)
+  host.querySelectorAll(".pdf-page").forEach(n => n.remove());
 
   const renderAll = async () => {
     for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
       const page = await pdf.getPage(pageNum);
 
       // Scale for crispness on HiDPI screens
-      const cssScale = 1.5;                 // visual size
+      const cssScale = 1.5; // visual size
       const viewport = page.getViewport({ scale: cssScale });
       const outputScale = window.devicePixelRatio || 1;
 
       const pageWrap = document.createElement("div");
       pageWrap.className = "pdf-page";
+      pageWrap.dataset.page = String(pageNum);
 
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
+
+      // internal bitmap
       canvas.width = Math.floor(viewport.width * outputScale);
       canvas.height = Math.floor(viewport.height * outputScale);
+
+      // CSS size (what your % hotspot coordinates refer to)
       canvas.style.width = Math.floor(viewport.width) + "px";
       canvas.style.height = Math.floor(viewport.height) + "px";
 
-      const transform = outputScale !== 1
-        ? [outputScale, 0, 0, outputScale, 0, 0]
-        : null;
+      const transform = outputScale !== 1 ? [outputScale, 0, 0, outputScale, 0, 0] : null;
 
       await page.render({ canvasContext: ctx, viewport, transform }).promise;
 
       const overlay = document.createElement("div");
       overlay.className = "pdf-overlay";
+
       pageWrap.appendChild(canvas);
       pageWrap.appendChild(overlay);
       host.appendChild(pageWrap);
@@ -331,34 +346,43 @@ function renderPdfWithHotspots(host, pdf, ann, tooltip, panel) {
       pageHotspots.forEach(h => {
         const hs = document.createElement("div");
         hs.className = "doc-hotspot";
+
         // % positions mapped to canvas CSS size (not pixel buffer)
-        hs.style.left = h.x + "%";
-        hs.style.top = h.y + "%";
-        hs.style.width = h.w + "%";
-        hs.style.height = h.h + "%";
+        hs.style.left = (Number(h.x) || 0) + "%";
+        hs.style.top = (Number(h.y) || 0) + "%";
+        hs.style.width = (Number(h.w) || 0) + "%";
+        hs.style.height = (Number(h.h) || 0) + "%";
 
         hs.setAttribute("data-title", h.title || "");
         hs.setAttribute("data-short", h.short || "");
         hs.setAttribute("data-panel", h.panelHtml || "");
         hs.setAttribute("tabindex", "0");
 
-        hs.addEventListener("mouseenter", (e) => {
-          showTooltip(tooltip, e.currentTarget, pageWrap);
-        });
+        // Tooltip interactions
+        hs.addEventListener("mouseenter", (e) => showTooltip(tooltip, e.currentTarget, pageWrap));
         hs.addEventListener("mouseleave", () => hideTooltip(tooltip));
-        hs.addEventListener("focus", (e) => {
-          showTooltip(tooltip, e.currentTarget, pageWrap);
-        });
+        hs.addEventListener("focus", (e) => showTooltip(tooltip, e.currentTarget, pageWrap));
         hs.addEventListener("blur", () => hideTooltip(tooltip));
 
+        // Click = update right panel + show flyout next to annotation
         hs.addEventListener("click", (e) => {
           e.preventDefault();
+          e.stopPropagation();
+
           const t = e.currentTarget;
-          const title = t.getAttribute("data-title");
-          const body = t.getAttribute("data-panel");
-          panel.innerHTML =
+          const title = t.getAttribute("data-title") || "";
+          const body = t.getAttribute("data-panel") || "";
+
+          const html =
             (title ? `<h3>${escapeHtml(title)}</h3>` : "") +
             (body || "<p>No details.</p>");
+
+          if (panel) panel.innerHTML = html;
+
+          if (flyout) {
+            showFlyoutNearHotspot(flyout, html, t, host);
+          }
+
           document.querySelector(".doc-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
         });
 
@@ -367,12 +391,44 @@ function renderPdfWithHotspots(host, pdf, ann, tooltip, panel) {
     }
   };
 
-  renderAll();
+  renderAll().catch(err => console.error("PDF render error:", err));
 
-  // Hide tooltip when clicking outside hotspots
+  // Hide tooltip/flyout when clicking outside hotspots
   host.addEventListener("click", (e) => {
-    if (!e.target.classList.contains("doc-hotspot")) hideTooltip(tooltip);
+    if (!e.target.classList.contains("doc-hotspot")) {
+      hideTooltip(tooltip);
+      if (flyout) flyout.hidden = true;
+    }
   });
+}
+
+/* ---------- Flyout helper (small box next to annotation) ---------- */
+function showFlyoutNearHotspot(flyout, html, hotspotEl, hostEl) {
+  flyout.innerHTML = html;
+  flyout.hidden = false;
+
+  const hostRect = hostEl.getBoundingClientRect();
+  const hsRect = hotspotEl.getBoundingClientRect();
+
+  // put flyout to the right of hotspot
+  let left = (hsRect.right - hostRect.left) + 12;
+  let top = (hsRect.top - hostRect.top);
+
+  // measure after making it visible
+  const fw = flyout.offsetWidth || 280;
+  const fh = flyout.offsetHeight || 120;
+
+  // if it would overflow right, place it left of hotspot
+  if (left + fw > hostRect.width - 12) {
+    left = (hsRect.left - hostRect.left) - fw - 12;
+  }
+
+  // clamp to host bounds
+  left = Math.max(12, Math.min(left, hostRect.width - fw - 12));
+  top = Math.max(12, Math.min(top, hostRect.height - fh - 12));
+
+  flyout.style.left = left + "px";
+  flyout.style.top = top + "px";
 }
 
 function groupByPage(items) {
@@ -385,24 +441,22 @@ function groupByPage(items) {
   return map;
 }
 
-/* Tooltip helpers – same logic as before */
+/* ---------- Tooltip helpers ---------- */
 function showTooltip(tooltip, hotspotEl, pageEl) {
+  if (!tooltip) return;
   const short = hotspotEl.getAttribute("data-short");
   if (!short) return;
 
   tooltip.textContent = short;
   tooltip.hidden = false;
 
-  // position within the page element box
   const pageRect = pageEl.getBoundingClientRect();
   const hsRect = hotspotEl.getBoundingClientRect();
   const offset = 8;
 
-  // set first to measure width/height
   tooltip.style.left = "0px";
   tooltip.style.top = "0px";
 
-  // place above/right of hotspot, clamped
   const left = Math.min(
     hsRect.left - pageRect.left + offset,
     pageRect.width - tooltip.offsetWidth - 8
@@ -414,16 +468,18 @@ function showTooltip(tooltip, hotspotEl, pageEl) {
 }
 
 function hideTooltip(tooltip) {
+  if (!tooltip) return;
   tooltip.hidden = true;
   tooltip.textContent = "";
 }
 
 function escapeHtml(s) {
-  return s.replace(/[&<>"']/g, (c) => ({
+  return String(s).replace(/[&<>"']/g, (c) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
   })[c]);
 }
 
+/* (Your initPdfCursor can stay as-is) */
 function initPdfCursor() {
   const host = document.querySelector(".pdf-canvas");
   if (!host) return;
@@ -456,4 +512,5 @@ function initPdfCursor() {
     }
   });
 }
+
 

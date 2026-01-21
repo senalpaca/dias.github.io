@@ -95,22 +95,34 @@
     <section class="doc-viewer">
       <div class="doc-grid">
 
-        <div class="pdf-canvas"
-             id="pdfHost"
-             data-pdf="{{ doc.pdf }}"
-             data-annotations="{{ doc.annotations }}">
-          <div class="doc-tooltip" id="docTooltip" role="tooltip" hidden></div>
-          <div id="pdfDebug"></div>
-        </div>
+      <div class="pdf-canvas"
+          id="pdfHost"
+          data-pdf="{{ doc.pdf }}"
+          data-annotations="{{ doc.annotations }}">
 
-        <aside class="doc-panel" aria-live="polite">
-          <div class="doc-panel__inner">
-            <h2 class="doc-panel__title">{{ title }}</h2>
-            <div class="doc-panel__content">
-              <p>Select a highlight on the document to read more.</p>
+        <div class="doc-tooltip" id="docTooltip" role="tooltip" hidden></div>
+
+        <!-- this is the "small box next to the annotation" -->
+        <div class="doc-flyout" id="docFlyout" hidden></div>
+
+        <div id="pdfDebug"></div>
+      </div>
+
+       <aside class="doc-panel" aria-live="polite">
+        <div class="doc-panel__inner">
+          <h2 class="doc-panel__title">{{ title }}</h2>
+
+          <p class="doc-panel__intro">
+          Select a highlight on the document to read more.
+          </p>
+
+          <div class="doc-panel__contentBox" id="docPanelBox">
+            <div class="doc-panel__content" id="docPanelContent">
+              <p>No highlight selected yet.</p>
             </div>
           </div>
-        </aside>
+        </div>
+<     </aside>
 
       </div>
     </section>
