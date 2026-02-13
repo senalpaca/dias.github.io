@@ -10,9 +10,9 @@
       "year": 2025
     },
     {
-      "slug": "dias-memo",
-      "title": "Freedom of Information Request - 03/2023",
-      "summary": "Freedom of information request on DIAS filed in March 2023.",
+      "slug": "Freedom of Information Request - 02/2023",
+      "title": "Freedom of Information Request - 02/2023",
+      "summary": "Freedom of information request on DIAS filed in February 2023.",
       "pdf": "/assets/docs/dias-memo/doc.pdf",
       "annotations": "/assets/docs/dias-memo/annotations.json",
       "tags": ["FOI"],
@@ -39,30 +39,58 @@
     {
       "slug": "Parliamentary Request 20/3238",
       "title": "Parliamentary Request 20/3238",
-      "summary": "Official instructions for BAMF officers on how to use DIAS.",
-      "pdf": "/assets/docs/drucksache/drucksache203238.pdf",
+      "summary": "Freedom of information request on DIAS filed in March 2023.",
+      "pdf": "/assets/docs/drucksache/Drucksache203238.pdf",
       "annotations": "/assets/docs/drucksache/annotations.json",
       "tags": ["parliamentary request"],
+      "year": 2023
+    },
+        {
+      "slug": "Parliamentary Request 20/9419",
+      "title": "Parliamentary Request 20/9419",
+      "summary": "Freedom of information request on DIAS filed in November 2023.",
+      "pdf": "/assets/docs/drucksache03/Drucksache20-9419.pdf",
+      "annotations": "/assets/docs/drucksache03/annotations.json",
+      "tags": ["parliamentary request"],
+      "year": 2023
+    },
+    {
+      "slug": "Freedom of Information Request - 04/2022",
+      "title": "Freedom of Information Request - 04/2022",
+      "summary": "Freedom of information request on DIAS filed in April 2022.",
+      "pdf": "/assets/docs/FOI - Ozkul/FOIozkul.pdf",
+      "annotations": "/assets/docs/FOI - Ozkul/annotations.json",
+      "tags": ["procedure", "created by BAMF", "for BAMF officer"],
       "year": 2022
+    },
+    {
+      "slug": "digitalisation-summit-2020",
+      "title": "Digitalisation Summit 2020 - DIAS Presentation",
+      "summary": "Presentation of DIAS for the digitalisation summit in 2020.",
+      "pdf": "/assets/docs/Messe-20/kat2020.pdf",
+      "annotations": "/assets/docs/Messe-20/annotations.json",
+      "tags": ["external presentation"],
+      "year": 2020
     },
     {
       "slug": "Parliamentary Request 19/6647",
       "title": "Parliamentary Request 19/6647",
-      "summary": "Official instructions for BAMF officers on how to use DIAS.",
+      "summary": "Freedom of information request on DIAS filed in 2018.",
       "pdf": "/assets/docs/drucksache01/Drucksache_19:6647.pdf",
       "annotations": "/assets/docs/drucksache01/annotations.json",
       "tags": ["parliamentary request"],
       "year": 2018
     },
     {
-      "slug": "Nuance",
-      "title": "Nuance",
-      "summary": "Official instructions for BAMF officers on how to use DIAS.",
-      "pdf": "/assets/docs/nuance-01/nuance-2017.pdf",
-      "annotations": "/assets/docs/nuance-01/annotations.json",
-      "tags": ["procedure", "created by BAMF", "for BAMF officer"],
-      "year": 2017
+      "slug": "digitalisation-summit-2018 ",
+      "title": "Digitalisation Summit 2018 - DIAS Presentation",
+      "summary": "Presentation of DIAS for the digitalisation summit in 2018.",
+      "pdf": "/assets/docs/Messe-18/kat2018.pdf",
+      "annotations": "/assets/docs/Messe-18/annotations.json",
+      "tags": ["external presentation"],
+      "year": 2018
     }
+
   ],
   "de": [
     {

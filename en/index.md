@@ -94,10 +94,10 @@ dir: "ltr"
     }
   },
   "how": {
-    "text": "Follow how DIAS appears in asylum interviews, language assessments, and credibility evaluations.",
+    "text": "The asylum applicant is asked by the staff worker to verbally describe a selected image or speak freely in their native language over telephone. The recording is approximately 2 minutes long. The applicant's speech is recorded in a central file repository and analysed using DIAS tool. The results show the person's speech as a probability distribution across different languages and dialects (e.g. 55 percent Arabic Levantine, 25 percent Arabic Gulf, 5 percent Turkish etc.). The results also show recommendations to redo the speech analysis for better accuracy, if necessary. The result file is added to the applicant's case folder for further evaluation of the asylum case.",
     "link": {
-      "href": "/en/methodology/",
-      "label": "Method overview"
+      "href": "/en/documents/digitalisation-summit-2020/",
+      "label": "See the internal guidelines"
     }
   },
   "risks": {
