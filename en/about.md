@@ -38,9 +38,7 @@ dir: "ltr"
         <div class="hero-right-text">
           <p>put image here</p>
         </div> -->
-        <div class="hero-right-media">
-          <img src="/assets/images/your-image.jpg" alt="Maybe a visual?" loading="lazy" />
-        </div>
+       
       </div>
     </div>
   </div>
