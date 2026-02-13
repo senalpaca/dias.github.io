@@ -1266,6 +1266,7 @@ html[dir="rtl"] .nav-lang {
   letter-spacing: 0.02em;
   font-size: 0.85rem;
   line-height: 1.2;
+  font-weight: bold;
 }
 
 /* content text */
