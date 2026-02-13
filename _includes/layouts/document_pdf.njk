@@ -52,9 +52,9 @@
           </div>
         #}
 
-            <div class="doc-panel__contentBox" id="docPanelBox">
+            <div class="doc-panel__contentBox" id="docPanelBox" style="cursor:pointer">
               <div class="doc-panel__content" id="docPanelContent">
-                <p>No highlight selected yet.</p>
+                <p>Go to first highlight</p>
               </div>
             </div>
         </aside>
@@ -66,6 +66,21 @@
   <!-- PDF.js (CDN) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="/assets/scripts/pdf-viewer.js" defer></script>
+ 
 
 </body>
+ <script> 
+const docpanel = document.getElementById("docPanelBox");
+docpanel.onclick = function() {
+      const element = document.getElementsByClassName("doc-hotspot")[0];
+      element.scrollIntoView({
+      behavior: "auto",
+      block: "center",
+      inline: "center"
+    });
+document.getElementById("docPanelContent").textContent = "Click the highlight";
+docpanel.onclick = function() {};
+docpanel.style.cursor = "default";
+}
+  </script>
 </html>

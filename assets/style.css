@@ -91,6 +91,29 @@ html, body {
   z-index: 1000;
 }
 
+/* Force justification for everything inside main content */
+.site-main.justify-text {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+/* Keep headings/nav from looking weird (optional) */
+.site-main.justify-text h1,
+.site-main.justify-text h2,
+.site-main.justify-text h3,
+.site-main.justify-text h4,
+.site-main.justify-text h5,
+.site-main.justify-text h6 {
+  text-align: left;
+}
+
+/* RTL (Arabic): avoid weird hyphenation */
+html[dir="rtl"] .site-main.justify-text {
+  hyphens: none;
+}
+
+
 /* ===== NAV CONTAINER & GLOBALS (needed to keep lang switch + CTA) ===== */
 
 .main-nav {
@@ -1228,6 +1251,8 @@ html[dir="rtl"] .nav-lang {
   display: block;
   margin: 0 0 1rem;
   line-height: 1.3rem;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 .hero-title-table {
@@ -1308,6 +1333,8 @@ html[dir="rtl"] .nav-lang {
   margin: 2rem 0rem;
   border: 1px solid var(--color-text-main);
   padding: 0.2rem 0.8rem 0.2rem 0.8rem;
+  background-color: var(--color-accent);
+
 }
 
 .hero-left-secondbox-headline {
@@ -1614,6 +1641,7 @@ html[dir="rtl"] .doc-grid {
   position: fixed;
   z-index: 10;
 }
+
 
 .doc-panel__inner { 
   padding: 1rem 1.2rem; 
